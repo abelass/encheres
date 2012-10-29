@@ -1,0 +1,7 @@
+	<p><strong><:inscription2:pays:> : </strong>
+	<BOUCLE_aut(AUTEURS_ELARGIS){id_auteur}>
+		<BOUCLE_regions(GROUPES_MOTS){id_groupe=#PAYS}>
+   		#TITRE
+		</BOUCLE_regions>
+	</BOUCLE_aut></p>
+

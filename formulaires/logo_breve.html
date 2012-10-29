@@ -1,0 +1,23 @@
+#CACHE{0}
+<div id="changer_statut" style="float:right;">
+	<form enctype="multipart/form-data" action="#ENV{action}" method="post" ame="form1" id="form1">
+    	#ACTION_FORMULAIRE{#ENV{action}}
+#SET{erreurs,#ENV**{erreurs}|table_valeur{file}}
+<div class="editer_file obligatoire [ (#GET{erreurs}|oui)erreur]">
+<label for="file">[(#ENV{logo}|non)<:encheres:ajouter_logo:>][(#ENV{logo}|oui)<:encheres:supprimer_photo:>]</label>
+  [<div class='erreur_message'>(#GET{erreurs})</div>]
+	[(#ENV{logo}|non)<div><input type="file" name="file" id="file"></div>]
+</div>
+	<input type="hidden" name="execute" id="execute">
+    	<p class="boutons">
+			<input type="submit" class="submit confirmer" name="submit" id="submit" value="OK">
+		</p>
+	</form>
+</div>
+
+
+
+
+
+
+

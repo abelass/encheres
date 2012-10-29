@@ -1,0 +1,73 @@
+#CACHE{0}
+
+#SET{pays,#ENV{pays,(#INCLURE{fond=inc/inc-pays})}}
+
+<div class="formulaire_spip formulaire_localisation" id="localisation">
+	<BOUCLE_commune(GEOLOCALITES){code_postal=#ENV{code_postal,-1}} {id_entite=#ENV{region}}>
+	#SET{titre,#TITRE}	#SET{id_geolocalite,#GEOLOCALITE} #SET{titre2,#TITRE**}
+	</BOUCLE_commune>
+	[(#TOTAL_BOUCLE|=={1}|oui)#SET{form,non} #SET{titre,#GET{titre}} #SET{id_commune,#GET{id_geolocalite}}]
+	[(#TOTAL_BOUCLE|>{1}|oui)#SET{form,oui}]
+	</B_commune>	
+	<form action='[(#SELF|parametre_url{id_commune=#GET{id_commune}})]#formulaire_inscription2' method='post'>
+	
+			#ACTION_FORMULAIRE{#SELF}
+	 <input type="hidden" name="code_postale" value="[(#GET{id_commune})]"/>
+		<ul>	
+			<li class="editer_pays obligatoire[ (#ENV**{erreurs}|table_valeur{pays}|oui)erreur]">
+					<label for="pays"><:inscription2:pays:></label>
+						<select id="pays" style="width:auto;" name="pays" select onmousewheel="return false" onchange="document.location.href='[(#SELF|parametre_url{pays,''}|parametre_url{localisation,''}|parametre_url{region,''}|parametre_url{code_postal,''})]&pays='+this.options[this.selectedIndex].value;this.focus();">
+							<option value=""><:encheres:choisir_pays:></option>
+							<BOUCLE_pays(GEOENTITES){id_parent=0}>	
+							<option value="#ID_GEOENTITE" [(#GET{pays}|=={#ID_GEOENTITE}|?{'selected="selected"'})]>#TITRE</option>
+							</BOUCLE_pays>	
+						</select>
+						[<p class='erreur'>(#ENV**{erreurs}|table_valeur{pays})</p>]
+						<noscript><input type="submit" class="submit confirmer" name="choix_pays" value="ok"></noscript>	
+			</li>			
+			<INCLURE{fond=formulaires/inscription2_regions}{env}{pays=#GET{pays}}>
+				
+			<li class="editer">
+			<B_cp>												
+				<span class="editer_code_postal obligatoire [ (#ENV**{erreurs}|table_valeur{code_postal}|oui)erreur]" style="float:left; width:100px;">
+					<label for="code_postal"><:inscription2:code_postal:></label>
+					<select id="code_postal" style="width:auto;" name="code_postal"  onchange="document.location.href='[(#SELF|parametre_url{code_postal,''}|parametre_url{localisation,''}|parametre_url{id_commune,''})]&code_postal='+this.options[this.selectedIndex].value;this.focus();">	
+					<option value="">-</option>						
+							<BOUCLE_cp(GEOLOCALITES){id_entite=#ENV{region}} {par code_postal}>	
+							[<option value="#CODE_POSTAL" [(#ENV{code_postal}|=={#CODE_POSTAL}|?{"selected="selected"})]>(#CODE_POSTAL|unique)</option>]
+							</BOUCLE_cp>	
+					</select>
+					[<p class='erreur'>(#ENV**{erreurs}|table_valeur{code_postal})</p>]
+				</span>
+			</B_cp>																		
+			
+									
+			[(#GET{form}|=={non}|oui)
+					<span class="editer_id_commune obligatoire[ (#ENV**{erreurs}|table_valeur{ville}|oui)erreur]" style="float:left; width:200px;"><label for="ville"><:inscription2:ville:></label>
+					#SET{id_commune,#GET{id_mot}} #GET{titre}</span>
+					<input type="submit" name="localisation" class="submit confirmer" value="<:bouton_valider:>"/>
+					<input type="hidden" name="id_commune" value="[(#GET{id_commune})]"/>	    
+					<input type="hidden" name="ville" value="[(#GET{titre2})]"/>    
+					]
+			[(#GET{form}|=={oui}|oui)
+					<span class="editer_id_commune[ (#CONFIG{inscription2/ville_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{ville}|oui)erreur]" style="float:left; width:200px;"><label for="ville"><:inscription2:ville:></label>
+					<INCLURE{fond=formulaires/inscription2_commune}{env}{ajax}> #SET{id_commune,#ENV{id_commune}}
+					]
+			[<p class='erreur'>(#ENV**{erreurs}|table_valeur{ville})</p></span>	]									
+			</li>
+	</ul>
+		<BOUCLE_ville(GEOLOCALITES){id_geolocalite=#GET{id_commune}}>
+	    <p class="boutons">
+	    	[(#ENV{localisation}|non)
+			[(#ENV{menu}|non)
+		    
+			<input type="submit" name="localisation" class="submit confirmer" value="<:bouton_valider:>"/>
+			<input type="hidden" name="id_commune" value="[(#GET{id_commune})]"/>	    
+		<input type="hidden" name="ville" value="[(#GET{titre2})]"/>    
+			]
+		    ]
+
+	    </p>			    
+		 </BOUCLE_ville>
+	</form>
+</div>

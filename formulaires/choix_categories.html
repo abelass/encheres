@@ -1,0 +1,120 @@
+#CACHE{0}
+
+#SET{ajax,ajax}
+
+[(#REM) Affichage uniquement dans le contexte d'encodage d'un nouveau objet]
+
+[(#ENV{act}|actions_mots{#ENV{id_article},#ENV{id_mot}})]
+
+[(#ENV{edition}|non)
+<h2><:choisir_categories:></h2>	
+	<p id="<:ajouter_categorie:>"><:explicatif_categories:><br /><:explicatif_autres_categories:></p>
+]	
+	[(#REM) Affichage des mots clés choisis avec leur chemin]
+	
+<BOUCLE_motarticle_test(MOTS){par titre}{id_article=#ENV*{id_article}}{0,1}>
+		<p><b><:encheres:categorie_liste:></b></p>
+</BOUCLE_motarticle_test>
+								
+	[(#REM) Mots clés de deux niveau ]
+
+<BOUCLE_groupes_liste(GROUPES_MOTS){id_parent=13}>
+		<B_motarticle>
+			<div class="cat_choisis"><b>#TITRE</b>  =>
+			<BOUCLE_motarticle(MOTS){par titre}{id_article=#ENV*{id_article}}{id_groupe}{doublons}>
+				[(#TITRE)]<a href="[(#SELF|parametre_url{act,supprimer}|parametre_url{id_mot,#ID_MOT})]" class="[(#GET{ajax}|texte_ie6_7{no_ajax})]" title="<:encheres:eliminer:>">&nbsp;<img src="#CHEMIN{img/item-remove.png}" alt="<:encheres:eliminer:>"/></a>
+			#SET{sel_mot,ok}
+			</BOUCLE_motarticle>
+			</div>
+		</B_motarticle>
+							
+		#SET{titre1,#TITRE }
+							
+	[(#REM) Mots clés de trois niveau (groupe/sousgroupe et mot clés)]
+							
+	<BOUCLE_sous_groupes_liste(GROUPES_MOTS){id_parent=#ID_GROUPE}{par titre}>
+		<B_motarticle2>
+		<div class="cat_choisis"><b>#GET{titre1}</b> => #TITRE =>
+			<BOUCLE_motarticle2(MOTS){par titre}{id_article=#ENV*{id_article}}{id_groupe}{doublons}>
+				[(#TITRE)]<a href="[(#SELF|parametre_url{act,supprimer}|parametre_url{id_mot,#ID_MOT})]" class="[(#GET{ajax}|texte_ie6_7{no_ajax})]" title="<:encheres:eliminer:>">&nbsp;<img src="#CHEMIN{img/item-remove.png}" alt="<:encheres:eliminer:>"/></a>
+			#SET{sel_mot,ok}
+			</BOUCLE_motarticle2>
+		</div>
+		</B_motarticle2>
+							
+		#SET{titre2,#TITRE }
+							
+		[(#REM) Mots clés de 4 niveu (groupe/sousgroupe/soussousgroupe et mot clé)]
+		
+		<BOUCLE_sous_groupes_liste2(GROUPES_MOTS){id_parent=#ID_GROUPE}{par titre}>
+			<B_motarticle3>
+			<div class="cat_choisis">
+				<b>#GET{titre1}</b> => #GET{titre2} => #TITRE =>
+				<BOUCLE_motarticle3(MOTS){par titre}{id_article=#ENV*{id_article}}{id_groupe}{doublons}>
+					[(#TITRE)]<a href="[(#SELF|parametre_url{act,supprimer}|parametre_url{id_mot,#ID_MOT})]" class="[(#GET{ajax}|texte_ie6_7{no_ajax})]" title="<:encheres:eliminer:>">&nbsp;<img src="#CHEMIN{img/item-remove.png}" alt="<:encheres:eliminer:>"/></a>
+				#SET{sel_mot,ok}
+			</BOUCLE_motarticle3>
+			</div>
+			</B_motarticle3>
+		</BOUCLE_sous_groupes_liste2>
+	</BOUCLE_sous_groupes_liste>
+</BOUCLE_groupes_liste>
+				
+<div class="menu_categories">
+				
+
+<B_groupes>
+	<div class="menu">	
+	<em><:categories:></em>#ENV{id_groupe}
+	<dl>
+	<BOUCLE_groupes(GROUPES_MOTS){par titre}{id_parent=#ENV{id_groupe,13}}>
+		<dt>
+		<a href="[(#SELF|parametre_url{id_groupe,#ID_GROUPE})]" class="[(#GET{ajax}|texte_ie6_7{no_ajax})]">#TITRE</a>						
+		</dt>
+	</BOUCLE_groupes>
+	</dl>
+	</div>
+</B_groupes>
+	<B_groupes_alter>
+	<div class="menu">							
+		<em><:categories:></em>
+		<dl>
+		<BOUCLE_groupes_alter(GROUPES_MOTS){par titre}{id_parent=13}>
+			<dt>	
+			[(#ENV{id_groupe}|!={#ID_GROUPE}|oui)
+			<a href="[(#SELF|parametre_url{id_groupe,#ID_GROUPE})]" class="[(#GET{ajax}|texte_ie6_7{no_ajax})]">#TITRE</a>
+			]
+			[(#ENV{id_groupe}|=={#ID_GROUPE}|oui)
+			<b>#TITRE</b>
+			]
+			</dt>	
+		</BOUCLE_groupes_alter>
+		</dl>
+	</div>								
+	</B_groupes_alter>
+<//B_groupes>
+					
+					
+<B_mots>
+	<div class="menu">							
+	<em><:sous_categories:></em>
+	<dl name="id_mot">
+	<BOUCLE_mots(MOTS){par titre}{id_groupe=#ENV{id_groupe,0}}{doublons}>
+		<dt><a href="[(#SELF|parametre_url{act,ajouter}|parametre_url{id_mot,#ID_MOT})]" class="[(#GET{ajax}|texte_ie6_7{no_ajax})]">#TITRE</a></dt>
+	</BOUCLE_mots>
+	</dl>
+	</div>
+</B_mots>
+
+</div>
+
+[(#REM) Affichage uniquement dans le contexte d'encodage d'un nouveau objet]
+
+[(#ENV{edition}|non)
+	[(#GET{sel_mot}|oui)
+	<br class="nettoyeur" />
+	<h2><:objet_detail:></h2>
+	<b><:explication_objet:></b>
+	#FORMULAIRE_EDITER_OBJETS		
+	]
+]

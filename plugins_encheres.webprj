@@ -1,0 +1,165 @@
+<!DOCTYPE webproject>
+<webproject>
+  <project type="Local" name="plugins_encheres" encoding="utf8" >
+    <upload/>
+    <author/>
+    <email/>
+    <defaultDTD>-//W3C//DTD HTML 4.01 Transitional//EN</defaultDTD>
+    <item url="base/" uploadstatus="1" />
+    <item url="base/installation.php" uploadstatus="1" />
+    <item url="base/tables_interfaces.php" uploadstatus="1" />
+    <item url="css/" uploadstatus="1" />
+    <item url="css/encheres.css" uploadstatus="1" />
+    <item url="formulaires/" uploadstatus="1" />
+    <item url="formulaires/inscription2_encheres.html" uploadstatus="1" />
+    <item url="formulaires/paypal_annule.html" uploadstatus="1" />
+    <item url="formulaires/paypal_ok.html" uploadstatus="1" />
+    <item url="formulaires/paypal_retour.html" uploadstatus="1" />
+    <item url="img/" uploadstatus="1" />
+    <item url="img/item-remove.png" uploadstatus="1" />
+    <item url="inc/" uploadstatus="1" />
+    <item url="inc/eliminer_mot.php" uploadstatus="1" />
+    <item url="inc/inc_header.html" uploadstatus="1" />
+    <item url="inc/inc-supprimer_objet_rappel.php" uploadstatus="1" />
+    <item url="prive/" uploadstatus="1" />
+    <item url="prive/editer_objets.html" uploadstatus="1" />
+    <item url="prive/inc-header.html" uploadstatus="1" />
+    <item url="encheres_options.php" uploadstatus="1" />
+    <item url="pipelines.php" uploadstatus="1" />
+    <item url="" uploadstatus="1" />
+    <templates>templates/</templates>
+    <toolbars>toolbars/</toolbars>
+    <item url="exec/" uploadstatus="1" />
+    <item url="fonds/" uploadstatus="1" />
+    <item url="genie/" uploadstatus="1" />
+    <item url="lang/" uploadstatus="1" />
+    <item url="lang/backup/" uploadstatus="1" />
+    <item url="pub_ouverte/" uploadstatus="1" />
+    <item url="saisies/" uploadstatus="1" />
+    <item url="templates/" uploadstatus="1" />
+    <item url="toolbars/" uploadstatus="1" />
+    <item url="plugins_encheres.session" uploadstatus="1" />
+    <item url="plugins_encheres.webprj" uploadstatus="1" />
+    <item url="base/tables_principales.php" uploadstatus="1" />
+    <item url="base/tables_principales.php~" uploadstatus="1" />
+    <item url="css/fonds/" uploadstatus="1" />
+    <item url="css/fonds/cfg_encheres.html" uploadstatus="1" />
+    <item url="css/fonds/cfg_encheres.html~" uploadstatus="1" />
+    <item url="css/fonds/inscription2_encheres.html" uploadstatus="1" />
+    <item url="css/jquery.autocomplete.css" uploadstatus="1" />
+    <item url="fonds/cfg_encheres.html" uploadstatus="1" />
+    <item url="fonds/cfg_encheres.html~" uploadstatus="1" />
+    <item url="fonds/inscription2_encheres.html" uploadstatus="1" />
+    <item url="formulaires/actions_enchere_gagne.php" uploadstatus="1" />
+    <item url="formulaires/actualisations_divers.html" uploadstatus="1" />
+    <item url="formulaires/actualisations_divers.php" uploadstatus="1" />
+    <item url="formulaires/changer_statut_breve.html" uploadstatus="1" />
+    <item url="formulaires/changer_statut_breve.php" uploadstatus="1" />
+    <item url="formulaires/changer_statut.html" uploadstatus="1" />
+    <item url="formulaires/changer_statut.php" uploadstatus="1" />
+    <item url="formulaires/ecrire_auteur.php" uploadstatus="1" />
+    <item url="formulaires/editer_article.html" uploadstatus="1" />
+    <item url="formulaires/editer_objets.html" uploadstatus="1" />
+    <item url="formulaires/editer_objets.php" uploadstatus="1" />
+    <item url="formulaires/eliminer_suivis.html" uploadstatus="1" />
+    <item url="formulaires/eliminer_suivis.php" uploadstatus="1" />
+    <item url="formulaires/enchere_mise.html" uploadstatus="1" />
+    <item url="formulaires/enchere_mise.php" uploadstatus="1" />
+    <item url="formulaires/enchere_mise_res.html" uploadstatus="1" />
+    <item url="formulaires/formulaire_abonnement.html" uploadstatus="1" />
+    <item url="formulaires/gerer_mots.html" uploadstatus="1" />
+    <item url="formulaires/gerer_mots.php" uploadstatus="1" />
+    <item url="formulaires/inc-achats_effectuees.html" uploadstatus="1" />
+    <item url="formulaires/inc-jours.html" uploadstatus="1" />
+    <item url="formulaires/inc-kidonaki_liste_form.html" uploadstatus="1" />
+    <item url="formulaires/inc-mois.html" uploadstatus="1" />
+    <item url="formulaires/inc-mon_profil.html" uploadstatus="1" />
+    <item url="formulaires/inc-objets_vendus.html" uploadstatus="1" />
+    <item url="formulaires/inc-objets_vendus_np_projets.html" uploadstatus="1" />
+    <item url="formulaires/inscription2_encheres_communs.html" uploadstatus="1" />
+    <item url="formulaires/inscription2_encheres_ong_marques.html" uploadstatus="1" />
+    <item url="formulaires/inscription2.html" uploadstatus="1" />
+    <item url="formulaires/inscription2_regions.html" uploadstatus="1" />
+    <item url="formulaires/jquery.js" uploadstatus="1" />
+    <item url="formulaires/localisation.html" uploadstatus="1" />
+    <item url="formulaires/logo_breve.html" uploadstatus="1" />
+    <item url="formulaires/logo_breve.php" uploadstatus="1" />
+    <item url="formulaires/remise_vente.php" uploadstatus="1" />
+    <item url="formulaires/selection_projet.html" uploadstatus="1" />
+    <item url="genie/encheres.php" uploadstatus="1" />
+    <item url="img/cart.png" uploadstatus="1" />
+    <item url="inc/actions_enchere_gagne.php" uploadstatus="1" />
+    <item url="inc/affich_jours_spectacles.php" uploadstatus="1" />
+    <item url="inc/changer_statut.php" uploadstatus="1" />
+    <item url="inc/editer_objets.html" uploadstatus="1" />
+    <item url="inc/eliminer_art.php" uploadstatus="1" />
+    <item url="inc/encheres_fr.php" uploadstatus="1" />
+    <item url="inc/envoyer_inscription2.php" uploadstatus="1" />
+    <item url="inc/envoyer_mail2.php" uploadstatus="1" />
+    <item url="inc/envoyer_message_visiteur.php" uploadstatus="1" />
+    <item url="inc/envoyer_message_webmaster.php" uploadstatus="1" />
+    <item url="inc/envoyer_webmaster_inscription2.php" uploadstatus="1" />
+    <item url="inc/gestion_trad.php" uploadstatus="1" />
+    <item url="inc/inc-email_head_html.html" uploadstatus="1" />
+    <item url="inc/inc-objets_vendus.html" uploadstatus="1" />
+    <item url="inc/inc-suivre.php" uploadstatus="1" />
+    <item url="inc/inc-supprimer_trad.php" uploadstatus="1" />
+    <item url="inc/joindre2.php" uploadstatus="1" />
+    <item url="inc/legender2.php" uploadstatus="1" />
+    <item url="inc/remise_vente.php" uploadstatus="1" />
+    <item url="inc/supprimer_objet.php" uploadstatus="1" />
+    <item url="prive/donnees_objets.html" uploadstatus="1" />
+    <item url="pub_ouverte/formulaire_encheres.html" uploadstatus="1" />
+    <item url="pub_ouverte/formulaire_encheres.php" uploadstatus="1" />
+    <item url="saisies/input_crochets.html" uploadstatus="1" />
+    <item url="saisies/selection_crochets.html" uploadstatus="1" />
+    <item url="encheres_en.php" uploadstatus="1" />
+    <item url="encheres_fonctions.php" uploadstatus="1" />
+    <item url="encheres_pipeline.php" uploadstatus="1" />
+    <item url="encheres_pipeline.php~" uploadstatus="1" />
+    <item url="inc-objets_vendus_np_projets.html" uploadstatus="1" />
+    <item url="jquery.js" uploadstatus="1" />
+    <item url="pluginencheres.session" uploadstatus="1" />
+    <item url="pluginencheres.webprj" uploadstatus="1" />
+    <item url="plugin.xml" uploadstatus="1" />
+    <item url="plugin.xml~" uploadstatus="1" />
+    <item url="vente.html" uploadstatus="1" />
+    <annotations>
+      <annotation line="34" receiver="" url="formulaires/enchere_mise.php" text="Validation des champs obligatoires" />
+      <annotation line="37" receiver="" url="formulaires/enchere_mise.php" text="le champ prix_livraison est obligatoire si la marchandise est livré ou envoyé ou les deux, si pas de frais de livraison exigé, on permet la valeur 0" />
+      <annotation line="116" receiver="" url="formulaires/enchere_mise.php" text="Actualisation de la base de donnée" />
+      <annotation line="168" receiver="" url="formulaires/enchere_mise.php" text="Si l'id_client  n'existe pas encore on crée un nouveau" />
+      <annotation line="2" receiver="" url="formulaires/gerer_mots.php" text="Charge les valeurs par défaut pour le fomulaire editer objet" />
+      <annotation line="13" receiver="" url="formulaires/gerer_mots.php" text="Validation des champs obligatoires" />
+      <annotation line="25" receiver="" url="formulaires/gerer_mots.php" text="Actualisation de la base de donnée" />
+      <annotation line="2" receiver="" url="inc/changer_statut.php" text="Charge les valeurs par défaut pour le fomulaire changer statut" />
+      <annotation line="22" receiver="" url="inc/changer_statut.php" text="Actualisation de la base de donnée" />
+      <annotation line="2" receiver="" url="pub_ouverte/formulaire_encheres.php" text="Charge les valeurs par défaut pour le fomulaire editer objet" />
+      <annotation line="53" receiver="" url="pub_ouverte/formulaire_encheres.php" text="Validation des champs obligatoires" />
+      <annotation line="56" receiver="" url="pub_ouverte/formulaire_encheres.php" text="le champ prix_livraison est obligatoire si la marcyhandise est livré ou envoyé" />
+      <annotation line="1" receiver="" url="formulaires/changer_statut_breve.php" text="Charge les valeurs par défaut pour le fomulaire changer statut" />
+      <annotation line="18" receiver="" url="formulaires/changer_statut_breve.php" text="Actualisation de la base de donnée" />
+      <annotation line="12" receiver="" url="formulaires/logo_breve.php" text="Validation des champs obligatoires" />
+      <annotation line="15" receiver="" url="formulaires/logo_breve.php" text="le champ prix_livraison est obligatoire si la marchandise est livré ou envoyé ou les deux, si pas de frais de livraison exigé, on permet la valeur 0" />
+      <annotation line="36" receiver="" url="formulaires/logo_breve.php" text="Actualisation de la base de donnée" />
+      <annotation line="2" receiver="" url="formulaires/changer_statut.php" text="Charge les valeurs par défaut pour le fomulaire changer statut" />
+      <annotation line="19" receiver="" url="formulaires/changer_statut.php" text="Actualisation de la base de donnée" />
+      <annotation line="4" receiver="" url="formulaires/editer_objets.php" text="Charge les valeurs par défaut pour le fomulaire editer objet" />
+      <annotation line="56" receiver="" url="formulaires/editer_objets.php" text="Modification: Si pas de id_object dans le context, charge les info de l'objet  avec l'id_source=0, cad l'entrée principale" />
+      <annotation line="120" receiver="" url="formulaires/editer_objets.php" text="Charge les infos de l'id du context" />
+      <annotation line="191" receiver="" url="formulaires/editer_objets.php" text="Validation des champs obligatoires" />
+      <annotation line="246" receiver="" url="formulaires/editer_objets.php" text="le champ prix_livraison est obligatoire si la marchandise est livré ou envoyé ou les deux, si pas de frais de livraison exigé, on permet la valeur 0" />
+      <annotation line="276" receiver="" url="formulaires/editer_objets.php" text="le champ prix_livraison n'est pas obligatoire si la marchandise sera cherché chez le vendeur" />
+      <annotation line="356" receiver="" url="formulaires/editer_objets.php" text="Actualisation de la base de donnée" />
+      <annotation line="436" receiver="" url="formulaires/editer_objets.php" text="Si l'id_objet existe déjà, on actualise" />
+      <annotation line="2" receiver="" url="formulaires/activation_rubrique.php" text="Charge les valeurs par défaut pour le fomulaire editer objet" />
+      <annotation line="12" receiver="" url="formulaires/activation_rubrique.php" text="Validation des champs obligatoires" />
+      <annotation line="29" receiver="" url="formulaires/activation_rubrique.php" text="Actualisation de la base de donnée" />
+    </annotations>
+    <item url="t.html" uploadstatus="1" />
+    <item url="genie/encheres_journalier.php" uploadstatus="1" />
+    <item url="prive/activation_rubrique.html" uploadstatus="1" />
+    <item url="formulaires/activation_rubrique.php" uploadstatus="1" />
+    <item url="formulaires/activation_rubrique.html" uploadstatus="1" />
+  </project>
+</webproject>

@@ -1,0 +1,13 @@
+#SET{langues,(#CONFIG{langues_multilingue}|explode{','})}
+
+
+<li class="editer_langue[ (#CONFIG{inscription2/langue_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{langue}|oui)erreur]">
+	<label><:langue:></label>
+		<select name="langue" id="langue" style="width:auto;">
+			<BOUCLE_langues(POUR){tableau #GET{langues}} >	
+				<option id="langue_#VALEUR"  value="#VALEUR"  [(#ENV{langue}|=={#VALEUR}|?{selected="selected"})]> [(#VALEUR|traduire_nom_langue)]</option>
+			</BOUCLE_langues>	
+		</select>        
+					
+	[<p class='erreur'>(#ENV**{erreurs}|table_valeur{langue})</p>]
+</li>

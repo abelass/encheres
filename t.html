@@ -1,0 +1,63 @@
+#CACHE{3600*24}
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title><:encheres:vente:> - [(#NOM_SITE_SPIP|textebrut)]</title>
+[<meta name="description" content="(#INTRODUCTION{150}|textebrut)" />]
+<INCLURE{fond=inc/inc-head}>
+<link rel="stylesheet" href="[(#CHEMIN{styles/spip_formulaires.css}|direction_css)]" type="text/css" media="projection, screen, tv" />
+[(#REM) Lien vers le flux RSS des articles la rubrique ]
+<link rel="alternate" type="application/rss+xml" title="<:syndiquer_rubrique:>" href="[(#URL_PAGE{backend}|parametre_url{id_rubrique,#ID_RUBRIQUE})]" />
+</head>
+<body>
+<div id="main">
+<!-- conteneur principal -->  
+	<div id="content">
+<!-- menu vertical -->  
+
+<!-- fin menu vertical -->  
+<!-- contenu central -->
+		<div id="contenu_central">
+<!-- le contenu généré depuis le back office commence ici -->
+            <div>
+
+
+
+
+	
+	***
+	<?php
+	
+	$champs = array('id_article', 'id_objet');
+		
+	$sql = sql_select($champs,'spip_encheres_objets','statut NOT IN ("vente_termine","vendu")');
+	
+		while($data = sql_fetch($sql)){	
+		
+	
+		
+			if(!sql_fetsel('id_article','spip_articles',"id_article=" .$data['id_article'])){
+				echo $data['id_objet'].'-'.$data['id_article'].'<br/>';
+				$eliminer = charger_fonction('supprimer_objet','inc');
+				$eliminer($data['id_objet'],$data['id_article'],$type);
+			 	}
+		}
+	
+	
+	?>
+
+            </div>
+            <!-- fin du contenu généré -->
+
+<!-- fin contenu central -->
+<!-- colonne bannière -->
+
+<!-- fin colonne bannière -->
+    </div>
+<!-- fin conteneur principal -->
+<!-- footer -->
+
+    <!-- fin footer -->
+</div>
+</body>
+</html>

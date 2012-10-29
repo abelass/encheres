@@ -1,0 +1,127 @@
+<?php
+
+function encheres_affiche_milieu($flux) {
+
+$section_projets  = lire_config('encheres/rubrique_projets');
+
+
+   $exec = $flux["args"]["exec"];
+   
+   	// affichage du formulaire d'édition de l'objet dans les rubriques projets
+	if ($exec=='articles'){
+		$id_article = $flux["args"]["id_article"];	
+		$art=sql_select("id_rubrique", "spip_articles", "id_article=".$id_article);
+		
+		while($data=sql_fetch($art)){
+			if(sql_fetsel('id_rubrique','spip_rubriques','id_parent='.$section_projets.' AND id_rubrique='.$data['id_rubrique'])){
+				$contexte = array('id_article'=>$id_article);
+				$ret = "<div id='pave_selection'>";
+				$ret .= recuperer_fond("prive/editer_objets", $contexte);
+				$ret .= "</div>";
+				$flux["data"] .= $ret;
+				}
+			}
+		}
+		
+	// affichage du formulaire d'activation désactivation projets	
+	if ($exec=='naviguer'){
+		$id_rubrique = $flux["args"]["id_rubrique"];
+		if(sql_fetsel('id_rubrique','spip_rubriques','id_parent='.$section_projets.' AND id_rubrique='.$id_rubrique)){
+			$deplie=false;
+			if($_REQUEST['formulaire_action']=='activation_rubrique')$deplie=true;
+			$contexte = array('id_rubrique'=>$id_rubrique);
+			$contenu .= recuperer_fond('prive/activation_rubrique', $contexte);
+			$res .= cadre_depliable('',_T('encheres:activation_desactivation_projet'),$deplie,$contenu,'activation_rubrique','e');    		
+			$flux["data"] .= $res;
+			}
+		}		
+    return $flux;
+}
+
+function encheres_header_prive($flux){
+    $flux .= recuperer_fond('inc/inc_header');
+	return $flux;	
+}
+
+function encheres_insert_head($flux){
+    $flux .= recuperer_fond('prive/inc-header');
+	return $flux;	
+
+}
+function encheres_I2_cfg_form($flux){
+    $flux .= recuperer_fond('fonds/inscription2_encheres');
+	return $flux;	
+}
+
+
+function encheres_formulaire_charger($flux){
+	$form = $flux['args']['form'];
+	if($form=='configurer_encheres'){
+	$flux['data']['id_super_asso'] = lire_config('encheres/id_super_asso');
+	if(_request('id_super_asso'))$flux['data']['id_super_asso'] = _request('id_super_asso');
+		if($id_auteur=$flux['data']['id_super_asso'][0]) {
+			$flux['data']['donnees_super_asso'] = sql_fetsel('nom,prenom,nom_famille,email,adresse,code_postal,ville,communication_virement,compte_bancaire,paypal,bic,iban','spip_auteurs LEFT JOIN spip_auteurs_elargis using (id_auteur)','id_auteur='.sql_quote($id_auteur));
+		
+			foreach($flux['data']['donnees_super_asso'] AS $champ =>$valeur ){
+				$flux['data'][$champ] =lire_config('encheres/'.$champ);
+			}
+		}
+	}
+
+return $flux;
+}
+
+function encheres_formulaire_verifier($flux){
+	$form = $flux['args']['form'];
+	if($form=='configurer_encheres'){
+	
+		foreach(array('pays_defaut','rubrique_projets','devise') as $obligatoire){
+					if (!_request($obligatoire)) $flux['data'][$obligatoire] = _T('encheres:champ_obligatoire');			
+				}
+	
+		if(_request('super_asso'))
+				foreach(array('id_super_asso','compte_bancaire','bic','iban') as $obligatoire){
+					if (!_request($obligatoire)) $flux['data'][$obligatoire] = _T('encheres:champ_obligatoire');
+					}			
+		}
+return $flux;
+}
+
+
+// function encheres_I2_form_fin($flux,$args){
+//     $flux .= recuperer_fond('formulaires/inscription2_encheres',$args);
+	
+// 	return $flux;	
+// }
+
+/*function encheres_OP_squelette($flux){
+$flux = @unserialize($flux);
+
+ 	return inclure_balise_dynamique(
+ 			array('formulaires/editer_objets', 0,
+ 				array(
+				'bouton' => "Ajouter ce/ces tag(s)",
+				'id_article' => $flux['id_article']
+ 				)
+ 			), false);
+}*/
+
+function encheres_taches_generales_cron($taches_generales){
+    	$taches_generales['encheres_12heures'] = 3600*12; // tous les 12 heures    
+    	$taches_generales['encheres'] = 60*10; // tous les 10 minutes    		
+	return $taches_generales;
+}
+
+function encheres_ajouter_boutons($boutons_admin) {
+
+    // si on est admin
+
+    if ($GLOBALS['connect_statut'] == "0minirezo") {
+       // on voit le bouton comme  sous-menu de "naviguer"
+       $boutons_admin['cfg']->sousmenu['cfg&cfg=encheres']= new Bouton("../"._DIR_PLUGIN_ENCHERES."/img/cart.png",_T('encheresl:configurer_encheres'));
+    }
+
+    return $boutons_admin;
+
+}
+?>

@@ -1,0 +1,78 @@
+<?php
+     
+     if (!defined("_ECRIRE_INC_VERSION")) return;
+     
+     // charger cfg
+     include_spip('cfg_options');
+     
+     /**
+     * 
+     * Chargement des valeurs par defaut des champs du formulaire
+     * 
+     * @return array L'ensemble des champs et de leur valeurs
+     * @param int $id_auteur[optional] Si cette valeur est utilisée, on entre dans le cadre de
+     * la modification d'un auteur, et plus dans la création
+     */
+     function formulaires_localisation_charger_dist($id_auteur = NULL){
+     
+     //initialise les variables d'environnement pas défaut
+     $valeurs = array();
+     
+     //recupere la liste des champs possible
+     $chercher_champs = charger_fonction('inscription2_champs_formulaire','inc');
+     $champs = $chercher_champs($id_auteur);
+     
+     
+     //si on a bien un auteur alors on preremplit le formulaire avec ses informations
+     //les nom des champs sont les memes que ceux de la base de données
+     if (is_numeric($id_auteur)) {
+     
+     $auteur = sql_fetsel(
+     $champs,
+     'spip_auteurs LEFT JOIN spip_auteurs_elargis USING(id_auteur)',
+     'spip_auteurs_elargis.id_auteur ='.$id_auteur
+     );
+     $auteur['id_auteur'] = $id_auteur;
+     $champs = $auteur;
+     } else {
+     
+     //si on est en mode creation et que l'utilisateur a saisi ses valeurs on les prends en compte
+     foreach($champs as $clef =>$valeurs) {
+if (_request($valeurs)) {
+$champs[$valeurs] = _request($valeurs);
+}
+}		
+}
+
+//Offrir aux autres plugins la possibilite de charger les donnees
+$champs = pipeline('i2_charger_formulaire',
+array(
+'args' => '',
+'data' => $champs
+)
+);
+$champs['localisation']=_request('localisation');
+$champs['menu']=_request('menu');	
+if (_request('pays')) $champs['pays']=_request('pays');
+if (_request('region')) $champs['region']=_request('region');
+if (_request('code_postal')) $champs['code_postal']=_request('code_postal');		
+if (_request('id_commune')) $champs['id_commune']=_request('id_commune');
+if (_request('ville')) $champs['ville']=_request('ville');		
+
+return $champs;
+}
+
+function formulaires_localisation_traiter_dist($id_auteur = NULL){
+
+	$valeurs =array(
+		'pays'=>_request('pays'),
+		'region'=>_request('region'),	
+		'code_postal'=>_request('code_postal'),		
+		'id_commune'=>_request('id_commune'),		
+		'ville'=>_request('ville'),		
+		);
+	
+	if ($id_auteur) sql_updateq('spip_auteurs_elargis',$valeurs,'id_auteur='.$id_auteur);
+
+}
+?>

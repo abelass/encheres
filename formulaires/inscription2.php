@@ -1,0 +1,604 @@
+<?php
+if (!defined("_ECRIRE_INC_VERSION")) return;
+
+// charger cfg
+include_spip('cfg_options');
+
+/**
+ * 
+ * Chargement des valeurs par defaut des champs du formulaire
+ * 
+ * @return array L'ensemble des champs et de leur valeurs
+ * @param int $id_auteur[optional] Si cette valeur est utilisée, on entre dans le cadre de
+ * la modification d'un auteur, et plus dans la création
+ */
+function formulaires_inscription2_charger_dist($id_auteur = NULL,$redirect = null){
+   
+	//initialise les variables d'environnement pas défaut
+	$valeurs = array();
+
+	//recupere la liste des champs possible
+	$chercher_champs = charger_fonction('inscription2_champs_formulaire','inc');
+	$champs = $chercher_champs($id_auteur);
+
+
+	//si on a bien un auteur alors on preremplit le formulaire avec ses informations
+	//les nom des champs sont les memes que ceux de la base de données
+	if (is_numeric($id_auteur)) {
+		
+		$auteur = sql_fetsel(
+			$champs,
+			'spip_auteurs LEFT JOIN spip_auteurs_elargis USING(id_auteur)',
+			'spip_auteurs_elargis.id_auteur ='.$id_auteur
+		);
+		$auteur['id_auteur'] = $id_auteur;
+		if(in_array('naissance',$champs)){
+			if(preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})/",$auteur['naissance'],$date_naissance)){
+				include_spip('inc/date');
+				$auteur['annee'] = $date_naissance[1];
+				$auteur['mois'] = $date_naissance[2];
+				$auteur['jour'] = $date_naissance[3];
+			}
+		}
+		$champs = $auteur;
+	if (_request('pays')) $champs['pays']=_request('pays');
+	if (_request('region')) $champs['region']=_request('region');
+	if (_request('code_postal')) $champs['code_postal']=_request('code_postal');		
+	if (_request('id_commune')) $champs['id_commune']=_request('id_commune');
+	if (_request('ville')) $champs['ville']=_request('ville');		
+	} else {
+
+	$champs['jour'] =_request('jour');	
+	$champs['mois'] =_request('mois');	
+	$champs['annee'] =_request('annee');
+	$champs['password1'] =_request('password1');		
+	$naissance = date('Y-m-d', mktime(0,0,0,$champs['mois'],$champs['jour'], $champs['annee']));
+	$champs['naissance'] = $naissance;
+
+	    //si on est en mode creation et que l'utilisateur a saisi ses valeurs on les prends en compte
+	    foreach($champs as $clef =>$valeurs) {
+            if (_request($valeurs)) {
+                $champs[$valeurs] = _request($valeurs);
+                $champs['naissance'] = $naissance;
+            }
+            if($valeurs == 'naissance'){
+	            if(preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})/",_request($valeurs),$date_naissance)){
+					include_spip('inc/date');
+					$champs['annee'] = $date_naissance[1];
+					$champs['mois'] = $date_naissance[2];
+					$champs['jour'] = $date_naissance[3];
+					echo 'hola';
+				}
+            }
+	    }		
+	}
+	
+	//Offrir aux autres plugins la possibilite de charger les donnees
+	$champs = pipeline('i2_charger_formulaire',
+		array(
+			'args' => '',
+			'data' => $champs
+		)
+	);
+
+	$champs['inscription_vente'] =_request('choix_type');	
+	$champs['date_naissance'] = date('d-m-Y');	
+	$inscription_vente = $champs['inscription_vente'];	
+	return $champs;
+}
+
+function formulaires_inscription2_verifier_dist($id_auteur = NULL){
+
+     
+	//charge la fonction de controle du login et mail
+ 	//$test_inscription = charger_fonction('test_inscription');
+	
+ 	//initialise le tableau des erreurs
+	$erreurs = array();
+ 	
+     //initilise le tableau de valeurs $champs => $valeur
+     $valeurs = array();	
+     
+ 	//recupere la liste des champs possible
+ 	$chercher_champs = charger_fonction('inscription2_champs_formulaire','inc');
+ 	$champs = $chercher_champs($id_auteur);	
+ 
+     //gere la correspondance champs -> _request(champs)
+ 	foreach($champs as $clef => $valeur) {
+ 		$valeurs[$valeur] = _request($valeur);
+ 	}		
+ 		
+ 	//verifier les champs obligatoires
+ 	$type_auteur = _request('type_auteur');
+ 	if ($type_auteur == 'particulier'){
+ 		foreach ($valeurs  as $champs => $valeur) {
+ 			if ((lire_config('inscription2/'.$champs.'_obligatoire') == 'on' ) && (empty($valeur) OR (strlen(_request($champs)) == 0)) AND $champs!='statut_asso' AND $champs!='statut_juridique' AND $champs!='bio' AND $champs!='naissance' AND $champs!='compte_bancaire') {
+ 				$erreurs[$champs] = _T('inscription2:champ_obligatoire');
+ 				if(is_numeric($id_auteur) && (lire_config('inscription2/pass_fiche_mod') == 'on') && (strlen(_request('pass')) == 0)){
+ 					// Si le password est vide et que l'on est dans le cas de la modification d'un auteur
+ 					// On garde le pass original
+ 					spip_log("pass= $pass");
+ 					unset($erreurs['pass']);
+ 					$pass == 'ok';
+ 				}
+ 			}
+ 		}
+ 	}
+ 	else {
+ 		foreach ($valeurs  as $champs => $valeur) {
+ 			if ((lire_config('inscription2/'.$champs.'_obligatoire') == 'on' ) && (empty($valeur) OR (strlen(_request($champs)) == 0)) AND $champs!='naissance' AND $champs!='statut_asso') {
+ 				$erreurs[$champs] = _T('inscription2:champ_obligatoire');
+ 				if(is_numeric($id_auteur) && (lire_config('inscription2/pass_fiche_mod') == 'on') && (strlen(_request('pass')) == 0)){
+ 					// Si le password est vide et que l'on est dans le cas de la modification d'un auteur
+ 					// On garde le pass original
+ 					spip_log("pass= $pass");
+ 					unset($erreurs['pass']);
+ 					$pass == 'ok';
+ 				}
+ 			}
+ 		}
+	};
+ 	
+ 	//Verifier certains champs specifiquement
+ 	
+ 	// Verifier si le mail est connu
+ 	if (strlen(_request('email')) > 0 AND email_valide(_request('email')) AND !is_numeric($id_auteur)) {
+ 		if (sql_getfetsel('id_auteur','spip_auteurs','id_auteur !='.intval($id_auteur).' AND email = \''._request('email').'\'')) {
+ 			// verifier si c un spip listes a maj en pipeline (a faire)
+ 			// sinon renvoyer le form de login
+ 			$erreurs['email_connu'] = _T('form_forum_email_deja_enregistre');
+ 		}
+ 	}
+	else{ 
+	$email=_request('email');
+
+		$sql = spip_query( "SELECT * FROM spip_auteurs WHERE email='$email' AND id_auteur!='$id_auteur'");
+					while($data = spip_fetch_array($sql)) {
+ 			$erreurs['email_utilise'] = _T('email_utilise');
+						}
+	}
+ 	
+ 	//Verifier le login
+ 	// c'est a dire regarder dans la base si un autre utilisateur que celui en cours possede le login saisi
+ 	if (_request('login')) {
+ 		if (sql_getfetsel('id_auteur','spip_auteurs','id_auteur !='.intval($id_auteur).' AND login LIKE \''._request('login').'\'')) {
+ 			$erreurs['login'] = _T('inscription2:formulaire_login_deja_utilise');
+ 		}
+ 		if (strlen(_request('login')) < _LOGIN_TROP_COURT){
+ 			$erreurs['login'] = _T('info_login_trop_court');	
+ 		}
+ 	}
+ 	
+ 	// verifier que le mail est valide
+ 	if(!email_valide(_request('email')))
+ 		$erreurs['email_invalide'] = _T('inscription2:saisir_email_valide');
+ 
+ 	//messages d'erreur au cas par cas (PASSWORD)
+ 	//verification des champs
+ 	// Sinon on le verifie
+ 	if(($pass != 'ok') && (lire_config('inscription2/pass') == 'on')) {
+ 		if (strlen(_request('password')) != 0){$p = _request('password');}else{$p = _request('pass');}
+ 		if($p) {
+ 			if(strlen($p)){
+ 				if (strlen($p) < 6) {
+ 					$erreurs['pass'] = _T('info_passe_trop_court');
+ 					$erreurs['message_erreur'] .= _T('info_passe_trop_court')."<br />";
+ 				} elseif ($p != _request('password1')) {
+ 					$erreurs['pass'] = _T('info_passes_identiques');
+ 					$erreurs['message_erreur'] .= _T('info_passes_identiques')."<br />";
+ 				}
+ 			}else{
+ 				if(!is_numeric($id_auteur)){
+ 					// (1) Si on est dans la modif d'id_auteur on garde l'ancien pass si rien n'est rentre
+ 					// donc on accepte la valeur vide
+ 					// dans le cas de la création d'un auteur ... le password sera necessaire
+ 					$erreurs['pass'] = _T('inscription2:password_obligatoire');
+ 				}
+ 			}
+ 		}
+ 	}
+ 	
+ 	//messages d'erreur au cas par cas (CODE POSTAL)
+     //liste des champs de type code postal
+ 	$champs_code_postal = array('code_postal','code_postal_pro');
+ 	
+ 	// verification des champs saisis
+ 	foreach($champs_code_postal as $champs) {
+ 	    if(lire_config('inscription2/'.$champs) == 'on') {
+ 	    	$valide_cp = charger_fonction('inscription2_valide_cp','inc');
+ 	        $erreur = $valide_cp($valeurs[$champs]);
+ 	        if($erreur){
+ 		        $erreurs[$champs] = $erreur;
+ 	        }		
+ 	    }
+ 	}	
+ 
+ 	//messages d'erreur au cas par cas (TELEPHONE)
+ 	//liste des champs de type telephone
+ 	$champs_telephone = array('telephone','fax','mobile','telephone_pro','fax_pro','mobile_pro');
+ 	
+ 	// verification des champs saisis
+ 	foreach($champs_telephone as $champs) {
+ 	    	$valide_numero = charger_fonction('inscription2_valide_numero','inc');
+ 	        $erreur = $valide_numero($valeurs[$champs]);
+ 	        if($erreur){
+ 		        $erreurs[$champs] = $erreur;
+ 	        }		
+ 	    }
+ 	    
+ 	 //messages d'erreur au cas par cas (Nom) 
+ 	//Verifier que l'incrits est majeur
+  $nom=_request('nom');
+ 	$controle_nom=spip_query( "SELECT * FROM spip_auteurs WHERE nom='$nom' and id_auteur!='$id_auteur' LIMIT 1");
+ 	while ($name = mysql_fetch_array ($controle_nom)){
+ 		$erreurs['nom'] = _T('erreur_pseudo');
+		}   	
+ 	
+ 	
+if (!is_numeric($id_auteur)){
+ 	//messages d'erreur au cas par cas (NAISSANCE) 
+ 	//Verifier que l'incrits est majeur
+	$jour =_request('jour');	
+	$mois =_request('mois');	
+	$annee =_request('annee');	
+	$naissance = date('d-m-Y', mktime(0,0,0,$mois,$jour,$annee));
+	$champs['naissance'] = $naissance;
+
+	$age = floor((time() - strtotime($naissance))/(60*60*24*365.2425));
+    if ($age < 18){
+    $erreurs['naissance'] = _T('trop_jeune');
+		};
+
+ 	//messages d'erreur au cas par cas (CONDITIONS GENERALES) 
+ 	//Verifier que l'incrits est majeur
+ 	if(!(_request('conditions_generales'))){
+ 		$erreurs['conditions_generales'] = _T('erreur_conditions_generales');
+
+		};
+ 	}
+ 	//Offrir aux autres plugins la possibilite de verifier les donnees
+ 	$erreurs = pipeline('i2_verifier_formulaire',
+ 		array(
+ 			'args' => array(
+ 			    'champs' => $valeurs
+ 			),
+ 		'data' => $erreurs
+ 		)
+ 	);
+ 	
+ 	
+ 	//verifier que l'auteur a bien des droits d'edition
+ 	if (is_numeric($id_auteur)) {
+ 		include_spip('inc/autoriser');
+ 		if (!autoriser('modifier','auteur',$id_auteur)) {
+ 			$erreurs['message_erreur'] .= _T('inscription2:profil_droits_insuffisants');
+ 		}
+ 	}
+ 	
+ 	//message d'erreur generalise
+ 	if (count($erreurs)) {
+ 		spip_log($erreurs,"inscription2");
+ 		$erreurs['message_erreur'] .= _T('inscription2:formulaire_remplir_obligatoires');
+ 	}
+
+
+     return $erreurs; // si c'est vide, traiter sera appele, sinon le formulaire sera resoumis
+ }
+
+function formulaires_inscription2_traiter_dist($id_auteur = NULL,$redirect = null){
+	global $tables_principales;
+	$champs['spip_listes_format'] = 'html';
+	$champs['inscription_vente'] =_request('choix_type');	
+	$inscription_vente = $champs['inscription_vente'];
+	$page = _request('page');
+	
+	$retour = array();
+	
+	if((is_numeric($id_auteur) && (lire_config('inscription2/pass_fiche_mod') != 'on'))
+		OR (is_numeric($id_auteur) && (lire_config('inscription2/pass_fiche_mod') == 'on')) && (strlen(_request('password')) == 0)){
+		$mode = 'modification_auteur_simple';
+	}
+	else if((is_numeric($id_auteur) && (lire_config('inscription2/pass_fiche_mod') == 'on')) and (strlen(_request('password')) != 0)){
+		$mode = 'modification_auteur_pass';
+	}
+	else if((lire_config('inscription2/pass') == 'on') && (strlen(_request('pass')))){
+		$mode = 'inscription_pass';
+	}
+	else{
+		$mode = 'inscription';
+	}
+	
+	/* Generer la liste des champs a traiter
+	* champ => valeur formulaire
+	*/
+	if(!is_numeric($id_auteur)){
+		$new = true;
+	}
+	
+	$chercher_champs = charger_fonction('inscription2_champs_formulaire','inc');
+	$champs = $chercher_champs($id_auteur);
+	
+	foreach($champs as $clef => $valeur) {
+		$valeurs[$valeur] = _request($valeur);
+	}
+	// Definir le login s'il a besoin de l'etre
+	// NOM et LOGIN sont des champs obligatoires donc a la creation il ne doivent pas etre vide
+	// Apres on s'en fiche s'il n'est pas dans le formulaire
+	if($new){
+		if(!$valeurs['nom']){
+			if($valeurs['nom_famille']||$valeurs['prenom']){
+				$valeurs['nom'] = $valeurs['prenom'].' '.$valeurs['nom_famille'];
+			}
+			else{
+				$valeurs['nom'] = strtolower(translitteration(preg_replace('/@.*/', '', $valeurs['email'])));
+			}
+		}
+		if(!$valeurs['login']){
+			$definir_login = charger_fonction('inscription2_definir_login','inc');
+			$valeurs['login'] = $definir_login($valeurs['nom'], $valeurs['email']);
+		}
+	}
+	
+	//$valeurs contient donc tous les champs remplit ou non 
+	include_spip('inc/inscription2_compat_php4');
+	//definir les champs pour spip_auteurs
+	$table = "spip_auteurs";
+    
+	//genere le tableau des valeurs a mettre a jour pour spip_auteurs
+	//toutes les clefs qu'inscription2 peut mettre a jour
+
+	$clefs = array_fill_keys(array('login','nom','email','bio','nom_site','url_site','pgp'),'');
+	
+	//extrait uniquement les donnees qui ont ete proposees a la modification
+	$val = array_intersect_key($valeurs,$clefs);
+	
+	//Verification du password
+	if(($mode == 'inscription_pass') || ($mode == 'modification_auteur_pass')){
+		if (strlen(_request('password')) != 0)
+			$new_pass = _request('password');
+		else
+			$new_pass = _request('pass');
+		if (strlen($new_pass)) {
+			include_spip('inc/acces');
+			$htpass = generer_htpass($new_pass);
+			$alea_actuel = creer_uniqid();
+			$alea_futur = creer_uniqid();
+			$pass = md5($alea_actuel.$new_pass);
+			$val['pass'] = $pass;
+			$val['htpass'] = $htpass;
+			$val['alea_actuel'] = $alea_actuel;
+			$val['alea_futur'] = $alea_futur;
+			$val['low_sec'] = '';
+		}
+		if(!is_numeric($id_auteur)){
+			$val['statut'] = lire_config('inscription2/statut_nouveau');
+		}
+	}else{
+		if(!is_numeric($id_auteur)){
+			$val['statut'] = 'aconfirmer';
+		}
+	}
+	
+	//inserer les donnees dans spip_auteurs -- si $id_auteur : mise a jour - autrement : nouvelle entree
+	if (!$new) {
+		$where = 'id_auteur = '.$id_auteur;
+		sql_updateq(
+			$table,
+			$val,
+			$where
+		);
+	} else {
+		$id_auteur = sql_insertq(
+			$table,
+			$val
+		);
+	}
+	
+	$table = 'spip_auteurs_elargis';
+	//extrait les valeurs propres a spip_auteurs_elargis
+	
+	//genere le tableau des valeurs a mettre a jour pour spip_auteurs
+	//toutes les clefs qu'inscription2 peut mettre a jour
+	//s'appuie sur les tables definies par le plugin
+	
+	$clefs = $tables_principales[$table]['field'];
+	if(is_array($clefs)){
+		//extrait uniquement les donnees qui ont ete proposees a la modification
+		$val = array_intersect_key($valeurs,$clefs);
+	}else{
+		$where = 'id_auteur='.sql_quote($id_auteur);	
+		$res = sql_select('*',$table,$where);
+		$clefs = sql_fetch($res);
+		$val = array_intersect_key($valeurs,$clefs);	
+	}
+	
+	unset($val['login']);
+	
+	//recherche la presence d'un complement sur l'auteur
+	$id_elargi = sql_getfetsel('id_auteur','spip_auteurs_elargis','id_auteur='.$id_auteur);
+	$jour =_request('jour');	
+	$mois =_request('mois');	
+	$annee =_request('annee');	
+	$naissance = $annee.'-'.$mois.'-'.$jour;
+	$val['naissance'] = $naissance;
+
+	$val['spip_listes_format'] = 'html';
+	
+	if ($id_elargi) {
+		$where = 'id_auteur = '.$id_auteur;
+		sql_updateq(
+			$table,
+			$val,
+			$where      
+		);
+	} else {
+		// Si on utilise la date de creation de la fiche
+		if(lire_config('inscription2/creation') == 'on'){
+			$val['creation'] = date("Y-m-d H:i:s",time());
+		}
+		$val['id_auteur'] = $id_auteur;
+		$id = sql_insertq(
+			$table,
+			$val
+		);
+	}
+    
+	$traiter_plugin = pipeline('i2_traiter_formulaire',
+		array(
+			'args' => array(
+				'id_auteur' => $id_auteur,
+				'champs' => $val
+			),
+		'data' => null
+		)
+	);
+	
+    if (!$new){
+        $message = _T('inscription2:profil_modifie_ok');
+        if($mode == 'modification_auteur_simple'){
+        	$message .= '<br />'._T('inscription2:mot_passe_reste_identique');
+        }
+        $editable = true;
+    } else {
+		if(!$traiter_plugin['ne_pas_confirmer_par_mail']){
+
+			// envoi d'un email à la personne inscrite
+
+			$envoyer_inscription = charger_fonction('envoyer_inscription2','inc');
+			$envoyer_inscription($id_auteur,$mode);
+			$message = _T('inscription2:formulaire_inscription_ok');
+			$lang = _request('lang');
+			$auteur = spip_query( "SELECT * FROM spip_auteurs WHERE id_auteur='$id_auteur' ");
+			while ($resultat = mysql_fetch_array ($auteur)){
+			$nom = $resultat['nom'];
+			$login = $resultat['login'];
+			$mail_inscrit=$resultat['email'];
+			}
+			$titre = $nom;
+			$id_rubrique = "42";
+			$statut = "publie";
+			$langue_choisie = "oui";
+			$accepter_forum = "pos";
+			$date = date('Y-m-d G:i:s');
+			$date_redac = $date;
+
+			// Inscription aux mailing listes
+
+			spip_query ("UPDATE spip_auteurs_elargis SET spip_listes_format = 'html'  WHERE         	 id_auteur='$id_auteur'");
+
+// 			spip_query ( " INSERT INTO spip_auteurs_listes (id_auteur, id_liste, statut, format) VALUES ("._q($id_auteur).", "._q($id_rubrique).", "._q($id_rubrique).", "._q($statut).", "._q($lang).", "._q($langue_choisie).", "._q($accepter_forum).", "._q($date).") ");
+
+			$langue=$val['langue'];
+			
+			switch($langue){
+				case "fr": 
+					$id_liste_base=3;
+					$id_liste_marque=4;
+					$id_liste_ong=5;
+					$id_liste_lieu=6;
+					break;
+				case "nl": 
+					$id_liste_base=13;
+					$id_liste_marque=7;
+					$id_liste_ong=9;
+					$id_liste_lieu=11;
+					break;
+				case "en": 
+					$id_liste_base=14;
+					$id_liste_marque=8;
+					$id_liste_ong=10;
+					$id_liste_lieu=12;
+					break;												
+				}
+					$arg_inser_liste = array(
+					'id_auteur' => $id_auteur,
+					'id_liste' => $id_liste_base,
+					'format' => 'html',
+					'statut' => 'a_valider',
+					'date_inscription' => $date,
+					);
+					$id_objet = sql_insertq('spip_auteurs_listes',$arg_inser_liste);
+
+			if(_request('type_auteur')=='marque' OR _request('type_auteur')=='restaurant'){
+					$arg_inser_liste = array(
+					'id_auteur' => $id_auteur,
+					'id_liste' => $id_liste_marque,
+					'format' => 'html',
+					'statut' => 'a_valider',
+					'date_inscription' => $date,
+					);
+					$id_objet = sql_insertq('spip_auteurs_listes',$arg_inser_liste);
+				}
+
+			if(_request('type_auteur')=='ong'){
+					$arg_inser_liste = array(
+					'id_auteur' => $id_auteur,
+					'id_liste' => $id_liste_ong,
+					'format' => 'html',
+					'statut' => 'a_valider',
+					'date_inscription' => $date,
+					);
+					$id_objet = sql_insertq('spip_auteurs_listes',$arg_inser_liste);
+				}
+
+			if(_request('type_auteur')=='lieu'){
+					$arg_inser_liste = array(
+					'id_auteur' => $id_auteur,
+					'id_liste' => $id_liste_lieu,
+					'format' => 'html',
+					'statut' => 'a_valider',
+					'date_inscription' => $date,
+					);
+					$id_objet = sql_insertq('spip_auteurs_listes',$arg_inser_liste);
+				}
+
+			// Crée un article par auteur dans la rubrique 42 qui sert pour stocker les photos et autres doc, forum avec le kidonateur et plus
+
+				$sql = spip_query( "SELECT * FROM spip_auteurs_articles WHERE id_auteur='$id_auteur' ");
+				while ($name = mysql_fetch_array ($sql)){
+					$id_article = $name['id_article'];
+					$sql2 = spip_query( "SELECT * FROM spip_articles WHERE id_article'$id_article' AND id_rubrique='$id_rubrique' ");
+						while ($name = mysql_fetch_array ($sql2)){
+						$id_article_controle = $name['id_article'];
+						$id_article = $id_article_controle;
+							}
+					}		
+			if(!$id_article_controle){
+				$art=spip_query ( " INSERT INTO spip_articles (titre, id_rubrique, id_secteur, statut, lang,langue_choisie,accepter_forum,date) VALUES ("._q($titre).", "._q($id_rubrique).", "._q($id_rubrique).", "._q($statut).", "._q($lang).", "._q($langue_choisie).", "._q($accepter_forum).", "._q($date).") ");
+
+				$id_article=mysql_insert_id();
+
+				spip_query ( " INSERT INTO spip_auteurs_articles (id_auteur, id_article) VALUES ("._q($id_auteur).","._q($id_article).") ");
+					};
+
+		// envoi d'un email de confirmation au responsable du site
+			$nom_site_spip = $GLOBALS['meta']["nom_site"];
+			$email = $GLOBALS['meta']["email_webmaster"]; 
+
+			$url_inscrit= generer_url_public("auteur","id_auteur=$id_auteur");
+			$url_inscrit= str_replace('&amp;','&',$url_inscrit); 
+			$message = "Bonjour, \n\n"
+.			$nom." vient de s'inscrire \n\nVoir son profile: ".$url_inscrit;
+			$sujet = "[".$nom_site_spip."] - Avis d'inscription ! ";
+
+			$envoyer_message_webmestre = charger_fonction('envoyer_message_webmestre','inc');
+			$envoyer_message_webmestre('inscription2','',$id_auteur);
+		}
+		   		if ($page){
+ 			header('Location: spip.php?page='.$page.'&etape=login&email='.$mail_inscrit);
+				}
+		if($traiter_plugin['message_ok'])
+			$message = $traiter_plugin['message_ok'] ;
+		$editable = false;
+    }
+	
+	$retour['editable'] = $editable;
+	$retour['message_ok'] = $message;
+	
+	if($redirect){
+// 		$retour['redirect'] = $redirect;
+	}
+	
+    return $retour;
+}
+?>

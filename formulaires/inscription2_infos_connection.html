@@ -1,0 +1,50 @@
+[(#REM) Charge les informations minimale d'un auteur]
+<fieldset class="info_connection">
+	<legend>
+	   [(#ENV{type_auteur}|=={particulier}|non)<:inscription2:info_connection:>]
+		[(#ENV{type_auteur}|=={particulier}|oui)<:info_generale:>]
+	</legend>
+
+	<ul>
+		[(#ENV{type_auteur}|=={particulier}|oui)
+	    [(#CONFIG{inscription2/nom}|=={on}|oui)	
+	    <li class="editer_nom[ (#CONFIG{inscription2/nom_obligatoire}|=={on}|?{obligatoire})][ (#ENV**{erreurs}|table_valeur{nom}|oui)erreur]">
+	        <label for="nom">[(#ENV{type_auteur}|=={particulier}|?{<:login:><br><small>(<:explicatif_login:>)</small>,<:encheres:nom_organisme:>})]</label>
+	        <input type="text" class="text" name="nom" id="nom" value="#ENV{nom}" />
+	        [<p class='erreur'>(#ENV**{erreurs}|table_valeur{nom})</p>]
+	    </li>]
+	    ]
+	    [(#CONFIG{inscription2/login}|=={on}|oui)	
+	    <li class="editer_login[ (#CONFIG{inscription2/login_obligatoire}|=={on}|?{obligatoire})][ (#ENV**{erreurs}|table_valeur{login}|oui)erreur]">
+	        <label for="login"><:login:><br><small>(<:explicatif_login:>)</small></label>
+	        <input type="text" class="text" name="login" id="login" value="#ENV{login}" />
+	        [<p class='erreur'>(#ENV**{erreurs}|table_valeur{login})</p>]
+	    </li>]
+	    [(#CONFIG{inscription2/email}|=={on}|oui)	
+	    <li class="editer_email[ (#CONFIG{inscription2/email_obligatoire}|=={on}|?{obligatoire})][ (#ENV**{erreurs}|table_valeur{email}|oui)erreur][ (#ENV**{erreurs}|table_valeur{email_invalide}|oui)erreur]">
+	        <label for="email"><:inscription2:email:><br/><small>(<:explicatif_email:>)</small></label>
+	        <input type="text" class="text" name="email" id="email" value="#ENV{email}" />
+	        [<p class='erreur'>(#ENV**{erreurs}|table_valeur{email})</p>]
+	        [<p><span class='erreur'>(#ENV**{erreurs}|table_valeur{email_invalide})</span></p>]
+	    </li>]
+		[(#CONFIG{inscription2/pass}|=={on}|oui)	
+		<li class="editer_password[ (#CONFIG{inscription2/pass_obligatoire}|=={on}|?{obligatoire})][ ((#ENV**{erreurs})erreur]">
+		    <label for="pass"><:inscription2:pass:></label>
+		    <input type="password" class="text" autocomplete="off" name="pass" id="pass" value="#ENV{pass}" />
+			<label for="password1"><:inscription2:password_retaper:></label>
+		    <input type="password" class="text" autocomplete="off" name="password1" id="password1" value="#ENV{password1}" />
+		    [<p class='erreur'>(#ENV**{erreurs}|table_valeur{pass})</p>]
+		</li>]
+		[(#ENV{type_auteur}|=={particulier}|oui)
+       [(#CONFIG{inscription2/bio}|=={on}|oui)	
+        <li class="editer_bio[ (#ENV{type_auteur}|!=={particulier}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{bio}|oui)erreur]">
+            <label for="bio">
+				<:descriptif_org:><br/><small>(<:explicatif_descriptif:>)</small>
+				</label>
+            <textarea name="bio" class="textarea" id="bio" rows="2" cols="20">#ENV{bio}</textarea>
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{bio})</p>]
+        </li>
+		]
+		]
+	</ul>
+</fieldset>

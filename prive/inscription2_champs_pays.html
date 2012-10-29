@@ -1,0 +1,12 @@
+        <li>
+            <label for="ville"><:inscription2:pays:></label>
+			<B_regions>
+				<select name="pays" id="pays" >
+				<option id="pays0"  value="#ID_MOT" [(#ENV{val}|=={''}|?{selected="selected"})]><:encheres:choisir_pays:></option>
+				<BOUCLE_regions(GEOENTITES){id_parent=0}>
+            	<option id="pays#ID_GEOENTITE"  value="#ID_GEOENTITE" [(#ENV{val}|=={#ID_GEOENTITE}|?{selected="selected"})]>#TITRE</option>
+				</BOUCLE_regions>
+				</select>
+			</B_regions>
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{ville})</p>]
+        </li>

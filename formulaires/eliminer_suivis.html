@@ -1,0 +1,78 @@
+#CACHE{0} 
+
+		<div id="containerobjsuivis">
+		[(#REM)Définis les objets en vente]
+		#SET{id_objet,#ARRAY}
+		<BOUCLE_objets(spip_encheres_objets){statut IN mise_en_vente,mise_en_vente_active}>
+		#SET{id_objet,#GET{id_objet}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_OBJET}}}
+		</BOUCLE_objets>
+
+		[(#REM)Définis les objets ou l'encherisseurs à misé pour ensuite les enlever du compte]
+		#SET{id_objet2,#ARRAY}
+		<BOUCLE_mises(spip_encheres_mises){id_encherisseur=#ENV{id_auteur}}>
+		#SET{id_objet2,#GET{id_objet2}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_OBJET}}}
+		</BOUCLE_mises>
+
+		[(#REM)Les purs suivis des objets en vente]
+		<B_suivre>
+		[<p>(#PAGINATION)</p>]
+		<form action="#ENV{action}" method="post">
+		<input name="id_auteur" type="hidden" value="#ENV{id_auteur}">
+    	#ACTION_FORMULAIRE{#ENV{action}}
+		<table>		
+			<thead class="soustitreobjsuivis">
+				<tr>
+					<td><:photo:></td>
+					<td><:encheres:objet:></td>
+					<td><:kidonateur:></td>
+					<td><:inscription2:ville:></td>
+					<td><:encheres:prix:></td>					
+					<td><:encheres:encheres_maj:></td>
+					<td><:encheres:livraison_court:></td>
+					<td><:encheres:fin:></td>
+					<td><:theme:></td>
+					<td><:encheres:supprimer:></td
+				</tr>	
+			</thead>		
+			<tbody>
+		<BOUCLE_suivre(spip_encheres_encherisseurs){id_encherisseur=#ENV{id_auteur}}{id_objet IN #GET{id_objet}}{id_objet !IN #GET{id_objet2}}{suivre=1} {pagination 10}>
+			<BOUCLE_objet(spip_encheres_objets){id_objet}>
+				<BOUCLE_art_objet(ARTICLES){id_article}>
+				<tr class="ligne1acheffect">
+
+					<td class="photoobj"><a href="[(#URL_ARTICLE|parametre_url{id_objet,#ID_OBJET})]">
+					<BOUCLE_photo(DOCUMENTS) {id_article} {extension IN jpg,png,gif} {par num titre,titre}{0,1}>
+					[(#FICHIER|copie_locale|image_reduire{100,100}|inserer_attribut{'alt',#TITRE}|inserer_attribut{'title',#TITRE})]				
+					</BOUCLE_photo>
+					[(#CHEMIN{styles/images/photo.jpg}|image_reduire{100,150}|inserer_attribut{'alt',#TITRE}|inserer_attribut{'title',#TITRE})] 
+					<//B_photo>	
+					</a></td>
+					<td class="titreobj"><a href="[(#URL_ARTICLE|parametre_url{id_objet,#ID_OBJET})]">[(#TITRE|couper{40})]</a><br>
+										<span class="">(#ID_OBJET)</span></td>
+					<td class="kidoobj">#LESAUTEURS</td>
+					<BOUCLE_aut_el(AUTEURS_ELARGIS){id_auteur}>
+					<td>#VILLE</td>
+					</BOUCLE_aut_el>
+					<td>#MONTANT_MISE</td>
+					<td><INCLURE{fond=inc/contenu_central/inc-encheres_nombre_mises_simple}{id_objet}/></td>
+					<td>[(#MODE_LIVRAISON|=={livraison}|?{<:oui:>,[(#MODE_LIVRAISON|=={posteouvenir}|?{<:oui:>,<:non:>})]})]</td>
+					<td><INCLURE{fond=inc/contenu_central/inc-encheres_delais_mises_simple}{id_objet}></td>
+					<td>
+						<INCLURE{fond=inc/contenu_central/inc-icones_projets}{id_rubrique}>
+					</td>
+					<td><input name="id_objet_#ID_OBJET" type="checkbox" value="#ID_OBJET"></td>
+				</tr>	
+				</BOUCLE_art_objet>
+			</BOUCLE_objet>
+		</BOUCLE_suivre>
+		</tbody>
+		</table>
+    	<p class="boutons">
+			<input type="submit" class="submit confirmer" value="<:encheres:supprimer:>"/>
+		</p>
+		</form>
+		</B_suivre>
+				
+					
+
+		</div>

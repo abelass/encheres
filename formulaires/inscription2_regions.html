@@ -1,0 +1,14 @@
+#CACHE{3600*24}
+<BOUCLE_regions(GEOENTITES){id_parent=#ENV{pays,-1}} {par titre}>
+		<B_regions_sous>
+        <li class="editer_region obligatoire[ (#ENV**{erreurs}|table_valeur{region}|oui)erreur]">
+            <label for="ville">#TITRE</label>
+		<select name="region" id="region" style="width:auto;" onchange="document.location.href='[(#SELF|parametre_url{region,''}|parametre_url{localisation,''}|parametre_url{code_postal,''})]&region='+this.options[this.selectedIndex].value;this.focus();">
+			<option id="region"  value="" [(#ENV{region}|=={''}|?{selected="selected"})]><:encheres:choisir_region:> #TITRE</option>
+			<BOUCLE_regions_sous(GEOENTITES){id_parent=#ID_GEOENTITE} {par titre}>
+            		<option id="region#ID_GEOENTITE"  value="#ID_GEOENTITE" [(#ENV{region}|=={#ID_GEOENTITE}|?{selected="selected"})]>#TITRE</option>	</BOUCLE_regions_sous>
+		</select>
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{region})</p>]
+        </li>            			
+        </B_regions_sous>								
+</BOUCLE_regions>

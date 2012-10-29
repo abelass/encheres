@@ -1,0 +1,234 @@
+// <?php
+
+function genie_encheres_12heures_dist($time){
+	$date_actuel= time();
+	
+	include_spip('inc/utils');
+
+	// les objets vendus non payés
+
+	  $vendu = sql_select('*','spip_encheres_objets',array('statut="vendu"',"statut_payement_objet=''","id_acheteur!=0"),'',array("date_vente"));
+	 
+	 while($v = sql_fetch($vendu)) {
+		$id_objet = $v['id_objet'];
+		$id_auteur=$v['id_auteur'];
+		$id_article=$v['id_article'];
+		$id_acheteur=$v['id_acheteur']; 
+		$date_vente = $v['date_vente'];
+		$envoi_rappels = $v['envoi_rappels'];
+
+		$date_vente_jours = date('d-m-Y',strtotime($date_vente));
+		$date_vente_heures = date('G:i:s',strtotime($date_vente));
+		$split_vente_jours = explode("-", $date_vente_jours);
+		$split_vente_heures = explode(":", $date_vente_heures);
+		$date_vente = mktime($split_vente_heures[0], $split_vente_heures[1], $split_vente_heures[2], $split_vente_jours[1], $split_vente_jours[0], $split_vente_jours[2]) ;
+		$date_difference_vente = ($date_actuel-$date_vente)/86400;
+
+		// 28 jours sans paiement enregistré
+		if ($date_difference_vente >= 28 AND $envoi_rappels==24){
+			$periode=28;
+			rappels_paiements($id_objet, $periode,$id_acheteur );
+		}
+		// 21 jours sans paiement enregistré
+
+		if ($date_difference_vente >= 24 AND $envoi_rappels==16){
+			$periode=24;
+			rappels_paiements($id_objet, $periode,$id_acheteur);
+			}
+
+		// 15 jours sans paiement enregistré
+		elseif ($date_difference_vente >= 16 AND $envoi_rappels==10){
+			$periode=16;
+			rappels_paiements($id_objet, $periode,$id_acheteur);
+			}
+
+		// 10 jours sans paiement enregistré
+		elseif ($date_difference_vente >= 10 AND $envoi_rappels==''){
+			$periode=10;
+			rappels_paiements($id_objet, $periode,$id_acheteur);
+			};
+		}
+		
+		// les objets vendus non livrés	
+		
+		$livre=sql_select('*','spip_encheres_objets',
+			array(
+				'statut="vente_termine"',
+				 'statut_livraison!="envoie"', 
+				 'statut_livraison!= "recu"',
+				 'statut_payement_livraison= "ok"',
+				 'date_paiement_livraison!= "0000-00-00 00:00:00"',
+				 'envoi_rappels!="rappel_1_livraison"'
+				 )
+			);
+
+		while($v = sql_fetch($livre)) {
+			$id_objet = $v['id_objet'];
+			$id_acheteur = $v['id_acheteur'];		
+			$date_paiement_livraison = $v['date_paiement_livraison'];
+			$date_paiement_livraison_jours = date('d-m-Y',strtotime($date_paiement_livraison));
+			$date_paiement_livraison_heures = date('G:i:s',strtotime($date_paiement_livraison));
+			
+			$split_jours = explode("-", $date_paiement_livraison_jours);
+			$split_heures = explode(":", $date_paiement_livraison_heures);
+	
+			$date_paiement_livraison_explode = mktime($split_heures[0], $split_heures[1], $split_heures[2], $split_jours[1], $split_jours[0], $split_jours[2]) ;
+			$date_difference_paiement_livraison = ($date_actuel-$date_paiement_livraison_explode)/86400;	
+			
+				 
+			if ($date_difference_paiement_livraison >= 8){
+
+				//Envoi d'un rappel au vendeur
+				
+				$envoyer_message_kidonateur = charger_fonction('envoyer_message_kidonateur','inc');
+				$envoyer_message_kidonateur('','rappel_vendeur_livraison',$id_objet);
+	
+				
+				//Mail d'info au webmaster
+				
+				$envoyer_message_webmestre = charger_fonction('envoyer_message_webmestre','inc');
+				$envoyer_message_webmestre('rappel_vendeur',$id_objet);
+				
+
+				sql_updateq('spip_encheres_objets',array("envoi_rappels" =>'rappel_1_livraison'),'id_objet='.sql_quote($id_objet));				
+				spip_log("CRON : rappel vendeur 8 jours depuis paiement livraison: id_objet: $id_objet ",'encheres_cron');
+			} 
+ 		}
+
+	// les objets vendus non recus
+			
+	$recu =sql_select('*','spip_encheres_objets',
+			array(
+				'statut="vente_termine"',
+				 'statut_livraison!="envoie"', 
+				 )
+			);
+	
+		while($v = sql_fetch($recu)) {
+			$id_objet = $v['id_objet'];
+			$id_acheteur = $v['id_acheteur'];	
+			$date_livraison = $v['date_livraison'];
+			
+			$date_livraison_jours = date('d-m-Y',strtotime($date_livraison));
+			$date_livraison_heures = date('G:i:s',strtotime($datet_livraison));		
+			
+			$split_jours = explode("-", $date_livraison_jours);
+			$split_heures = explode(":", $date_livraison_heures);
+			$date_livraison_explode = mktime($split_heures[0], $split_heures[1], $split_heures[2], $split_jours[1], $split_jours[0], $split_jours[2]) ;
+			$date_difference_livraison = ($date_actuel-$date_livraison_explode)/86400;
+			
+			$avis=sql_getfetsel('envoi_avis','spip_encheres_encherisseurs',
+				array(
+					'id_encherisseur='.$id_acheteur,
+					 'id_objet='.$id_objet, 
+					'envoi_avis="rappel_1_recu"',
+					 )
+				);
+				 
+			if ($date_difference_livraison >= 8 AND !$avis){
+				
+				$email_acheteur =sql_getfetsel('email','spip_auteurs',array('id_auteur='.sql_quote($id_acheteur)));
+				
+				if($email_acheteur) {
+					$envoyer_message_acheteur = charger_fonction('envoyer_message_acheteur','inc');
+					$envoyer_message_acheteur($email_acheteur,'rappel_acheteur_recu',$id_objet);
+				}
+							
+				sql_updateq('spip_encheres_encherisseurs',array("envoi_avis" =>'rappel_1_recu'),'id_encherisseur='.sql_quote($id_acheteur).' AND id_objet='.sql_quote($id_objet));	
+				
+				spip_log("CRON : rappel achteur 8 jours depuis livraison: id_objet: $id_objet ",'encheres_cron');
+			 
+			 }
+		}	
+
+}
+
+function  rappels_paiements($id_objet, $periode,$id_acheteur) {
+	include_spip('inc/encheresmail_fonctions');		
+	 // on note le rappel dans la bdd 
+		 			 
+	sql_updateq('spip_encheres_objets',array("envoi_rappels" =>$periode ),'id_objet='.sql_quote($id_objet));		 
+
+	spip_log("CRON : update bdd rappel $periode: id_objet: $id_objet",'encheres_cron_12');
+
+	//On récupère les données
+	 $contexte =donnees($id_objet);
+	 
+	 // on envoie les mails 	 
+	 
+	$envoyer_message_asso = charger_fonction('envoyer_message_asso','inc');
+	$envoyer_message_asso('','rappel_asso',$id_objet,$contexte);
+	
+	// nom de l'assos origin	en cas de superasso
+	if(lire_config('encheres/super_asso')) $contexte['asso']['nom']=$contexte['asso']['nom_asso'];
+	
+	$envoyer_message_kidonateur = charger_fonction('envoyer_message_kidonateur','inc');
+	$envoyer_message_kidonateur('','rappel_vendeur',$id_objet,$contexte);
+	
+	$envoyer_message_acheteur = charger_fonction('envoyer_message_acheteur','inc');
+	$envoyer_message_acheteur('','rappel_acheteur',$id_objet,$contexte);
+	
+	if($periode!=10){
+	 //Mail d'info au webmaster
+		 $envoyer_message_webmestre = charger_fonction('envoyer_message_webmestre','inc');
+		 $envoyer_message_webmestre('rappel_acheteur',$id_objet);
+	}
+
+	spip_log("CRON : envoi rappel $periode: id_objet: $id_objet ",'encheres_cron');
+
+
+	 return;
+ }
+ 
+ function donnees($id_objet){
+	include_spip('inc/encheresmail_fonctions');		
+	
+	// Les infos de l'objet
+	$objet=sql_fetsel('*','spip_encheres_objets',array('id_objet='.sql_quote($id_objet)));
+	
+	// Les infos acheteur
+	$acheteur= requete_auteurs_elargis(array('id_auteur='.sql_quote($objet['id_acheteur'])));
+	
+	//les infos kidonateur
+	$kidonateur = requete_auteurs_elargis(array('id_auteur='.sql_quote($objet['id_auteur'])),'compte_bancaire,bic');
+			
+	// les infos projets	
+						
+	$artobjet=sql_fetsel('*','spip_articles',array('id_article='.sql_quote($objet['id_article'])));
+					
+	$projet=sql_fetsel('*','spip_rubriques',array('id_rubrique='.sql_quote($artobjet['id_rubrique'])));				
+							
+	// Les infos de l'association
+	
+	$asso = requete_auteurs_elargis(array('id_auteur='.sql_quote($projet['id_auteur'])));
+	
+	$asso['nom_asso']=$asso['nom'];
+	
+	
+	if(lire_config('encheres/super_asso')) {
+		$d=array(
+			'asso'=>$asso,
+			'projet'=>$projet
+			);
+		include_spip('encheres_fonctions');		
+		$donnees =donnees_superasso($d);	
+		$asso=$donnees['asso'];
+		$projet=$donnees['projet'];	
+		}
+	
+	$contexte=array(
+			'objet'=>$objet,
+			'projet'=>$projet,
+			'asso'=>$asso,
+			'artobjet'=>$artobjet,	
+			'acheteur'=>$acheteur,	
+			'kidonateur'=>$kidonateur,
+			'commune'=>'rien',	
+			'pays_kidonateur'=>'rien',	
+			'id_mot_article'=>'rien',	
+			);	
+
+return $contexte;
+
+}
+?>

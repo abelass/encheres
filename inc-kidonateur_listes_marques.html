@@ -1,0 +1,20 @@
+<h1>[(#ENV{type_auteur}|=={marque}|oui)<:encheres:marques:>]</h1>
+
+	#SET{id_auteur,#ARRAY}
+		<BOUCLE_objet(ENCHERES_OBJETS){statut IN mise_en_vente,mise_en_vente_active,vendu,venter_termine}>	
+		#SET{id_auteur,#GET{id_auteur}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_AUTEUR}}}
+		</BOUCLE_objet>		
+
+<B_kidonateurs>
+<br />
+<div class="pagination">#PAGINATION</div>
+
+<BOUCLE_kidonateurs(AUTEURS_ELARGIS){id_auteur IN #GET{id_auteur}}{type_auteur IN marque, marque_convention}{pagination 20}{par hasard}>
+	
+	<INCLURE{fond=inc/contenu_central/inc-profil_kidonateur}{fichier}{id_auteur}/>
+	
+</BOUCLE_kidonateurs>
+
+</B_kidonateurs>
+
+<//B_kidonateurs>

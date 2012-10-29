@@ -1,0 +1,16 @@
+        <li>
+            <label for="choix_projets3"><:encheres:type_auteur:></label>
+		<select id="type_auteur" name="type_auteur">
+			<option value="rien"><:encheres:choisir_type_auteur:></option>
+			<option value="particulier" [(#ENV{val}|=={particulier}|?{"selected="selected"})]><:encheres:particulier:></option>
+			<option value="ong" [(#ENV{val}|=={ong}|?{selected="selected="selected"})]><:encheres:ong:></option>
+			<option value="marque" [(#ENV{val}|=={marque}|?{selected="selected="selected"})]><:encheres:marque:></option>
+			<option value="marque_convention" [(#ENV{val}|=={marque_convention}|?{selected="selected="selected"})]><:encheres:marque_convention:></option>
+			<option value="lieu" [(#ENV{val}|=={lieu}|?{selected="selected="selected"})]><:encheres:lieu:></option>
+			<option value="restaurant" [(#ENV{val}|=={restaurant}|?{selected="selected="selected"})]><:encheres:restaurant:></option>
+			[(#CONFIG{encheres/super_asso}|oui)<option value="super_asso" [(#ENV{val}|=={super_asso}|?{selected="selected="selected"})]><:encheres:super_asso:></option>]			
+		</select>
+        </li>
+
+
+

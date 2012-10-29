@@ -1,0 +1,43 @@
+#CACHE{0}
+
+	<BOUCLE_art(ARTICLES){id_article}>
+		<BOUCLE_art_trad(ARTICLES){traduction}{origine_traduction}>
+			<B_compte>
+			<p><:encheres:categorie_objet_choisis:></p>
+			<ul class="cat_choisis">
+			<BOUCLE_compte(MOTS){id_article}{doublons}>
+			 <li>[(#TITRE)]<a href="[(#SELF|parametre_url{act,supprimer}|parametre_url{id_mot,#ID_MOT})]" class="ajax" title="<:encheres:eliminer:>">&nbsp;<img src="#CHEMIN{img/item-remove.png}" alt="<:encheres:eliminer:>"/></a><li>
+			</BOUCLE_compte>
+			</ul>
+			</B_compte>
+
+		<div id="donnees_objets">
+	<form action="#ENV{action}" method="post">
+    	#ACTION_FORMULAIRE{#ENV{action}}
+     <input type='hidden' name='id_article'  value="#ID_ARTICLE" />
+     <input type='hidden' name='act'  value="ajouter" />
+   	 <ul>
+        <li class="editer_statut obligatoire[ (#GET{erreurs}|oui)erreur]">
+            <label for="statut"><:encheres:ajouter_categorie:><br/><small><:encheres:explicatif_ajouter_categorie:></small></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+				<div class="choix">
+				<select name="id_mot">
+				<BOUCLE_mots_dispo_groupe(GROUPES_MOTS){id_parent=13}{par titre}{doublons}>
+            	<option value="">#TITRE *</option>
+				<BOUCLE_mots_dispo(MOTS){id_groupe}{par titre}{doublons}>
+            	<option  value="#ID_MOT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#TITRE</option>
+				</BOUCLE_mots_dispo>
+				</BOUCLE_mots_dispo_groupe>
+				</select>
+				</div>
+        </li>
+    	</ul>
+
+    	<p class="boutons"><input type="submit" class="submit confirmer" value="<:pass_ok:>" /></p>
+	</form>
+</div>
+
+
+
+		</BOUCLE_art_trad>
+</BOUCLE_art>

@@ -1,0 +1,35 @@
+#CACHE{24*3600}
+<br/>
+<div class="formulaire_spip" id="selction_billeterie">
+	<form action="#SELF#billetterie"  method="post">
+		<select id="id_auteur" style="width:auto;" name="id_auteur" onchange="document.location.href='[(#SELF|parametre_url{id_auteur,''}|parametre_url{id_commune,''}|parametre_url{id_mot_cat_objet,''})]&id_auteur='+this.options[this.selectedIndex].value;this.focus();">
+		#SET{id_auteur,#ARRAY}
+			<option value=""><:encheres:choisir_lieu:></option>
+			<BOUCLE_auteurs(AUTEURS){id_lieu!=0}{tout} {par multi nom}>
+			#SET{id_auteur,#GET{id_auteur}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_AUTEUR}}}
+			[<option value="#ID_AUTEUR" [(#ENV{id_auteur}|=={#ID_AUTEUR}|?{"selected="selected"})]>(#NOM|nom_marque{#ID_AUTEUR})</option>]
+			</BOUCLE_auteurs>
+		</select>
+		<noscript><input type="submit" class="submit confirmer" name="choix_type" value="ok"></noscript>
+	</form>
+	<form action="#SELF#billetterie"  method="post">
+		<select id="id_mot_cat_objet" style="width:auto;" name="id_mot_cat_objet" onchange="document.location.href='[(#SELF|parametre_url{id_mot_cat_objet,''}|parametre_url{id_commune,''}|parametre_url{id_auteur,''})]&id_mot_cat_objet='+this.options[this.selectedIndex].value;this.focus();">
+			<option value=""><:encheres:choisir_categorie:></option>
+
+			<BOUCLE_categorie(MOTS){id_groupe=#ENV{id_groupe1}} {par multi titre}>	
+			[<option value="#ID_MOT" [(#ENV{id_mot_cat_objet}|=={#ID_MOT}|?{"selected="selected"})]>(#TITRE)</option>]
+			</BOUCLE_categorie>
+		</select>
+		<noscript><input type="submit" class="submit confirmer" name="choix_type" value="ok"></noscript>
+	</form>
+	<form action="#SELF#billetterie"  method="post">
+		<select id="id_auteur" style="width:auto;" name="id_commune" onchange="document.location.href='[(#SELF|parametre_url{id_commune,''}|parametre_url{id_auteur,''}|parametre_url{id_mot_cat_objet,''})]&id_commune='+this.options[this.selectedIndex].value;this.focus();">
+			<option value=""><:encheres:choisir_ville:></option>
+			<BOUCLE_ville(AUTEURS_ELARGIS){id_auteur IN #GET{id_auteur}} {par multi ville}>
+			[<option value="#ID_COMMUNE" [(#ENV{id_commune}|=={#ID_COMMUNE}|?{"selected="selected"})]>(#VILLE|unique)</option>]
+			</BOUCLE_ville>
+		</select>
+		<noscript><input type="submit" class="submit confirmer" name="choix_type" value="ok"></noscript>
+	</form>	
+</div>
+		

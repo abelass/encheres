@@ -1,0 +1,44 @@
+#CACHE{0}
+[(#ENV{type_auteur}|=={particulier}|oui)
+[(#SET{pays,#INCLURE{fond=inc/inc-pays}})]	
+<INCLURE{fond=formulaires/inscription2_form_priorites}{pays=#GET{pays}}>
+]
+<fieldset class="info_perso">
+    <legend>
+        <:encheres:section_vendeurs:>
+    </legend>
+    
+    <ul>	
+	[(#CONFIG{inscription2/compte_bancaire}|=={on}|oui)	
+        <li class="editer_compte_bancaire[ (#CONFIG{inscription2/compte_bancaire_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{compte_bancaire}|oui)erreur]">
+            <label for="compte_bancaire"><:encheres:compte_bancaire:><br/><small>(<:explicatif_compte_bancaire:>)</small></label>
+            <input type="text" class="text" name="compte_bancaire" id="compte_bancaire" value="#ENV{compte_bancaire}" />       
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{compte_bancaire})</p>]
+        </li>
+        ]
+	[(#CONFIG{inscription2/iban}|=={on}|oui)	
+        <li class="editer_iban[ (#CONFIG{inscription2/iban_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{iban}|oui)erreur]">
+            <label for="iban"><:encheres:iban:><br/><small>(<:explicatif_iban:>)</small></label>
+            <input type="text" class="text" name="iban" id="iban" value="#ENV{iban}" />       
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{iban})</p>]
+        </li>
+        ]        
+        
+        [(#CONFIG{inscription2/bic}|=={on}|oui)	
+        <li class="editer_bic[ (#CONFIG{inscription2/bic_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{bic}|oui)erreur]">
+            <label for="bic"><:encheres:bic:><br/><small>(<:explicatif_bic:>)</small></label>
+            <input type="text" class="text" name="bic" id="bic" value="#ENV{bic}" />       
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{bic})</p>]
+        </li>
+        ]
+	[(#CONFIG{inscription2/paypal}|=={on}|oui)	
+        <li class="editer_paypal[ (#CONFIG{inscription2/paypa_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{paypal}|oui)erreur]">
+            <label for="paypal"><:encheres:paypal:> <br/><small>(<:encheres:paypal_explications:> - <a href="spip.php?rubrique2" target="_blank"><:explicatif_compte_paypal:></a>)</small></label>
+            <input type="text" class="text" name="paypal" id="paypal" value="#ENV{paypal}" />       
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{paypal})</p>]
+        </li>
+        ]
+    </ul>
+	<br class="nettoyeur" />
+</fieldset>
+

@@ -1,0 +1,25 @@
+<?php
+
+if (!defined("_ECRIRE_INC_VERSION")) return;
+
+function action_changer_statut_dist(){
+	
+	$securiser_action = charger_fonction('securiser_action', 'inc');
+	$arg = $securiser_action();
+	
+	$explode= explode("/",$arg);
+	$id=trim($explode[0]);
+	$statut=trim($explode[1]);
+	$option=trim($explode[2]);	
+	
+	if($statut=='poubelle'){
+		$supprimer_objet = charger_fonction('supprimer_objet_kidonateur','inc');
+		$supprimer_objet ($id,$statut,$option);
+	}
+	
+		spip_log("Changer statut : $statut - id : $id  - option : $option",'encheres_actions');		
+
+	
+}
+
+?>

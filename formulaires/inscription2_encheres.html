@@ -1,0 +1,7 @@
+[(#REM) information communs a tous]
+<INCLURE{fond=formulaires/inscription2_encheres_communs}{env}>
+#FLUX
+#ENV{type_auteur}tyutryurtyurtyu
+
+[(#REM) information uniquement des ongs et marques]
+[(#ENV{type_auteur}|!=={particulier}|oui)<INCLURE{fond=formulaires/inscription2_encheres_ong_marques}{env}>]

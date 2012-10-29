@@ -1,0 +1,293 @@
+<!DOCTYPE webproject>
+<webproject>
+  <project type="Local" name="Plugin encheres" encoding="utf8" enableEvents="true" >
+    <upload/>
+    <defaultDTD>-//w3c//dtd xhtml 1.0 strict//en</defaultDTD>
+    <item modified_time="1260950337" url="plugin.xml" bookmarks="" uploadstatus="1" />
+    <item url="" uploadstatus="1" />
+    <annotations>
+      <annotation line="2" receiver="" url="pub_ouverte/formulaire_encheres.php" text="Charge les valeurs par défaut pour le fomulaire editer objet" />
+      <annotation line="53" receiver="" url="pub_ouverte/formulaire_encheres.php" text="Validation des champs obligatoires" />
+      <annotation line="56" receiver="" url="pub_ouverte/formulaire_encheres.php" text="le champ prix_livraison est obligatoire si la marcyhandise est livré ou envoyé" />
+      <annotation line="12" receiver="" url="formulaires/logo_breve.php" text="Validation des champs obligatoires" />
+      <annotation line="15" receiver="" url="formulaires/logo_breve.php" text="le champ prix_livraison est obligatoire si la marchandise est livré ou envoyé ou les deux, si pas de frais de livraison exigé, on permet la valeur 0" />
+      <annotation line="36" receiver="" url="formulaires/logo_breve.php" text="Actualisation de la base de donnée" />
+      <annotation line="1" receiver="" url="formulaires/changer_statut_breve.php" text="Charge les valeurs par défaut pour le fomulaire changer statut" />
+      <annotation line="18" receiver="" url="formulaires/changer_statut_breve.php" text="Actualisation de la base de donnée" />
+      <annotation line="2" receiver="" url="formulaires/gerer_mots.php" text="Charge les valeurs par défaut pour le fomulaire editer objet" />
+      <annotation line="13" receiver="" url="formulaires/gerer_mots.php" text="Validation des champs obligatoires" />
+      <annotation line="25" receiver="" url="formulaires/gerer_mots.php" text="Actualisation de la base de donnée" />
+      <annotation line="34" receiver="" url="formulaires/enchere_mise.php" text="Validation des champs obligatoires" />
+      <annotation line="39" receiver="" url="formulaires/enchere_mise.php" text="le champ prix_livraison est obligatoire si la marchandise est livré ou envoyé ou les deux, si pas de frais de livraison exigé, on permet la valeur 0" />
+      <annotation line="118" receiver="" url="formulaires/enchere_mise.php" text="Actualisation de la base de donnée" />
+      <annotation line="173" receiver="" url="formulaires/enchere_mise.php" text="Si l'id_client  n'existe pas encore on crée un nouveau" />
+      <annotation line="2" receiver="" url="formulaires/activation_rubrique.php" text="Charge les valeurs par défaut pour le fomulaire editer objet" />
+      <annotation line="14" receiver="" url="formulaires/activation_rubrique.php" text="Validation des champs obligatoires" />
+      <annotation line="31" receiver="" url="formulaires/activation_rubrique.php" text="Actualisation de la base de donnée" />
+      <annotation line="2" receiver="" url="formulaires/changer_statut.php" text="Charge les valeurs par défaut pour le fomulaire changer statut" />
+      <annotation line="19" receiver="" url="formulaires/changer_statut.php" text="Actualisation de la base de donnée" />
+      <annotation line="4" receiver="" url="formulaires/editer_objets.php" text="Charge les valeurs par défaut pour le fomulaire editer objet" />
+      <annotation line="56" receiver="" url="formulaires/editer_objets.php" text="Modification: Si pas de id_object dans le context, charge les info de l'objet  avec l'id_source=0, cad l'entrée principale" />
+      <annotation line="120" receiver="" url="formulaires/editer_objets.php" text="Charge les infos de l'id du context" />
+      <annotation line="191" receiver="" url="formulaires/editer_objets.php" text="Validation des champs obligatoires" />
+      <annotation line="249" receiver="" url="formulaires/editer_objets.php" text="le champ prix_livraison est obligatoire si la marchandise est livré ou envoyé ou les deux, si pas de frais de livraison exigé, on permet la valeur 0" />
+      <annotation line="279" receiver="" url="formulaires/editer_objets.php" text="le champ prix_livraison n'est pas obligatoire si la marchandise sera cherché chez le vendeur" />
+      <annotation line="359" receiver="" url="formulaires/editer_objets.php" text="Actualisation de la base de donnée" />
+      <annotation line="440" receiver="" url="formulaires/editer_objets.php" text="Si l'id_objet existe déjà, on actualise" />
+      <annotation line="2" receiver="" url="inc/changer_statut.php" text="Charge les valeurs par défaut pour le fomulaire changer statut" />
+      <annotation line="22" receiver="" url="inc/changer_statut.php" text="Actualisation de la base de donnée" />
+    </annotations>
+    <templates>templates/</templates>
+    <toolbars>toolbars/</toolbars>
+    <item url="img/" uploadstatus="1" />
+    <item url="base/" uploadstatus="1" />
+    <item desc="" modified_time="1260976520" url="encheres_fonctions.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1260870017" url="encheres_options.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841191" url="base/installation.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1260974976" url="base/tables_principales.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1258736874" url="base/tables_interfaces.php" bookmarks="" uploadstatus="1" />
+    <item url="prive/" uploadstatus="1" />
+    <item modified_time="1257854797" url="prive/editer_objets.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841212" url="css/encheres.css" uploadstatus="1" />
+    <item url="css/" uploadstatus="1" />
+    <item modified_time="1260950029" url="encheres_pipeline.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1260462727" url="fonds/inscription2_encheres.html" bookmarks="" uploadstatus="1" />
+    <item url="fonds/" uploadstatus="1" />
+    <item url="lang/" uploadstatus="1" />
+    <item url="inc/" uploadstatus="1" />
+    <item modified_time="1257841146" url="inc/gestion_trad.php" uploadstatus="1" />
+    <item modified_time="1257841160" url="inc/eliminer_mot.php" uploadstatus="1" />
+    <item url="pub_ouverte/" uploadstatus="1" />
+    <item modified_time="1257841206" url="pub_ouverte/formulaire_encheres.html" uploadstatus="1" />
+    <item modified_time="1257841205" url="pub_ouverte/formulaire_encheres.php" uploadstatus="1" />
+    <item modified_time="1261150554" url="pluginencheres.session" uploadstatus="1" />
+    <item modified_time="1261150554" url="pluginencheres.webprj" uploadstatus="1" />
+    <item modified_time="1260949965" url="plugin.xml~" uploadstatus="1" />
+    <item modified_time="1257841156" url="inc/envoyer_inscription2.php" uploadstatus="1" />
+    <item modified_time="1257841148" url="inc/envoyer_webmaster_inscription2.php" uploadstatus="1" />
+    <item desc="" modified_time="1260983578" url="inc/envoyer_message_visiteur.php" bookmarks="454,115" uploadstatus="1" />
+    <item desc="" modified_time="1261150227" url="inc/envoyer_message_webmaster.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841155" url="inc/envoyer_mail.php" bookmarks="" uploadstatus="1" />
+    <item desc="" modified_time="1257841137" url="inc/joindre2.php" uploadstatus="1" />
+    <item modified_time="1260972078" url="inc/actions_enchere_gagne.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841134" url="inc/legender2.php" uploadstatus="1" />
+    <item modified_time="1257841139" url="inc/inc-supprimer_trad.php" bookmarks="" uploadstatus="1" />
+    <item url="genie/" uploadstatus="1" />
+    <item modified_time="1257926681" url="genie/encheres.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841143" url="inc/inc-suivre.php" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/" uploadstatus="1" />
+    <item modified_time="1257855512" url="formulaires/changer_statut.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257855349" url="formulaires/changer_statut.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841119" url="formulaires/changer_statut_breve.html" uploadstatus="1" />
+    <item modified_time="1257841117" url="formulaires/changer_statut_breve.php" uploadstatus="1" />
+    <item modified_time="1261149297" url="formulaires/editer_objets.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1261133044" url="formulaires/editer_objets.php" bookmarks="145" uploadstatus="1" />
+    <item modified_time="1260199034" url="formulaires/enchere_mise.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1258383698" url="formulaires/enchere_mise.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1260526432" url="formulaires/selection_projet.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841067" url="formulaires/logo_breve.html" uploadstatus="1" />
+    <item modified_time="1259750027" url="formulaires/logo_breve.php" uploadstatus="1" />
+    <item modified_time="1257841100" url="formulaires/eliminer_suivis.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841098" url="formulaires/eliminer_suivis.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1258987894" url="formulaires/actualisations_divers.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1258990363" url="formulaires/actualisations_divers.php" bookmarks="" uploadstatus="1" />
+    <item url="saisies/" uploadstatus="1" />
+    <item modified_time="1257841199" url="saisies/selection_crochets.html" uploadstatus="1" />
+    <item modified_time="1257841201" url="saisies/input_crochets.html" uploadstatus="1" />
+    <item modified_time="1258099901" url="formulaires/inc-achats_effectuees.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1258386044" url="formulaires/inc-objets_vendus.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1258386824" url="formulaires/inc-objets_vendus_np_projets.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841144" url="inc/inc_header.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841091" url="formulaires/enchere_mise_res.html" uploadstatus="1" />
+    <item modified_time="1257841091" url="formulaires/formulaire_abonnement.html" uploadstatus="1" />
+    <item modified_time="1257841082" url="formulaires/inc-kidonaki_liste_form.html" uploadstatus="1" />
+    <item modified_time="1257841080" url="formulaires/inc-mon_profil.html" uploadstatus="1" />
+    <item modified_time="1257841074" url="formulaires/inscription2_encheres_communs.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841072" url="formulaires/inscription2_encheres.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841070" url="formulaires/inscription2_encheres_ong_marques.html" bookmarks="" uploadstatus="1" />
+    <item desc="" modified_time="1257841069" url="formulaires/inscription2.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841162" url="inc/eliminer_art.php" uploadstatus="1" />
+    <item modified_time="1257841216" url="prive/donnees_objets.html" uploadstatus="1" />
+    <item modified_time="1260527019" url="vente.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841164" url="inc/changer_statut.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841107" url="formulaires/ecrire_auteur.php" bookmarks="" uploadstatus="1" />
+    <item desc="" modified_time="1257841125" url="inc/supprimer_objet.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841158" url="inc/encheres_fr.php" uploadstatus="1" />
+    <item modified_time="1257841140" url="inc/inc-supprimer_objet_rappel.php" uploadstatus="1" />
+    <item url="lang/backup/" uploadstatus="1" />
+    <item modified_time="1257841184" url="lang/backup/encheres_en.php" uploadstatus="1" />
+    <item modified_time="1257841181" url="lang/backup/encheres_fr.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1257841177" url="lang/backup/encheres_nl.php" uploadstatus="1" />
+    <item modified_time="1260376624" url="css/jquery.autocomplete.css" uploadstatus="1" />
+    <item modified_time="1258386060" url="inc/inc-objets_vendus.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1261150554" url="inc/remise_vente.php" bookmarks="" uploadstatus="1" />
+    <item modified_time="1260522010" url="prive/inc-header.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1260956203" url="fonds/cfg_encheres.html" bookmarks="" uploadstatus="1" />
+    <item modified_time="1260808876" url="base/tables_principales.php~" uploadstatus="1" />
+    <item modified_time="1260953645" url="fonds/cfg_encheres.html~" uploadstatus="1" />
+    <item url="lang/encheres_fr.php" bookmarks="" uploadstatus="1" />
+    <item url="lang/encheres_nl.php" bookmarks="" uploadstatus="1" />
+    <item url="inc/affich_jours_spectacles.php" bookmarks="" uploadstatus="1" />
+    <item url="lang/encheres_en.php" bookmarks="" uploadstatus="1" />
+    <item desc="" url="inc/inc-email_head_html.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inc-jours.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inc-mois.html" bookmarks="" uploadstatus="1" />
+    <item url="base/installation.php~" uploadstatus="1" />
+    <item url="css/fonds/" uploadstatus="1" />
+    <item url="css/fonds/cfg_encheres.html" uploadstatus="1" />
+    <item url="css/fonds/cfg_encheres.html~" uploadstatus="1" />
+    <item url="css/fonds/inscription2_encheres.html" uploadstatus="1" />
+    <item url="formulaires/activation_rubrique.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/activation_rubrique.php" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/gerer_mots.html" uploadstatus="1" />
+    <item url="formulaires/gerer_mots.php" uploadstatus="1" />
+    <item url="formulaires/inc-paypal_form.html" uploadstatus="1" />
+    <item url="formulaires/inscription2_regions.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/localisation.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/remise_vente.php" uploadstatus="1" />
+    <item url="genie/encheres_journalier.php" bookmarks="" uploadstatus="1" />
+    <item url="img/item-remove.png" uploadstatus="1" />
+    <item url="img/logo_32.png" uploadstatus="1" />
+    <item url="img/Nuvola_apps_package_development.png" uploadstatus="1" />
+    <item url="inc/editer_objets.html" uploadstatus="1" />
+    <item url="inc/envoyer_mail2.php" uploadstatus="1" />
+    <item url="prive/activation_rubrique.html" uploadstatus="1" />
+    <item url="prive/activation_rubrique.html~" uploadstatus="1" />
+    <item url="inc-achats_effectuees.html" uploadstatus="1" />
+    <item url="inc-objets_vendus_np_projets.html" uploadstatus="1" />
+    <item url="plugins_encheres.session" uploadstatus="1" />
+    <item url="plugins_encheres.webprj" uploadstatus="1" />
+    <item url="t.html" uploadstatus="1" />
+    <item url="traduire_mod.php" uploadstatus="1" />
+    <item url="encheres_options.php~" uploadstatus="1" />
+    <item url="formulaires/localisation.php" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/calendrier_mini.html" uploadstatus="1" />
+    <item url="formulaires/choisir_projet.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/choix_categories.html" uploadstatus="1" />
+    <item url="formulaires/editer_breve_public.html" uploadstatus="1" />
+    <item url="formulaires/editer_breve_public.php" uploadstatus="1" />
+    <item url="formulaires/enchere_mise.php~" uploadstatus="1" />
+    <item url="formulaires/formulaire_article.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/formulaire_auteurspip.html" uploadstatus="1" />
+    <item url="formulaires/formulaire_documents.html" uploadstatus="1" />
+    <item url="formulaires/formulaire_motclefs.html" uploadstatus="1" />
+    <item url="formulaires/formulaire_motclefs_res.html" uploadstatus="1" />
+    <item url="formulaires/inc-cloture_enchere.html" uploadstatus="1" />
+    <item url="formulaires/inc-inscription2_geolocalisation.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inc-login_forum.html" uploadstatus="1" />
+    <item url="formulaires/inc-login_forum_abo.html" uploadstatus="1" />
+    <item url="formulaires/inscription2.php" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inscription2_commune.html" uploadstatus="1" />
+    <item url="formulaires/inscription2_form_date_naissance.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inscription2_form_listes.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inscription2_form_priorites.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inscription2_infos_connection.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inscription2_infos_perso.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inscription2_modif_infos_connection.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inscription2_modif_infos_perso.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inscription2_res.php" uploadstatus="1" />
+    <item url="formulaires/menus_selection_billetterie.html" uploadstatus="1" />
+    <item url="formulaires/moteur_orange.html" uploadstatus="1" />
+    <item url="formulaires/recherche.php" uploadstatus="1" />
+    <item url="formulaires/selection_type_auteurs.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/spip_listes_inscription.html" uploadstatus="1" />
+    <item url="genie/encheres.php~" uploadstatus="1" />
+    <item url="prive/inc-kidonateurs_listes_affichage.html" uploadstatus="1" />
+    <item url="prive/inscription2_champs_choix_projets1.html" uploadstatus="1" />
+    <item url="prive/inscription2_champs_choix_projets2.html" uploadstatus="1" />
+    <item url="prive/inscription2_champs_choix_projets3.html" uploadstatus="1" />
+    <item url="prive/inscription2_champs_conditions_generales.html" uploadstatus="1" />
+    <item url="prive/inscription2_champs_pays.html" uploadstatus="1" />
+    <item url="prive/inscription2_champs_pays.html~" uploadstatus="1" />
+    <item url="prive/inscription2_champs_region.html" uploadstatus="1" />
+    <item url="prive/inscription2_champs_region.html~" uploadstatus="1" />
+    <item url="prive/inscription2_champs_superkidonateur.html" uploadstatus="1" />
+    <item url="prive/inscription2_champs_type_auteur.html" bookmarks="" uploadstatus="1" />
+    <item url="prive/inscription2_modif_infos_perso.html" uploadstatus="1" />
+    <item url="prive/inscription2_vue_pays.html" uploadstatus="1" />
+    <item url="prive/inscription2_vue_pays.html~" uploadstatus="1" />
+    <item url="prive/inscription2_vue_region.html" uploadstatus="1" />
+    <item url="prive/inscription2_vue_region.html~" uploadstatus="1" />
+    <item url="inc-kidonateur_listes_marques.html" uploadstatus="1" />
+    <item url="plugins_encheres.bfproject" uploadstatus="1" />
+    <item url="test.php~" uploadstatus="1" />
+    <item url="teste.html" bookmarks="" uploadstatus="1" />
+    <item desc="" url="genie/encheres_12heures.php" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/actualisations_divers.html~" uploadstatus="1" />
+    <item url="formulaires/choisir_projet.html~" uploadstatus="1" />
+    <item url="genie/encheres_12heures.php~" uploadstatus="1" />
+    <item url="templates/" uploadstatus="1" />
+    <item url="toolbars/" uploadstatus="1" />
+    <item url="teste.html~" uploadstatus="1" />
+    <item url="test.html~" uploadstatus="1" />
+    <author>Rainer Müller</author>
+    <email/>
+    <debuggerclient persistentWatches="1" persistentBreakpoints="1" >No Debugger</debuggerclient>
+    <exclude cvsignore="false" />
+    <teamdata>
+      <taskleaders/>
+      <subprojectleaders/>
+      <mailinglist address="" />
+    </teamdata>
+    <events/>
+    <item url="formulaires/configurer_encheres.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/actions_enchere_gagne.php" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/actions_enchere_gagne.php~" uploadstatus="1" />
+    <item url="formulaires/changer_statut.php~" uploadstatus="1" />
+    <item url="formulaires/configurer_encheres.html~" uploadstatus="1" />
+    <item url="formulaires/editer_objets.html~" uploadstatus="1" />
+    <item url="formulaires/editer_objets.php~" uploadstatus="1" />
+    <item url="formulaires/enchere_mise.html~" uploadstatus="1" />
+    <item url="formulaires/paypal_annule.html" uploadstatus="1" />
+    <item url="formulaires/paypal_ok.html" uploadstatus="1" />
+    <item url="formulaires/paypal_ok.php" uploadstatus="1" />
+    <item url="formulaires/paypal_retour.html" uploadstatus="1" />
+    <item url="formulaires/paypal_retour.php" uploadstatus="1" />
+    <item url="formulaires/selection_type_auteurs.html~" uploadstatus="1" />
+    <item url="formulaires/test.php" uploadstatus="1" />
+    <item url="inc/actions_enchere_gagne.php~" uploadstatus="1" />
+    <item url="lang/encheres_en.php~" uploadstatus="1" />
+    <item url="lang/encheres_fr.php~" uploadstatus="1" />
+    <item url="lang/encheres_nl.php~" uploadstatus="1" />
+    <item url="prive/inscription2_champs_type_auteur.html~" uploadstatus="1" />
+    <item url="encheres_en.php" uploadstatus="1" />
+    <item url="encheres_fonctions.php~" uploadstatus="1" />
+    <item url="pipelines.php" uploadstatus="1" />
+    <item url="test.php" bookmarks="" uploadstatus="1" />
+    <item url="inc/donnees_asso.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/inc-objets_vendus_np_projets.html~" uploadstatus="1" />
+    <item url="genie/encheres_rappels_paiements_objets.php~" uploadstatus="1" />
+    <item url="genie/rappels_paiements_objets.php" uploadstatus="1" />
+    <item url="inc/donnees_asso.html~" uploadstatus="1" />
+    <item url="saisies/input_multiples.html~" uploadstatus="1" />
+    <item url="encheres_pipeline.php~" uploadstatus="1" />
+    <item url="formulaires/actualisations_divers.php~" uploadstatus="1" />
+    <item url="action/" uploadstatus="1" />
+    <item url="action/changer_statut.php" bookmarks="" uploadstatus="1" />
+    <item url="inc/supprimer_objet_kidonateur.php" bookmarks="" uploadstatus="1" />
+    <item url="action/changer_statut.php~" uploadstatus="1" />
+    <item url="formulaires/formulaire_article.html~" uploadstatus="1" />
+    <item url="formulaires/inscription2_encheres.html~" uploadstatus="1" />
+    <item url="formulaires/inscription2_infos_perso.html~" uploadstatus="1" />
+    <item url="inc/supprimer_objet_kidonateur.php~" uploadstatus="1" />
+    <item url="action/archiver.php" bookmarks="" uploadstatus="1" />
+    <item url="action/archiver.php~" uploadstatus="1" />
+    <item url="formulaires/activation_rubrique.html~" uploadstatus="1" />
+    <item url="formulaires/activation_rubrique.php~" uploadstatus="1" />
+    <item url="formulaires/inc-achats_effectuees.html~" uploadstatus="1" />
+    <item url="formulaires/inc-objets_vendus.html~" uploadstatus="1" />
+    <item url="formulaires/inscription2.html~" uploadstatus="1" />
+    <item url="formulaires/inscription2_infos_connection.html~" uploadstatus="1" />
+    <item url="img/archive_32.png" uploadstatus="1" />
+    <item url="formulaires/inc-inscription2_geolocalisation.html~" uploadstatus="1" />
+    <item url="formulaires/inscription2_encheres_ong_marques.html~" uploadstatus="1" />
+    <item url="formulaires/localisation.html~" uploadstatus="1" />
+    <item url="formulaires/inc-inscription2_langues.html" bookmarks="" uploadstatus="1" />
+    <item url="formulaires/formulaire_article.html.2866.backup" uploadstatus="1" />
+    <item url="formulaires/inc-inscription2_langues.html~" uploadstatus="1" />
+    <item url="formulaires/inscription2_modif_infos_perso.html~" uploadstatus="1" />
+    <item url="formulaires/inscription2.php~" uploadstatus="1" />
+    <item url="formulaires/localisation.php~" uploadstatus="1" />
+    <item url="inc/supprimer_objet.php~" uploadstatus="1" />
+  </project>
+</webproject>

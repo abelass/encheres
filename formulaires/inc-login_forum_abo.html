@@ -1,0 +1,15 @@
+[(#REM)
+
+	Presenter les regles du jeu du forum sur abonnement
+	avec un lien vers la connexion / l'inscription / le rappel
+
+]
+
+<fieldset>
+	<p class="explication">[(#ENV{type}|=={reponse}|?{<:explicatif_reponse:>,<:explicatif_forum:>})]</p>
+	<p class="retour">
+		[&#91;<a href="(#URL_PAGE{inscription})" target="spip_pass" onclick="javascript:window.open(this.href, 'spip_pass', 'scrollbars=yes, resizable=yes, width=480, height=340'); return false;"><:sinscrire:></a>&#93;]
+[(#ENV{type}|=={reponse}|non)[<p>(#FORMULAIRE_LOGIN{#SELF})</p>]]
+[(#ENV{type}|=={reponse}|oui)[<p>(#FORMULAIRE_LOGIN{#SELF#off})</p>]]
+	</p>
+</fieldset>

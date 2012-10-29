@@ -1,0 +1,41 @@
+#CACHE{0}
+<div id="activation_rubrique">
+	<form action="#SELF#activation_rubrique" method="post">
+    	#ACTION_FORMULAIRE{#ENV{action}}
+	#SET{erreurs,#ENV**{erreurs}|table_valeur{id_rub_mod}}
+	
+	[(#REM) Si projet est active on propose de le désactiver]
+
+	<BOUCLE_rub(RUBRIQUES){id_rubrique}{desactiver=''}{tout}>
+	<input type="hidden" name="desactiver" value="oui"/>
+	<div class="verdana1"><b><:encheres:desactiver_projet:></b></div>
+	
+		[(#REM) Si articles/objets attachés on demande de choisir le projet destination]
+		
+		<BOUCLE_art(ARTICLES){id_rubrique}{0,1}>
+			<B_rub_dest>
+			<label for="id_rub_mod"><:encheres:changer_objet_projet:></label>
+			[<div class='erreur_message'>(#GET{erreurs})</div>]
+			<select name="id_rub_mod" class="fondl" style ="width:300px;">
+				<option  value=""><:encheres:choisir_projet_destination:></option>
+				<BOUCLE_rub_dest(RUBRIQUES){id_parent=#ENV{rubrique_projet}}{desactiver=''}{par titre}{tout}>
+				<option value="#ID_RUBRIQUE">#TITRE</option>
+				</BOUCLE_rub_dest>
+			</select>	
+			</B_rub_dest>
+		</BOUCLE_art>
+		[(#REM) Sinon on ne demande pas le choix de projet]
+			<input type="hidden" name="sans_article" value="oui"/>
+		<//B_art>
+	</BOUCLE_rub>
+	
+	[(#REM) Si projet est désactivé on propose de l'activer]
+		<input type="hidden" name="sans_article" value="oui"/>
+		<div class="verdana1"><b><:encheres:activer_projet:></b></div>
+	<//B_rub>
+    	<p class="boutons"><input type="submit" class="submit confirmer" value="<:pass_ok:>" /></p>
+	</form>
+</div>
+
+
+

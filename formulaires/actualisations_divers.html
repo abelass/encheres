@@ -1,0 +1,149 @@
+#CACHE{0} 
+[(#ENV{mode}|=={'payer'}|oui)<h1><:payer:></h1>]
+
+[(#ENV{mode}|=={achats_effectues}|oui)	
+<div id="containerachatseffectues">		
+	<div class="formulaire_spip #ENV{mode}">
+	<form action="#ENV{action}" method="post">
+		<input name="id_auteur" type="hidden" value="#ENV{id_auteur}"/>
+    		#ACTION_FORMULAIRE{#ENV{action}}
+		<INCLURE{fond=formulaires/inc-achats_effectuees}{archive_acheteur=''}{env}/>
+	</form>
+	</div>
+
+	<div class="formulaire_spip #ENV{mode}">
+	<form action="#ENV{action}" method="post">
+		<input name="id_auteur" type="hidden" value="#ENV{id_auteur}"/>
+    		#ACTION_FORMULAIRE{#ENV{action}}
+		<INCLURE{fond=formulaires/inc-achats_effectuees}{archive_acheteur='1'}{env}/>
+	</form>
+	</div>
+</div>
+
+
+[(#REM) inclusion du javascript pour formulaire dynamique ]
+<INCLURE{fond=formulaires/inc-paypal_form}>
+]
+
+[(#ENV{mode}|=={objets_vendus}|oui)
+<div id="containerobjsuivis">
+	<div class="formulaire_spip #ENV{mode}">
+	<form action="#ENV{action}" method="post">
+		<input name="id_auteur" type="hidden" value="#ENV{id_auteur}"/>	
+    			#ACTION_FORMULAIRE{#ENV{action}}
+		<INCLURE{fond=formulaires/inc-objets_vendus}{env}{archive_kidonateur=''}{ajax}/>
+	</form>
+	</div>
+	
+	<div class="formulaire_spip #ENV{mode}">
+	<form action="#ENV{action}" method="post">
+		<input name="id_auteur" type="hidden" value="#ENV{id_auteur}"/>	
+    			#ACTION_FORMULAIRE{#ENV{action}}
+			<INCLURE{fond=formulaires/inc-objets_vendus}{env}{archive_kidonateur='1'}{ajax}/>	
+	</form>
+	</div>	
+	
+</div>
+
+]
+
+[(#ENV{mode}|=={objets_vendus_np_projets}|oui)
+<div id="containerobjsuivis">
+	<div class="formulaire_spip #ENV{mode}">
+	<form action="#ENV{action}" method="post">
+    		#ACTION_FORMULAIRE{#ENV{action}}
+		<input name="id_auteur" type="hidden" value="#ENV{id_auteur}"/>						
+		<INCLURE{fond=formulaires/inc-objets_vendus_np_projets}{archive_association=''}{env}{ajax}/>
+	</form>
+	</div>
+	
+	<div class="formulaire_spip #ENV{mode}">
+	<form action="#ENV{action}" method="post">
+    		#ACTION_FORMULAIRE{#ENV{action}}
+		<input name="id_auteur" type="hidden" value="#ENV{id_auteur}"/>						
+		<INCLURE{fond=formulaires/inc-objets_vendus_np_projets}{env}{archive_association='1'}{ajax}/>
+	</form>
+	</div>	
+</div>
+]
+
+
+
+[(#ENV{mode}|=={evaluation_vendeur}|oui)
+	<div class="formulaire_spip evaluation">
+		<h2><:evaluer:></h2>
+	
+		[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+		[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+		<form action="#ENV{action}" method="post">
+	#ACTION_FORMULAIRE{#ENV{action}}
+			<input type='hidden' name='id_objet' value="#ENV{id_objet}" />
+	
+		#SET{erreurs,#ENV**{erreurs}|table_valeur{evaluation_vendeur}}
+	<div class="editer_evaluation_vendeur obligatoire[ (#GET{erreurs}|oui)erreur]">
+	<label for="evaluation_vendeur"><:evaluer:></label>
+	[<span class='erreur_message'>(#GET{erreurs})</span>]
+				<div class="choix">
+				<input type='radio' class="radio" name='evaluation_vendeur' value='1' id='evaluation_vendeur_positive' />
+				<label for='type_occasion'><:evaluation_vendeur_positif:></label>
+				</div>
+			<div class="choix">
+				<input type='radio' class="radio" name='evaluation_vendeur' value='0' id='evaluation_vendeur_neutre'  />
+				<label for='mode_livraison_livraison'><:evaluation_vendeur_neutre:></label>
+				</div>
+				<div class="choix">
+				<input type='radio' class="radio" name='evaluation_vendeur' value='-1' id='evaluation_vendeur_negatif' />
+				<label for='type_occasion'><:evaluation_vendeur_negatif:></label>
+			</div>
+			</div>
+	<p class="boutons confirmer"><input type="submit" class="submit" value="<:evaluer:>" onClick="return confirmSubmitEvaluation()"/></p>
+		</form>
+	</div>
+]
+
+[(#ENV{mode}|=={evaluation_acheteur}|oui)
+	<div class="formulaire_spip evlauation">
+		<h2><:evaluer:></h2>
+
+		[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+		[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+		<form action="#ENV{action}" method="post">
+	#ACTION_FORMULAIRE{#ENV{action}}
+			<input type='hidden' name='id_objet' value="#ENV{id_objet}" />
+
+		#SET{erreurs,#ENV**{erreurs}|table_valeur{evaluation_acheteur}}
+	<div class="editer_evaluation_vendeur obligatoire[ (#GET{erreurs}|oui)erreur]">
+	<label for="evaluation_vendeur"><:evaluer:></label>
+	[<span class='erreur_message'>(#GET{erreurs})</span>]
+			<div class="choix">
+				<input type='radio' class="radio" name='evaluation_acheteur' value='1' id='evaluation_vendeur_positive' />
+				<label for='type_occasion'><:evaluation_vendeur_positif:></label>
+			</div>            		
+			<div class="choix">
+				<input type='radio' class="radio" name='evaluation_acheteur' value='0' id='evaluation_vendeur_neutre'  />
+				<label for='mode_livraison_livraison'><:evaluation_vendeur_neutre:></label>
+			</div>
+				<div class="choix">
+				<input type='radio' class="radio" name='evaluation_acheteur' value='-1' id='evaluation_vendeur_negatif' />
+				<label for='type_occasion'><:evaluation_vendeur_negatif:></label>
+			</div>
+			</div>
+	<p class="boutons confirmer"><input type="submit" class="submit" value="<:evaluer:>" onClick="return confirmSubmitEvaluation()"/></p>
+		</form>
+	</div>
+	]
+
+[(#ENV{mode}|=={remise_vente_automatique}|oui)
+	<div id="remise_vente_automatique">
+		<div>
+		[(#ENV{remise_vente_automatique}|?{<:non:>/<b style="font-size:16px;"><:oui:></b>,<b style="font-size:16px;"><:non:></b>/<:oui:>})]
+		<form action="#ENV{action}" method="post">
+	#ACTION_FORMULAIRE{#ENV{action}}
+			<input name="id_auteur" type="hidden" value="#ENV{objet}"/>			
+		#SET{erreurs,#ENV**{erreurs}|table_valeur{remise_vente_automatique}}
+	<input type='hidden'  name='remise_vente_automatique' id='remise_vente_automatique' value="[(#ENV{remise_vente_automatique}|?{'',on})]"/>           		
+	<input style="width:auto;color:black;cursor:pointer;" type="submit" class="submit" value="<:changer:>"/>
+		</form>
+		</div>
+	</div>
+]

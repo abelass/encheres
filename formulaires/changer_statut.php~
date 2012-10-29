@@ -1,0 +1,115 @@
+<?php
+
+/* @annotation: Charge les valeurs par défaut pour le fomulaire changer statut */
+if (!defined("_ECRIRE_INC_VERSION")) return;
+function formulaires_changer_statut_charger_dist($id_objet,$type='')
+{
+	$valeurs = array('statut'=>'','id_objet'=>$id_objet,'date_debut'=>'','type'=>$type);
+	$valeurs['statut'] = _request('statut');
+
+	$sql = spip_query( "SELECT * FROM spip_encheres_objets WHERE id_objet='$id_objet'");
+
+	while($data = spip_fetch_array($sql)) {
+	$valeurs['statut'] = $data['statut'];
+	$valeurs['date_debut'] = $data['date_debut'];
+
+		}
+	return $valeurs;
+}
+
+/* @annotation: Actualisation de la base de donnée */
+function formulaires_changer_statut_traiter_dist(){
+	$id_objet= _request('id_objet');
+	$statut= _request('statut');
+	$supprimer= _request('supprimer');
+	$date_debut= _request('date_debut');
+	$mode= _request('mode');	
+
+	//les donn&eacute;es de l'objet
+	
+	$objet = sql_fetsel('*','spip_encheres_objets',array('id_objet='.sql_quote($id_objet)));
+
+	$id_article=$objet['id_article'];
+	$duree=$objet['duree'];
+	$id_auteur=$objet['id_auteur'];
+	$mode_livraison=$objet['mode_livraison'];
+	$statut = $objet['statut'];
+	$date_stop_vente = $objet['date_stop_vente'];		
+
+
+		if ($supprimer AND $id_objet AND $id_article){
+			
+			// On elimine tous liés à l'article de base
+			$eliminer = charger_fonction('supprimer_objet','inc');
+			$eliminer($id_objet,$id_article);
+			
+				if(_request('exec') AND $supprimer){
+					$url_site = $GLOBALS['meta']["adresse_site"];
+					$url_retour='/ecrire';
+ 					header ('location:'.$url_site.$url_retour);		
+					}
+				}
+			
+		elseif ($statut == 'stand_by'){
+		$statut='mise_en_vente';
+			
+        		 if ($date_debut == '0000-00-00 00:00:00'){
+				$date_debut = date('Y-m-d G:i:s');
+					};
+					
+				
+				
+		$date_fin = date('Y-m-d G:i:s', strtotime ($date_debut."$duree day"));
+		
+			if ($mode == 'billetterie'){
+				$date_fin = $date_stop_vente;
+				}
+
+			if($mode_livraison=='venir') {
+			$statut_payement_livraison='ok';
+				}
+			spip_query ("UPDATE spip_encheres_objets SET statut = '$statut', date_debut = '$date_debut', date_fin = '$date_fin', statut_payement_livraison = '$statut_payement_livraison'  WHERE (statut='stand_by') AND id_article='$id_article' ORDER BY id_objet LIMIT 3");
+			
+			// Invalider les caches
+	   		include_spip('inc/invalideur');
+	    		suivre_invalideur("id='id_objet/$id_objet'");
+	    		
+	    		
+
+			//PREPARE L'ENVOIE DES MAILS
+			
+			// les infos projets	
+				
+			$artobjet=sql_fetsel('*','spip_articles',array('id_article='.sql_quote($id_article)));
+			
+			$projet=sql_fetsel('titre,id_auteur','spip_rubriques',array('id_rubrique='.sql_quote($artobjet['id_rubrique'])));				
+					
+			// Les infos de l'association
+			$asso=sql_fetsel('nom','spip_auteurs',array('id_auteur='.sql_quote($projet['id_auteur'])))	;
+			
+			$kidonateur = requete_auteurs_elargis(array('id_auteur='.sql_quote($id_auteur)));
+				
+			$contexte=array(
+					'objet'=>$objet,
+					'projet'=>$projet,
+					'asso'=>$asso,
+					'artobjet'=>$artobjet,					
+					'kidonateur'=>$kidonateur,	
+					);	
+
+			//Mail de confirmation visiteur
+			$envoyer_message_kidonateur = charger_fonction('envoyer_message_kidonateur','inc');
+			$envoyer_message_kidonateur($email,'mettre_en_vente',$id_objet,$contexte);
+
+			//Le mail pour le webmaster
+
+			$envoyer_message_webmestre = charger_fonction('envoyer_message_webmestre','inc');
+			$envoyer_message_webmestre('mettre_en_vente',$id_objet,$id_auteur);
+			}
+
+ 		$id_article = _request('id_article');
+ 		$url_retour= generer_url_public("article","id_article=$id_article");
+ 		$url_retour= str_replace('&amp;','&',$url_retour); 
+//  		header ('location:'.$url_retour);
+}
+?>

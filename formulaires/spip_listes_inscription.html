@@ -1,0 +1,27 @@
+[(#REM) détermination de la liste sur base de la langue ]
+[(#ENV{lang}|non)#SET{liste,18}]
+[(#ENV{lang}|=={fr}|oui)#SET{liste,18}]
+[(#ENV{lang}|=={nl}|oui)#SET{liste,19}]
+[(#ENV{lang}|=={en}|oui)#SET{liste,20}]
+
+[<p class='formulaire_ok'>(#ENV*{message_ok})</p>]
+[<p class='formulaire_erreur'>(#ENV*{message_erreur})</p>]
+[<p><span class='erreur'>(#ENV**{erreurs}|table_valeur{email})</span></p>]
+
+
+[(#ENV{editable}|oui)
+	<a name="inscription" />
+	<form action='#ENV{action}' method='post' id="newsletter_form">
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<label><:votre_email:></label>
+		<input type='text' name='email' value='#ENV{email}' />
+		<input type="hidden" name="listes&#91;&#93;" checked="checked" value="#GET{liste}" />
+
+		<br />
+		
+	<input name="format_abo" value="html" checked="checked" type="hidden" />			
+	<p style="text-align:right">
+	<input type='submit' name='ok' value='ok' />
+	</p>
+	</form>
+]

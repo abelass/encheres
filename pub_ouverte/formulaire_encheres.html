@@ -1,0 +1,111 @@
+#CACHE{0}
+
+<div class="formulaire_spip donnees_objets">
+<img src="../prive/images/mot-cle-24.gif" alt="" class="cadre-icone">
+	<div id="b35717abf11" class="titrem replie" onmouseover="jQuery(this).depliant('#donnees_objets');" ><a href="#" onclick="return jQuery(this).depliant_clicancre('#donnees_objets');" class="titremancre"></a>
+<:encheres:donnees_objets:>
+	</div>
+		<div class="cadre_padding">
+
+		<div id="donnees_objets" [(#ENV{message_erreur}|?{'style="display: block;"'})] [(#ENV{voir}|?{'style="display: block;"'})] class="bloc_depliable blocreplie">
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+	<form action="#ENV{action}" method="post">
+    	#ACTION_FORMULAIRE{#ENV{action}}
+      	<input type='hidden' name='id_article' id='id_article' value="#ENV{id_article}" />
+			<input type='hidden' name='id_objet' id='id_objet' value="#ENV{id_objet}" />
+			<input type='hidden' name='id_objet_source' id='id_objet_SOURCE' value="#ENV{id_objet_source}" />
+   	 <ul>
+        	#SET{erreurs,#ENV**{erreurs}|table_valeur{prix_depart}}
+        	<li class="editer_prix_depart obligatoire[ (#GET{erreurs}|oui)erreur]">
+            <label for="prix_depart"><:encheres:prix_depart:></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+            <input type='text'  size="6" name='prix_depart' id='prix_depart' value="#ENV{prix_depart}" />
+        	</li>
+        	#SET{erreurs,#ENV**{erreurs}|table_valeur{prix_achat_inmediat}}
+       	<li class="editer_prix_depart [ (#GET{erreurs}|oui)erreur]">
+            <label for="prix_achat_inmediat"><:encheres:prix_achat_inmediat:></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+            <input type='text'  size="6" name='prix_achat_inmediat' id='prix_achat_inmediat' value="#ENV{prix_achat_inmediat}" />
+        </li>
+        #SET{erreurs,#ENV**{erreurs}|table_valeur{mode_livraison}}
+			<li class="editer_mode_livraison obligatoire[ (#GET{erreurs}|oui)erreur]">
+            <label for="mode_livraison"><:encheres:mode_livraison:></label>
+    			<div class="choix">
+        		<input type='radio' class="radio" name='mode_livraison' value='livraison' id='mode_livraison_livraison'[ (#ENV{mode_livraison}|=={livraison}|oui)checked="checked"] onclick="showoblig(this)" />
+        		<label for='mode_livraison_livraison'><:encheres:livraison:></label>
+   			</div>
+    			<div class="choix">
+        		<input type='radio' class="radio" name='mode_livraison' value='poste' id='mode_livraison_poste'[ (#ENV{mode_livraison}|=={poste}|oui)checked="checked"] />
+        		<label for='mode_livraison_post'><:encheres:poste:></label>
+   			</div>
+    			<div class="choix">
+        		<input type='radio' class="radio" name='mode_livraison' value='venir' id='mode_livraison_venir'[ (#ENV{mode_livraison}|=={venir}|oui)checked="checked"] />
+        		<label for='mode_livraison_venir'><:encheres:venir:></label>
+   			</div>
+    			<div class="choix">
+        		<input type='radio' class="radio" name='mode_livraison' value='posteouvenir' id='mode_livraison_posteouvenir'[ (#ENV{mode_livraison}|=={posteouvenir}|oui)checked="checked"] />
+        		<label for='mode_livraison_posteouvenir'><:encheres:posteouvenir:></label>
+   			</div>
+
+			</li>
+        #SET{erreurs,#ENV**{erreurs}|table_valeur{prix_livraison}}
+        <li class="editer_prix_livraison obligatoire[ (#GET{erreurs}|oui)erreur]">
+            <label for="prix_livraison"><:encheres:prix_livraison:></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+            <input type='text' name='prix_livraison' id='prix_livraison' value="#ENV{prix_livraison}" />
+        </li>
+        #SET{erreurs,#ENV**{erreurs}|table_valeur{nombre}}
+        <li class="editer_nombre obligatoire [ (#GET{erreurs}|oui)erreur]">
+            <label for="nombre"><:encheres:nombre:></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+            <input type='text' name='nombre' id='nombre' value="#ENV{nombre,1}" />
+        </li>
+        #SET{erreurs,#ENV**{erreurs}|table_valeur{date_debut}}
+        <li class="editer_date_debut obligatoire[ (#GET{erreurs}|oui)erreur]">
+            <label for="date_debut"><:encheres:date_debut:></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+            <input type='text' name='date_debut' id='date_debut' value="#ENV{date_debut}" />
+        </li>
+        #SET{erreurs,#ENV**{erreurs}|table_valeur{duree}}
+        <li class="editer_duree obligatoire[ (#GET{erreurs}|oui)erreur]">
+            <label for="duree"><:encheres:duree:></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+            <input type='text' name='duree' id='duree' value="#ENV{duree}" />
+        </li>
+        #SET{erreurs,#ENV**{erreurs}|table_valeur{statut}}
+        <li class="editer_statut obligatoire[ (#GET{erreurs}|oui)erreur]">
+            <label for="statut"><:encheres:statut:></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+				<div class="choix">
+				<select name="statut">
+            	<option id='statut_mise_en_vente' value="mise_en_vente" [ (#ENV{statut}|=={mise_en_vente}|oui)selected="selected"]><:encheres:mise_en_vente:></option>
+            	<option id='statut_invendu' value="invendu" [(#ENV{statut}|=={invendu}|oui)selected="selected"]><:encheres:invendu:></option>
+            	<option id='statut_stand_by' value="stand_by" [ (#ENV{statut}|=={stand_by}|oui)selected="selected"]><:encheres:stand_by:></option>
+            	<option id='statut_fin_enchere_non_termine' value="fin_enchere_non_termine" [ (#ENV{statut}|=={fin_enchere_non_termine}|oui)selected="selected"]><:encheres:fin_enchere_non_termine:></option>
+            	<option id='statut_fin_enchere_termine' value="fin_enchere_termine" [ (#ENV{statut}|=={fin_enchere_termine}|oui)selected="selected"]><:encheres:fin_enchere_termine:></option>
+            	<option id='statut_supprime' value="supprime" [ (#ENV{statut}|=={supprime}|oui)selected="selected"]><:encheres:supprime:></option>
+				</select>
+				</div>
+        </li>
+
+        #SET{erreurs,#ENV**{erreurs}|table_valeur{type}}
+			<li class="editer_type obligatoire[ (#GET{erreurs}|oui)erreur]">
+            <label for="type"><:encheres:type:></label>
+    			<div class="choix">
+        		<input type='radio' class="radio" name='type' value='neuf' id='type_neuf'[ (#ENV{type}|=={neuf}|oui)checked="checked"]  />
+        		<label for='mode_livraison_livraison'><:encheres:neuf:></label>
+   			</div>
+    			<div class="choix">
+        		<input type='radio' class="radio" name='type' value='occasion' id='type_occasion'[ (#ENV{type}|=={occasion}|oui)checked="checked"] />
+        		<label for='type_occasion'><:encheres:occasion:></label>
+   			</div>
+			</li>
+    	</ul>
+
+    	<p class="boutons"><input type="submit" class="submit" value="<:pass_ok:>" /></p>
+	</form>
+</div>
+		</div>
+
+</div>

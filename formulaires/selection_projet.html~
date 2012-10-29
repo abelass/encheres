@@ -1,0 +1,29 @@
+#CACHE{24*3600}
+
+	<BOUCLE_objet(spip_encheres_objets){id_objet}>
+       	[<p class="editer_id_article  [(#GET{erreurs}|oui)erreur]"><span class='erreur_message'>(#GET{erreurs})</span> </p>]
+		<BOUCLE_art(ARTICLES){id_article}>
+			<BOUCLE_rub_art(RUBRIQUES){id_rubrique=#ENV{id_rubrique,#ID_RUBRIQUE}}{desactiver!=oui}{tout}>
+			#SET{id_rub,#ID_RUBRIQUE}
+		<input type="hidden" name="id_article"  value="#ID_ARTICLE" />
+			</BOUCLE_rub_art>
+			<li style="color:red;"><:encheres:projet_desactive:></li>
+			<//B_rub_art>
+		</BOUCLE_art>
+	</BOUCLE_objet>
+
+[(#ENV{id_rubrique}|oui)#SET{id_rub,#ENV{id_rubrique}}]
+        #SET{erreurs,#ENV**{erreurs}|table_valeur{id_rubrique}}
+       	<li class="editer_id_rubrique obligatoire [ (#GET{erreurs}|oui)erreur]">
+            <label for="id_rubrique "><:choisir_projet:></label>
+            [<span class='erreur_message'>(#GET{erreurs})</span>]
+			<select name="id_rubrique" style="width:500px;">
+				<option value="" ><:encheres:choisir_projet:></option>
+				<BOUCLE_rubrique(RUBRIQUES){id_parent=19}{tout}{doublons}{par titre}{desactiver!=oui}>
+					<option value="#ID_RUBRIQUE" [(#GET{id_rub}|=={#ID_RUBRIQUE}|oui)selected="selected"]>#TITRE</option>
+				</BOUCLE_rubrique>
+			</select>
+			</li>
+
+
+

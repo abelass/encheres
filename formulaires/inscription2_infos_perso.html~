@@ -1,0 +1,150 @@
+[(#REM) informations marques et associations/ongs]
+<fieldset class="info_perso">
+    <legend>
+        [(#ENV{type_auteur}|=={particulier}|oui)<:inscription2:info_perso:><br /> ]
+        [(#ENV{type_auteur}|=={particulier}|non)
+        	[(#ENV{type_auteur}|=={ong}|?{<:info_perso_asso:>,<:info_perso_organisation:>})]
+        	<br/>]
+    </legend>
+    
+    <ul>
+        [(#CONFIG{inscription2/sexe}|=={on}|oui)
+        <li class="editer_sexe[ (#CONFIG{inscription2/sexe_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{sexe}|oui)erreur]">
+		    <fieldset>
+			    <legend><:inscription2:civilite:></legend>
+			    <ul class="formfx">
+				    <li>
+                        <input class="radio" name="sexe" id="monsieur" type="radio" [(#ENV{sexe}|=={M}|?{'checked="checked"'})] value="M" />
+    	                <label for="monsieur"> <:inscription2:masculin:></label>
+    	                
+				    </li>
+				    <li>
+    	                <input class="radio" name="sexe" id="madame" type="radio" [(#ENV{sexe}|=={F}|?{'checked="checked"'})] value="F" />
+					    <label for="madame"> <:inscription2:feminin:></label>
+				    </li>
+			    </ul>
+		    </fieldset>
+		    [<p class='erreur'>(#ENV**{erreurs}|table_valeur{sexe})</p>]
+        </li>]
+		
+		[(#CONFIG{inscription2/prenom}|=={on}|oui)	
+        <li class="editer_prenom[ (#CONFIG{inscription2/prenom_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{prenom}|oui)erreur]">
+            <label for="prenom">[(#ENV{type_auteur}|=={particulier}|?{<:inscription2:prenom:>,<:prenom_personne_reponsable:>})]</label>
+            <input type="text" class="text" name="prenom" id="prenom" value="#ENV{prenom}" />       
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{prenom})</p>]
+        </li>
+        ]
+
+        [(#CONFIG{inscription2/nom_famille}|=={on}|oui)	
+        <li class="editer_nom_famille[(#CONFIG{inscription2/nom_famille_obligatoire}|=={on}|oui) obligatoire][ (#ENV**{erreurs}|table_valeur{nom_famille}|oui)erreur]">
+            <label for="nom_famille">[(#ENV{type_auteur}|=={particulier}|?{<:inscription2:nom_famille:>,<:nom_famille_personne_reponsable:>})]</label>
+            <input type="text" class="text" name="nom_famille" id="nom_famille" value="#ENV{nom_famille}" />
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{nom_famille})</p>]
+        </li>]
+        
+        [(#CONFIG{inscription2/surnom}|=={on}|oui)	
+        <li class="editer_surnom[ (#CONFIG{inscription2/surnom_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{surnom}|oui)erreur]">
+            <label for="surnom"><:inscription2:surnom:></label>
+            <input type="text" class="text" name="surnom" id="surnom" value="#ENV{surnom}" />       
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{surnom})</p>]
+        </li>
+        ]
+        
+        [(#CONFIG{inscription2/naissance}|=={on}|oui)
+        <li class="editer_naissance[ (#CONFIG{inscription2/naissance_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{naissance}|oui)erreur]">
+            <label><:inscription2:naissance:></label>
+            <INCLURE{fond=formulaires/inscription2_form_date_naissance}{jour}{mois}{annee}{naissance}>
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{naissance})</p>]
+        </li>]
+
+        [(#CONFIG{inscription2/langue}|=={on}|oui)
+	<INCLURE{fond=formulaires/inc-inscription_langues}{env}/>
+        ]
+        
+
+
+[(#ENV{type_auteur}|=={particulier}|non)</ul></fieldset>
+	<fieldset class="info_asso">
+    <legend>
+        <:encheres:info_ong_marques:>
+    </legend>    
+		<ul>
+
+       [(#CONFIG{inscription2/bio}|=={on}|oui)	
+        <li class="editer_bio[ (#ENV{type_auteur}|!=={particulier}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{bio}|oui)erreur]">
+            <label for="bio">
+				<:descriptif_org:><br/><small>([(#ENV{type_auteur}|=={ong}|?{<:explicatif_descriptif_org:>,<:explicatif_descriptif_organisation:>})])</small>
+				</label>
+            <textarea name="bio" class="textarea" id="bio" rows="2" cols="20">#ENV{bio}</textarea>
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{bio})</p>]
+        </li>
+		]
+
+
+  			[(#CONFIG{inscription2/statut_juridique}|=={on}|oui)
+        <li class="editer_statut_juridique[ (#CONFIG{inscription2/statut_juridique_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{statut_juridique}|oui)erreur]">
+    	  <label for="statut_juridique"> <:statut_juridique:></label>
+			<input class="text" name="statut_juridique" id="personne_physique" value="#ENV{statut_juridique}" [(#ENV{statut_juridique}|=={personne_physique}|?{'checked="checked"'})] value="personne_physique" />
+		    [<p class='erreur'>(#ENV**{erreurs}|table_valeur{statut_juridique})</p>]
+        </li>]
+
+	    [(#CONFIG{inscription2/nom}|=={on}|oui)	
+	    <li class="editer_nom[ (#CONFIG{inscription2/nom_obligatoire}|=={on}|?{obligatoire})][ (#ENV**{erreurs}|table_valeur{nom}|oui)erreur]">
+	        <label for="nom"><:encheres:nom_organisme:></label>
+	        <input type="text" class="text" name="nom" id="nom" value="#ENV{nom}" />
+	        [<p class='erreur'>(#ENV**{erreurs}|table_valeur{nom})</p>]
+	    </li>]
+
+        [(#CONFIG{inscription2/nom_marque}|=={on}|oui)	
+        <li class="editer_nom_marque[(#CONFIG{inscription2/nom_marque_obligatoire}|=={on}|oui) obligatoire][ (#ENV**{erreurs}|table_valeur{nom_marque}|oui)erreur]">
+            <label for="nom_marque"><:nom_marque:></label>
+            <input type="text" class="text" name="nom_marque" id="nom_marque" value="#ENV{nom_marque}" />
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{nom_marque})</p>]
+        </li>]
+	    ]
+
+		
+		[(#CONFIG{inscription2/url_site}|=={on}|oui)	
+        <li class="editer_url_site[ (#CONFIG{inscription2/url_site_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{url_site}|oui)erreur]">
+            <label for="url_site"><:inscription2:url_site:></label>
+            <input type="text" class="text" name="url_site" id="url_site" value="#ENV{url_site}" />
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{url_site})</p>]
+        </li>]
+		
+		[(#CONFIG{inscription2/pgp}|=={on}|oui)	
+        <li class="editer_pgp[ (#CONFIG{inscription2/pgp_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{pgp}|oui)erreur]">
+            <label for="pgp"><:inscription2:pgp:></label>
+            <textarea name="pgp" class="textarea" id="pgp" rows="2" cols="20">#ENV{pgp}</textarea>
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{pgp})</p>]
+        </li>]
+		
+        [(#CONFIG{inscription2/telephone}|=={on}|oui)	
+        <li class="editer_telephone[ (#CONFIG{inscription2/telephone_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{telephone}|oui)erreur]">
+            <label for="telephone"><:inscription2:telephone:><br/><small><i>(<:explication_telephone:>)</i></small></label>
+            <input type="text" class="text" name="telephone" id="telephone" value="#ENV{telephone}" />
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{telephone})</p>]
+        </li>]
+
+        [(#CONFIG{inscription2/fax}|=={on}|oui)	
+        <li class="editer_fax[ (#CONFIG{inscription2/fax_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{fax}|oui)erreur]">
+            <label for="fax"><:inscription2:fax:></label>
+            <input type="text" class="text" name="fax" id="fax" value="#ENV{fax}" />
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{fax})</p>]
+        </li>]
+        
+        [(#CONFIG{inscription2/mobile}|=={on}|oui)	
+        <li class="editer_mobile[ (#CONFIG{inscription2/mobile_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{mobile}|oui)erreur]">
+            <label for="mobile"><:inscription2:mobile:></label>
+            <input type="text" class="text" name="mobile" id="mobile" value="#ENV{mobile}" />
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{mobile})</p>]
+        </li>]
+
+        [(#CONFIG{inscription2/commentaire}|=={on}|oui)
+        <li class="editer_commentaire[ (#CONFIG{inscription2/commentaire_obligatoire}|=={on}|oui)obligatoire][ (#ENV**{erreurs}|table_valeur{commentaire}|oui)erreur]">
+            <label><:inscription2:commentaire:></label>
+            <textarea name="commentaire" class="textarea" id="commentaire" rows="5" cols="20">#ENV{commentaire}</textarea>	
+            [<p class='erreur'>(#ENV**{erreurs}|table_valeur{commentaire})</p>]
+        </li>]
+    </ul>
+	<br class="nettoyeur" />
+</fieldset>

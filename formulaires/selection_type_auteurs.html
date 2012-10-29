@@ -1,0 +1,22 @@
+#CACHE{24*3600}
+<div class="formulaire_spip ajax" id="type_auteur">
+	<p><b><:explication_type_auteur:></b></p>
+	<form action="#ENV{action}#type_auteur"  method="post">
+	<fieldset><legend><:encheres:type_auteur:></legend>
+		<input type="hidden" name="page" value="#ENV{page}">
+		<input type="hidden" name="inscription" value="oui">
+		<select id="type_auteur" style="width:auto;" name="type_auteur" onchange="document.location.href='[(#SELF|parametre_url{type_auteur,''})]&type_auteur='+this.options[this.selectedIndex].value;this.focus();">
+			<option value="rien"><:encheres:choisir_type_auteur:></option>
+			<option value="particulier" [(#ENV{type_auteur}|=={particulier}|?{"selected="selected"})]><:encheres:particulier:></option>
+			<option value="ong" [(#ENV{type_auteur}|=={ong}|?{selected="selected="selected"})]><:encheres:ong:></option>
+			<option value="marque" [(#ENV{type_auteur}|=={marque}|?{selected="selected="selected"})]><:encheres:marque:></option>
+			<option value="lieu" [(#ENV{type_auteur}|=={lieu}|?{selected="selected="selected"})]><:encheres:lieu:></option>
+			<option value="restaurant" [(#ENV{type_auteur}|=={restaurant}|?{selected="selected="selected"})]><:encheres:restaurant:></option>
+			<option value="ong_kido" [(#ENV{type_auteur}|=={ong_kido}|?{selected="selected="selected"})]><:encheres:ong_kido:></option>
+		</select>
+		<noscript><input type="submit" class="submit confirmer" name="choix_type" value="ok"></noscript>
+	</fieldset>
+			</form>
+[(#ENV{type_auteur}|=={'rien'}|?{' ',''})<div style="color:red;"><:erreur_choisir_type_auteur:></div>]
+</div>
+		

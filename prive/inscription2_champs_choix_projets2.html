@@ -1,0 +1,11 @@
+        <li>
+            <label for="choix_projets2"><:encheres:choix_projets2:></label>
+				<B_choix_projets2>
+				<select name="choix_projets2" >
+            	<option id="choix_projets2" value="" ><:pas_de_projet:></option>
+					<BOUCLE_choix_projets2(RUBRIQUES){id_parent=19} {desactiver!=oui}{tout} {par titre}>
+            	<option id="choix_projets2-#ID_RUBRIQUE" value="#ID_RUBRIQUE" [(#ENV{val}|=={#ID_RUBRIQUE}|?{selected="selected"})]>#TITRE</option>
+					</BOUCLE_choix_projets2>
+				</select>  
+				</B_choix_projets2>     
+        </li>

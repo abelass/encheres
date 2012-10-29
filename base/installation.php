@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * Plugin tradrub
+ * Licence GPL (c) 2008-2010 Stephane Laurent (Bill), Matthieu Marcillaud
+ * 
+ */
+
+if (!defined("_ECRIRE_INC_VERSION")) return;
+
+include_spip('inc/meta');
+
+/**
+ * Upgrade de la base
+ *
+ * @param string $nom_meta_base_version
+ * @param string $version_cible
+ */
+
+
+function encheres_upgrade($nom_meta_base_version,$version_cible){
+        $current_version = 0.0;
+        if ((!isset($GLOBALS['meta'][$nom_meta_base_version]))
+        || (($current_version = $GLOBALS['meta'][$nom_meta_base_version])!=$version_cible)){
+                include_spip('base/tables_principales');
+                // cas d'une installation
+                if ($version_cible > $GLOBALS['meta'][$nom_meta_base_version]){
+                	if($GLOBALS['meta'][$nom_meta_base_version]==''){
+				include_spip('base/create');
+				creer_base();
+				maj_tables('spip_encheres_objets'); 	
+				maj_tables('spip_encheres_mises'); 
+				maj_tables('spip_encheres_encherisseurs'); 
+				maj_tables('spip_encheres_evaluations'); 
+				maj_tables('spip_encheres_kidonathons'); 	
+																		
+				}
+			else{
+				include_spip('base/create');
+				creer_base();	
+				maj_tables('spip_encheres_objets'); 	
+				maj_tables('spip_encheres_mises'); 
+				maj_tables('spip_encheres_encherisseurs'); 
+				maj_tables('spip_encheres_evaluations'); 
+				maj_tables('spip_encheres_kidonathons'); 						
+				}
+               }
+
+        }
+	ecrire_meta($nom_meta_base_version,$current_version=$version_cible,'non');
+    
+}
+
+
+?>

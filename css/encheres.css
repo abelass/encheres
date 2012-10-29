@@ -1,0 +1,15 @@
+#donnees_objets li.obligatoire {
+background-color:#FFE080;
+}
+
+#donnees_objets li.obligatoire label {
+color:#000000;
+font-weight:bold;
+}
+
+#donnees_objets input,#donnees_objets select {
+margin-left:50px;
+width:250px;
+}
+
+.formulaire_spip .titrem {background-color:#FFC000;}

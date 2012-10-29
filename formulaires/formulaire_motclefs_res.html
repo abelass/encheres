@@ -1,0 +1,90 @@
+#CACHE{0}
+<fieldset><legend><b><:choisir_categories:></b></legend>
+
+<p><:explicatif_categories:></p>
+
+[(#REM) Affichage des mots clés choisis avec leur chemin]
+		<BOUCLE_motarticle_test(MOTS){par titre}{id_article=#ENV*{id_article}}{0,1}>
+		<p><b><:encheres:categorie_liste:></b><br/><small><:enlever_categories:></small></p>
+		
+		</BOUCLE_motarticle_test>
+
+	[(#REM) Mots clés de deux niveau (groupe et mot clés)]
+	<BOUCLE_groupes_liste(GROUPES_MOTS){id_parent=13}>
+		<B_motarticle>
+		<div class="cat_choisis"><b>#TITRE</b>  =>
+			<BOUCLE_motarticle(MOTS){par titre}{id_article=#ENV*{id_article}}{id_groupe}{doublons} {'/'}>
+			[(#TITRE)]
+			</BOUCLE_motarticle>
+		</div>
+		</B_motarticle>
+
+		#SET{titre1,#TITRE }
+
+			[(#REM) Mots clés de trois niveau (groupe/sousgroupe et mot clés)]
+
+			<BOUCLE_sous_groupes_liste(GROUPES_MOTS){id_parent=#ID_GROUPE}>
+			<B_motarticle2>
+			<div class="cat_choisis"><b>#GET{titre1}</b> => #TITRE =>
+				<BOUCLE_motarticle2(MOTS){par titre}{id_article=#ENV*{id_article}}{id_groupe}{doublons} {'/'}>
+				[ (#TITRE)]
+				</BOUCLE_motarticle2>
+			</div>
+			</B_motarticle2>
+
+				#SET{titre2,#TITRE }
+
+				[(#REM) Mots clés de 4 niveu (groupe/sousgroupe/soussousgroupe et mot clé)]
+
+				<BOUCLE_sous_groupes_liste2(GROUPES_MOTS){id_parent=#ID_GROUPE}>
+				<B_motarticle3>
+				<div class="cat_choisis" ><b>#GET{titre1}</b> => #GET{titre2} => #TITRE =>
+					<BOUCLE_motarticle3(MOTS){par titre}{id_article=#ENV*{id_article}}{id_groupe}{doublons} {'/'}>
+					[ (#TITRE)]
+					</BOUCLE_motarticle3>
+				</div>
+				</B_motarticle3>
+				</BOUCLE_sous_groupes_liste2>
+			</BOUCLE_sous_groupes_liste>
+	</BOUCLE_groupes_liste>
+
+<br />
+	<div style="float:left; width:200px;">
+	<B_groupes>
+	<label><:categories:></label>
+	<select  size='20' name="id_groupe">
+	<BOUCLE_groupes(GROUPES_MOTS){id_parent=#ENV{id_groupe,13}}>
+			<option value="#ID_GROUPE">#TITRE</option>
+	</BOUCLE_groupes>
+	</select>
+	</B_groupes>
+
+		<B_groupes_alter>
+		<label><:categories:></label>
+		<select   size='20' name="id_groupe">
+		<option value=""><:categorie_principale:></option>
+		<BOUCLE_groupes_alter(GROUPES_MOTS){id_parent=13}>
+			<option value="#ID_GROUPE" [(#ENV{id_groupe}|=={#ID_GROUPE}|?{selected="selected"})]>#TITRE</option>
+		</BOUCLE_groupes_alter>
+		</select>
+		</B_groupes_alter>
+
+	<//B_groupes>
+	</div>
+
+		<B_mots>
+		<div style="float:left; width:200px;">
+		<label><:sous_categories:></label>
+		<select multiple size='20'  id="motschoix" name='motschoix[]'>
+		<BOUCLE_mots(MOTS){par titre}{id_groupe=#ENV{id_groupe,0}}{doublons}>
+			<option value="#ID_MOT">#TITRE</option>
+		</BOUCLE_mots>
+		</select>
+		</div>
+		</B_mots>
+
+	<p>
+	<input name='mots' type='submit' value='<:ajouter_categorie:>' class='spip_bouton' style="float:left;"/>
+	<input type="hidden" name="id_article" value="#ENV*{id_article}"/>
+	</p>
+</fieldset>

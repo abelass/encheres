@@ -1,0 +1,21 @@
+<BOUCLE_obet(ENCHERES_OBJETS){id_article}>
+1
+</BOUCLE_obet>
+<div class="cadre cadre-e" style="">
+<img src="../prive/images/mot-cle-24.gif" alt="" class="cadre-icone">
+<div id="b35717abf" class="titrem depliant deplie blocdeplie" onmouseover="jQuery(this).depliant('#infos_objets');"><a href="#" onclick="return jQuery(this).depliant_clicancre('#infos_objets');" class="titremancre"></a>
+<:info_objets:>
+</div>
+<div style="display: block;" id="infos_objets" class="bloc_depliable blocreplie">
+<div class="cadre_padding">
+	<form onsubmit="valeur=Math.floor($('#ajouter_lire').attr('value')); if (valeur > 0 && valeur != #ID_ARTICLE){ $('#pave_lire_aussi').load('?exec=lire_aussi_interface&id_article=#ENV{id_article}&id_lire=#ID_LIRE&ajouter_lire='+valeur); }; return false;" action="index.php" method="get">
+	<:montant:>
+	<input type="hidden" name="exec" value="articles">
+	<input type="hidden" name="id_article" value="#ID_ARTICLE">
+	<input id="ajouter_lire" type="text" />
+	<input type="submit" value="Ajouter" class="fondo" />
+	</form>
+</div>
+</div>
+</div>
+

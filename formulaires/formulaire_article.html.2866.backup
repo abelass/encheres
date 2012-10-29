@@ -1,0 +1,100 @@
+#CACHE{0}
+
+<BOUCLE_billetterie(MOTS){id_article=#ENV{lier_trad}}{id_groupe=80}>
+	#SET{billetterie,oui}
+</BOUCLE_billetterie>
+
+<div class="formulaire_spip formulaire_editer formulaire_editer_article formulaire_editer_article-#ENV{id_article,nouveau}">
+
+
+<form action="[(#ENV{url})]##ENV{submit}" method="post" name="formulaire_article" enctype="multipart/form-data" >
+	<input type="hidden" name="id_auteur" value="#SESSION{id_auteur}"/>
+	<input type="hidden" name="id_article" value="[(#ENV**{id_article})]" />
+	<input type="hidden" name="url_site" value="[(#SELF)]" />
+	<input type="hidden" name="lang" value="#ENV{lang}" />
+
+
+	[<center><p style="color:red;font-size: 20px;"><b>(#ENV*{mess_error})</b></p></center>]
+
+	[(#ENV{lier_trad}|=={''}|?{' ',''})
+		<INCLURE{fond=formulaires/choisir_projet}{env} {ajax}>
+		]
+
+
+	<p>
+	<fieldset><legend><b><:titre_objet:>&nbsp;[<:opconfig:obligatoire:>]</b></legend>
+	<p><:explication_titre_objet:></p>
+		<p><input type="text" name="titre" value="[(#ENV**{titre})]"  size="70" maxlength="80"></p>
+	</fieldset>
+	</p>
+
+	[(#CONFIG{op/SousTitre,''}|=={yes}?{
+	<p>
+	<fieldset><legend><b><:opconfig:publie_soustitre:>&nbsp;(<:opconfig:optionel:>)</b></legend>
+		<p><input type="text" name="soustitre" value="[(#ENV**{soustitre})]"  size="70" maxlength="80"></p>
+		<p><:opconfig:explication_soustitre:></p>
+	</fieldset>
+	</p>
+	})]
+
+	[(#CONFIG{op/Descriptif,''}|=={yes}?{
+	<p>
+	<fieldset><legend><b><:opconfig:publie_descriptif:>&nbsp;(<:opconfig:optionel:>)</b></legend>
+		<p><textarea cols="62" rows="5" name="descriptif">[(#ENV**{descriptif})]</textarea></p>
+		<p><:opconfig:explication_descriptif:></p>
+	</fieldset>
+	</p>
+	})]
+
+
+	[(#GET{billetterie}|oui)
+	<p>
+	<fieldset><legend><b><:encheres:commentaire:>&nbsp;(<:opconfig:optionel:>)</b></legend>
+		<p><textarea cols="62" rows="5" name="chapo">[(#ENV{chapo}|sinon{<:encheres:commentaire_default:>})]</textarea></p>
+	</fieldset>
+	</p>
+	]
+
+
+	<p>
+	<fieldset><legend><b><:opconfig:publie_texte:></b></legend>
+		<p><:explicatif_style_texte:></p>
+		<p>[(#ENV**{texte}|barre_article{30,62})]</p>
+	</fieldset>
+	</p>
+
+
+	[(#CONFIG{op/Logo,''}|=={yes}?{[<p>
+	<fieldset><legend><b><:opconfig:logo_article:></b></legend>
+		<p>(#ENV**{id_article}|logo_article)</p>
+		<input name='sup_logo' type='submit' VALUE='<:opconfig:sup_logo:>' CLASS='spip_bouton'>
+	</fieldset>
+	</p>]})]
+	#SET{id,#ENV**{id_article}}
+
+
+
+
+	#PIPELINE{OP_squelette,#ENV*}
+
+	[(#CONFIG{op/Authentification,''}|=={yes}?{		
+	<p>
+	<fieldset><legend><b><:opconfig:identification:>&nbsp;(<:opconfig:optionel:>)</b></legend>
+		<p>
+		<:opconfig:votre_nom:> : <br />
+		<input class="nom_inscription" type="text" name="nom_inscription" value="[(#ENV*{nom_inscription})]" size="35"><br />
+		<:opconfig:votre_mail:> : <br />
+		<input class="mail_inscription" type="text" name="mail_inscription" value="[(#ENV*{mail_inscription})]" size="35"><br />
+		</p>
+	</fieldset>
+	</p>
+	})]
+
+	[(#ENV*{formulaire_auteurspip})]
+	<p class="boutons">
+		<input type='submit' name='valider' class='spip_bouton confirmer' value="<:confirmer:>" />
+		<input type="submit" name="abandonner" class="spip_bouton" value="<:opconfig:abandonner:>" />
+	</p>
+
+</form>
+</div>

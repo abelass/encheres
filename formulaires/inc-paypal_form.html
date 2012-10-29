@@ -1,0 +1,91 @@
+<script type="text/javascript">
+
+function send_to_paypal(lang,id_objet,montant_mise,business,item_name,custom){
+    
+    // fonction de génération d'un formulaire virtuel pour paypal (obligatoire car sinon form imbriqué dans un autre form = bordel)
+    
+ 
+    var outForm = document.createElement("form");
+    outForm.setAttribute("method", "post");
+    outForm.setAttribute("action", "[(#PAYPAL_URL)]");
+   
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "cmd");
+    txt.setAttribute("value", "_xclick");
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "currency_code");
+    txt.setAttribute("value", "EUR");
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "shipping");
+    txt.setAttribute("value", "0.00");
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "tax");
+    txt.setAttribute("value", "0.00");
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "amount");
+    txt.setAttribute("value", montant_mise);
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "lc");
+    txt.setAttribute("value", lang);
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "business");
+    txt.setAttribute("value", business);
+    outForm.appendChild(txt);
+
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "item_name");
+    txt.setAttribute("value", item_name);
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "custom");
+    txt.setAttribute("value", custom);
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "return");
+    txt.setAttribute("value", "#URL_SITE_SPIP/#CHEMIN{formulaires/paypal_ok.html}");
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "cancel_return");
+    txt.setAttribute("value", "#URL_SITE_SPIP/#CHEMIN{formulaires/paypal_annule.html}");
+    outForm.appendChild(txt);
+    
+    var txt = document.createElement("input");
+    txt.setAttribute("type", "hidden");
+    txt.setAttribute("name", "notify_url");
+    txt.setAttribute("value", "#URL_SITE_SPIP/#CHEMIN{formulaires/paypal_retour.html}");
+    outForm.appendChild(txt);
+    
+    
+    
+    document.body.appendChild(outForm);
+    outForm.submit();
+
+    return false;
+}
+</script>
