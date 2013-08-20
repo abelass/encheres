@@ -1,7 +1,0 @@
-	<p><strong><:encheres:region:> : </strong>
-	<BOUCLE_aut(AUTEURS_ELARGIS){id_auteur}>
-		<BOUCLE_regions(GEOENTITES){id_geoentite=#PAYS}>
-   		#TITRE
-		</BOUCLE_regions>
-	</BOUCLE_aut></p>
-
