@@ -67,7 +67,7 @@ function inc_remise_vente_dist ($id_objet='',$valeurs='',$type=''){
 						'asso'=>$asso,
 						'artobjet'=>$artobjet,					
 						'kidonateur'=>'rien',																				
-						)
+						);
 	   		
 	   		//Mail d'information aux perdants de l'enchère
 					$sql = spip_query( "SELECT * FROM spip_encheres_encherisseurs WHERE id_objet='$id_objet' AND gagne='0' AND suivre!='1'");
