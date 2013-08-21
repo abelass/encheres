@@ -64,7 +64,6 @@ function formulaires_editer_encheres_objet_identifier_dist($id_encheres_objet='n
  */
 function formulaires_editer_encheres_objet_charger_dist($id_encheres_objet='new', $id_rubrique=0, $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$valeurs = formulaires_editer_objet_charger('encheres_objet',$id_encheres_objet,$id_rubrique,$lier_trad,$retour,$config_fonc,$row,$hidden);
-    echo _request('date_debut');
     $valeurs['date_actuelle']=date('Y-m-d H:i:s');
 	return $valeurs;
 }
@@ -109,10 +108,10 @@ function formulaires_editer_encheres_objet_verifier_dist($id_encheres_objet='new
      }
 
     
-    array_merge($erreurs,formulaires_editer_objet_verifier('encheres_objet',$id_encheres_objet, array('id_auteur', 'titre', 'date_debut', 'date_fin')));
+    $erreurs=array_merge($erreurs,formulaires_editer_objet_verifier('encheres_objet',$id_encheres_objet, array('id_auteur', 'titre', 'date_debut', 'date_fin','id_parent')));
 
     if(strtotime(_request('date_debut'))>=strtotime(_request('date_fin')))$erreurs['date_fin']=_T('encheres_objet:erreur_date_fin_evenement');
-    
+
 	return $erreurs;
 }
 
