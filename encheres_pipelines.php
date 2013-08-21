@@ -58,10 +58,10 @@ function encheres_affiche_enfants($flux) {
 function encheres_affiche_auteurs_interventions($flux) {
 	if ($id_auteur = intval($flux['args']['id_auteur'])) {
 
-		$flux['data'] .= recuperer_fond('prive/objets/liste/encherisseurs', array(
+		/*$flux['data'] .= recuperer_fond('prive/objets/liste/encherisseurs', array(
 			'id_auteur' => $id_auteur,
 			'titre' => _T('encherisseur:info_encherisseurs_auteur')
-		), array('ajax' => true));
+		), array('ajax' => true));*/
 
 	}
 	return $flux;

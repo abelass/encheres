@@ -89,20 +89,10 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'encheres_auto' => '(enchères automatiques)',
 'encheres_maj' => 'Enchères',
 'encheres_titre' => 'Enchères',
-'enlever_kidonathon' => 'Enlever le kidonathon de l\'entete',
 'enregistrer' => 'Enregistrer',
 'erreur_choisir_image' => 'Veuillez sélectionner une image !',
-'erreur_date_fin_evenement' => 'La difference entre le debut de l\'enchere et la fin de la mise en vente doit être supérieur à 12 jours',
-'erreur_enregistrement_transaction_paypal' => 'Une erreur est survenue lors de l\'enregistrement de la transaction. Notez les numéros d\'identification de transaction PAYPAL et Kidonaki, le message d\'erreur et envoyer le tout à info@kidonaki.be.',
-'erreur_saisie' => 'Votre saisie contient des erreurs !',
-'espace_1' => 'Espace 1 (gauche)',
-'espace_2' => 'Espace 2 (droite)',
-'espaces_publicitaires' => 'Espaces publicitaires',
-'explicatif_ajouter_categorie' => '* Les catégories avec étoiles sont des catégories principales et donc pas sélectionables.',
 'explicatif_montant_maximum' => '(Le système fera automatiquement des enchères pour vous, sans jamais dépasser ce montant)',
-'explicatif_prix' => 'Minimum 5',
 'explication_remise_vente_automatique' => 'L\'objet sera remis en vente automatiquement la la fin de la période de vente!',
-'explication_taille' => 'largeur et hauteur, séparé par virgule (200,100) ou (200) comme pour image_reduire',
 
 
 // F

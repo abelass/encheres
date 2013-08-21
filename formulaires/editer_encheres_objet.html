@@ -21,24 +21,22 @@
 					]
 					(#VAL|chercher_rubrique{#ENV{id_encheres_objet},#ENV{id_parent},'encheres_objet',#ENV{id_secteur},'',0,form_simple})
 			</li>]
-
+            [(#SAISIE{textarea, descriptif,
+                label=<:encheres_objet:label_descriptif:>,
+                 li_class=haut,  rows=4 })]
+                 
+                
             [(#SAISIE{textarea, texte,
                 label=<:encheres_objet:label_texte:>,
-                li_class=haut, class=inserer_barre_edition, rows=4 })]
-
-            [(#SAISIE{textarea, descriptif,
-                label=<:encheres_objet:label_descriptif:>})]
+                li_class=haut, class=inserer_barre_edition,})]
 
 			[(#SAISIE{input, prix_minimum,
 				label=<:encheres_objet:label_prix_minimum:>})]
 
-			[(#SAISIE{input, prix_actuel,
-				label=<:encheres_objet:label_prix_actuel:>})]
-
-			[(#SAISIE{date, date_debut, obligatoire=oui,
+			[(#SAISIE{date, date_debut, obligatoire=oui,horaire=oui,defaut=#DATE_ACTUELLE,
 				label=<:encheres_objet:label_date_debut:>})]
 
-			[(#SAISIE{date, date_fin,obligatoire=oui,
+			[(#SAISIE{date, date_fin,obligatoire=oui,horaire=oui,defaut=#DATE_ACTUELLE,
 				label=<:encheres_objet:label_date_fin:>})]
 
 			[(#SAISIE{input, palier_encherissement,

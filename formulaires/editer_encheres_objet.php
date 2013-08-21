@@ -64,6 +64,8 @@ function formulaires_editer_encheres_objet_identifier_dist($id_encheres_objet='n
  */
 function formulaires_editer_encheres_objet_charger_dist($id_encheres_objet='new', $id_rubrique=0, $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$valeurs = formulaires_editer_objet_charger('encheres_objet',$id_encheres_objet,$id_rubrique,$lier_trad,$retour,$config_fonc,$row,$hidden);
+    echo _request('date_debut');
+    $valeurs['date_actuelle']=date('Y-m-d H:i:s');
 	return $valeurs;
 }
 
@@ -92,7 +94,26 @@ function formulaires_editer_encheres_objet_charger_dist($id_encheres_objet='new'
  *     Tableau des erreurs
  */
 function formulaires_editer_encheres_objet_verifier_dist($id_encheres_objet='new', $id_rubrique=0, $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	return formulaires_editer_objet_verifier('encheres_objet',$id_encheres_objet, array('id_auteur', 'titre', 'date_debut', 'date_fin'));
+         $verifier = charger_fonction('verifier', 'inc');
+     $champs = array('date_debut','date_fin');
+     $erreurs=array();
+     foreach($champs AS $champ){
+          $normaliser = null;
+         if ($erreur = $verifier(_request($champ), 'date', array('normaliser'=>'datetime'), $normaliser)) {
+         $erreurs[$champ] = $erreur;
+         // si une valeur de normalisation a ete transmis, la prendre.
+         } elseif (!is_null($normaliser) and _request($champ)) {
+         set_request($champ, $normaliser);
+         }
+         else set_request($champ,'0000-00-00 00:00:00');
+     }
+
+    
+    array_merge($erreurs,formulaires_editer_objet_verifier('encheres_objet',$id_encheres_objet, array('id_auteur', 'titre', 'date_debut', 'date_fin')));
+
+    if(strtotime(_request('date_debut'))>=strtotime(_request('date_fin')))$erreurs['date_fin']=_T('encheres_objet:erreur_date_fin_evenement');
+    
+	return $erreurs;
 }
 
 /**
@@ -120,6 +141,7 @@ function formulaires_editer_encheres_objet_verifier_dist($id_encheres_objet='new
  *     Retours des traitements
  */
 function formulaires_editer_encheres_objet_traiter_dist($id_encheres_objet='new', $id_rubrique=0, $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+
 	return formulaires_editer_objet_traiter('encheres_objet',$id_encheres_objet,$id_rubrique,$lier_trad,$retour,$config_fonc,$row,$hidden);
 }
 

@@ -12,112 +12,9 @@
 		#ACTION_FORMULAIRE{#ENV{action}}
 
 <ul>
-			<li class="fieldset"><fieldset><legend><:encheres:geo:></legend>
-				<ul>
-				#SET{erreurs,#ENV**{erreurs}|table_valeur{pays_defaut}}				
-				<B_pays_dispo>
-					<li>		
 
-						<label for="pays_defaut"><:encheres:pays_defaut:></label>
-						[<span class='erreur_message'>(#GET{erreurs})</span>]
-					<select name="pays_defaut" id="pays_defaut" class="forml"  style="width:auto;" >
-					<option value=""><:encheres:choisir_pays_defaut:></option>
-						<BOUCLE_pays_dispo(GEOENTITES){id_parent=0} {par multi titre}>	
-							<option value="#ID_GEOENTITE" [(#ENV{pays_defaut}|=={#ID_GEOENTITE}|?{'selected="selected"'})]>#TITRE</option>
-						</BOUCLE_pays_dispo>	
-					</select>
-					</li>
-					[(#TOTAL_BOUCLE|>{1}|oui)
-						[(#SAISIE{input,detection_pays,
-								label=<:encheres:activer_detection_pays:>,
-								})]
-					]
-					</B_pays_dispo>	
-				</ul>
-			</fieldset>
-			</li>
-			<li class="fieldset"><fieldset><legend><:encheres:langues:></legend>
-				<ul>
-					<li>
-						<label for="redirection_languedomaine"><:encheres:activer_redirection_langue_domaine:></label>	
-						<input type="checkbox"[ (#ENV{redirection_languedomaine}|oui) checked="checked")] name="redirection_languedomaine" id="redirection_languedomaine">
-					</li>				
-				
-					<li id="redirections_choix">
-						<label for="pays_defaut"><:encheres:redirection_choix:><span>sans http://www.</span></label>
-						
-						#SET{langues,(#CONFIG{langues_multilingue}|explode{','})}
-
-						<BOUCLE_langues(POUR){tableau #GET{langues}} >	
-							<:encheres:domaine_langue:> [(#VALEUR|traduire_nom_langue)]
-							<input type="text" value="#ENV{langue_domaine_#VALEUR}" name="langue_domaine_#VALEUR" id="langue_domaine_#VALEUR" class="forml">
-						</BOUCLE_langues>	
-					</li>
-				</ul>
-			</fieldset>
-			</li>			
-			    <script type="text/javascript">
-				    $(document).ready(function(){
-					[ (#ENV{redirection_languedomaine}|non)
-						//Hide div w/id extra
-					       $("#redirections_choix").css("display","none");
-						]
-					[ (#ENV{super_asso}|non)
-						//Hide div w/id extra
-					       $(".editer_id_super_asso").css("display","none");
-					       $("#donnees_super_asso").css("display","none");					       
-						]						
-						// Add onclick handler to checkbox w/id checkme
-					       $("#redirection_languedomaine").click(function(){
-							// If checked
-							if ($("#redirection_languedomaine").is(":checked"))
-								{
-								    //show the hidden div
-								    $("#redirections_choix").show("fast");
-								}
-								else
-								{      
-								    //otherwise, hide it 
-								    $("#redirections_choix").hide("fast");
-								}
-						      });
-						 $("#super_asso").click(function(){
-							// If checked
-							if ($("#super_asso").is(":checked"))
-								{
-								    //show the hidden div
-								    $(".editer_id_super_asso").show("fast");
-								    $("#donnees_super_asso").show("fast");								    
-								}
-								else
-								{      
-								    //otherwise, hide it 
-								    $(".editer_id_super_asso").hide("fast");
-								    $("#donnees_super_asso").hide("fast");								    
-								}
-						      });     
-					    
-					    });
-			     </script> 
-			<li class="fieldset">
-				<fieldset><legend><:encheres:choix_projets:></legend>
-				#SET{erreurs,#ENV**{erreurs}|table_valeur{rubrique_projets}}	
-				<ul>
-					<li>
-						<label for="groupe_pays"><:encheres:rubrique_projets:></label>
-						[<span class='erreur_message'>(#GET{erreurs})</span>]
-						<select name="rubrique_projets" id="rubrique_projets" class="forml"  style="width:auto;" >
-						<option value=""><:encheres:choisir_rubrique:></option>
-							<BOUCLE_projet(RUBRIQUES){id_parent=0}>	
-								<option value="#ID_RUBRIQUE" [(#ENV{rubrique_projets}|=={#ID_RUBRIQUE}|?{'selected="selected"'})]>#TITRE</option>
-							</BOUCLE_projet>	
-						</select>
-					</li>
-				</ul>		
-			</fieldset>
-			</li>
 			
-				#SET{erreurs,#ENV**{erreurs}|table_valeur{devises}}	
+			#SET{erreurs,#ENV**{erreurs}|table_valeur{devises}}	
 			<li class="fieldset"><fieldset><legend><:encheres:devises:></legend>
 				<ul>
 					<li>
@@ -136,17 +33,31 @@
 			
 			<li class="fieldset"><fieldset><legend><:encheres:super_asso:></legend>
 				<ul>
-					<li>
-						<label for="super_asso"><:encheres:activer_super_asso:></label>
-						<input type="checkbox"[ (#ENV{super_asso}|oui) checked="checked")] name="super_asso" id="super_asso">
-					</li>
 
-					[(#SAISIE{auteurs,id_super_asso,
-						label=<:encheres:choisir_super_asso:>,
-						valeur=#ENV{id_super_asso},
+                    [(#SAISIE{checkbox,activer_super_encherisseur,
+                        label=<:encheres:activer_super_encherisseur:>,
+                        datas=#ARRAY{on,ok}
+                        })]
+
+					[(#SAISIE{auteurs,id_super_encherisseur,
+						label=<:encheres:choisir_super_encherisseur:>,
 						option_statut=oui,
-						multiple=oui,
-						statut=0minirezo})]
+						multiple=oui})]
+						
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            
+                            if (!$('input[name="activer_super_encherisseur[]"]').is(':checked')) {
+                                $('.editer_id_super_encherisseur').hide(); 
+                                } 
+                            });
+                            
+                        $('input[name="activer_super_encherisseur[]"]').click(function() {
+                            $('.editer_id_super_encherisseur').slideToggle('slow', function() {
+                            });
+                    });   
+                    </script>
+
 
 					<B_art>
 					<li id="donnees_super_asso">
@@ -164,35 +75,7 @@
 
 				</ul>
 			</fieldset>
-			</li>
-			<li class="fieldset"><fieldset><legend><:encheres:espaces_publicitaires:></legend>
-				<ul>
-					<BOUCLE_espace1(POUR){tableau #GET{langues}}>
-						[(#SAISIE{textarea,espace_1_#VALEUR,
-						label=<:encheres:espace_1:> - #VALEUR,
-						})]
-					</BOUCLE_espace1>
-					<BOUCLE_espace2(POUR){tableau #GET{langues}}>
-						[(#SAISIE{textarea,espace_2_#VALEUR,
-						label=<:encheres:espace_2:> - #VALEUR,
-						})]
-					</BOUCLE_espace2>
-					<BOUCLE_footer(POUR){tableau #GET{langues}}>
-						[(#SAISIE{textarea,footer_#VALEUR,
-							label=<:encheres:footer:> - #VALEUR,
-							})]
-					</BOUCLE_footer>
-				</ul>
-			</fieldset>
-			</li>						
-			<li class="fieldset"><fieldset><legend><:encheres:divers:></legend>
-				<ul>
-						[(#SAISIE{case,enlever_kidonathon,
-							label=<:encheres:enlever_kidonathon:>,
-							})]
-				</ul>
-			</fieldset>
-			</li>						
+			</li>					
 		</ul>
 
 		<input type="hidden" name="_meta_casier" value="encheres" />

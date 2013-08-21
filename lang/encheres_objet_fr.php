@@ -8,6 +8,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
 	'ajouter_lien_encheres_objet' => 'Ajouter cet objet pour enchères',
+	
+    //E
+    'erreur_date_fin_evenement' => 'La date fin doit être supérieure à la date début',
 
 	// I
 	'icone_creer_encheres_objet' => 'Créer un objet pour enchères',
