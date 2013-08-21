@@ -50,6 +50,7 @@ function encheres_upgrade($nom_meta_base_version, $version_cible) {
 	# ...
 
 	$maj['create'] = array(array('maj_tables', array('spip_encheres_objets', 'spip_mises', 'spip_encherisseurs')));
+    $maj['1.0.7'] = array(array('maj_tables', array('spip_encheres_objets', 'spip_mises', 'spip_encherisseurs')));
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);

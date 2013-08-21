@@ -1,4 +1,4 @@
-<?php
+ <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
@@ -18,14 +18,16 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_encheres_encheres_objets' => '@nb@ objets pour enchères',
 
 	// L
-	'label_date_debut' => 'Dae début',
-	'label_date_fin' => 'Id auteur',
+	'label_date_debut' => 'Date début',
+	'label_date_fin' => 'Date fin',
+    'label_descriptif' => 'Déscriptif',   	
 	'label_id_auteur' => 'Id auteur',
-	'label_id_encheres_encheres_objet_source' => 'Id objet source',
-	'label_palier_encherissement' => 'Id objet source',
+	'label_id_encheres__objet_source' => 'Id objet source',
+	'label_palier_encherissement' => 'Paliers d\'enchérissement',
 	'label_prix_actuel' => 'Prix actuel',
 	'label_prix_minimum' => 'Prix Minimun',
 	'label_titre' => 'Titre',
+	'label_texte' => 'Texte',	
 
 	// R
 	'retirer_lien_encheres_objet' => 'Retirer cet objet pour enchères',
@@ -38,6 +40,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_encheres_encheres_objets' => 'Objets pour enchères',
 	'titre_encheres_encheres_objets_rubrique' => 'Objets pour enchères de la rubrique',
 	'titre_encheres_objet' => 'Objet pour enchères',
+	'titre_encheres_objets' => 'Objets pour enchères',	
 	'titre_langue_encheres_objet' => 'Langue de cet objet pour enchères',
 	'titre_logo_encheres_objet' => 'Logo de cet objet pour enchères',
 );

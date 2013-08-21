@@ -92,7 +92,7 @@ function formulaires_editer_encheres_objet_charger_dist($id_encheres_objet='new'
  *     Tableau des erreurs
  */
 function formulaires_editer_encheres_objet_verifier_dist($id_encheres_objet='new', $id_rubrique=0, $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	return formulaires_editer_objet_verifier('encheres_objet',$id_encheres_objet, array('id_auteur', 'titre', 'date_debut', 'palier_encherissement'));
+	return formulaires_editer_objet_verifier('encheres_objet',$id_encheres_objet, array('id_auteur', 'titre', 'date_debut', 'date_fin'));
 }
 
 /**

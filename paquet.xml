@@ -1,12 +1,12 @@
 <paquet
 	prefix="encheres"
 	categorie="divers"
-	version="1.0.0"
+	version="1.0.1"
 	etat="dev"
 	compatibilite="[3.0.11;3.0.*]"
 	logo="prive/themes/spip/images/encheres-64.png"
 	documentation=""
-	schema="1.0.0" 
+	schema="1.0.7" 
 >
 	<!--
 		Paquet genere le 2013-08-21 10:29:40
