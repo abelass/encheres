@@ -1,0 +1,54 @@
+<paquet
+	prefix="encheres"
+	categorie="divers"
+	version="1.0.0"
+	etat="dev"
+	compatibilite="[3.0.11;3.0.*]"
+	logo="prive/themes/spip/images/encheres-64.png"
+	documentation=""
+	schema="1.0.0" 
+>
+	<!--
+		Paquet genere le 2013-08-21 10:29:40
+		(Vous pouvez bien entendu supprimer ces commentaires) 
+	-->
+
+	<nom>Enchères</nom>
+
+	<!-- cette balise peut etre presente plusieurs fois s'il y a plusieurs auteurs --> 
+	<auteur lien='http://websimple.be/'>Rainer Müller</auteur>
+
+	<licence>GNU/GPL</licence>
+
+	<!--
+		Exemple de commandes
+		* dependances
+		<necessite nom="saisies" compatibilite="[1.21.0;]" />
+		<utilise nom="saisies" compatibilite="[1.21.0;]" />
+		<lib nom="simplehtmldom" lien="http://chemin_vers_archive.zip" />
+		* pipelines
+		<pipeline nom="autoriser" inclure="encheres_autorisations.php" />
+		<pipeline nom="insert_head" inclure="encheres_pipelines.php" />
+		* declarer un pipeline 
+		<pipeline nom="mon_pipeline" action="" />
+		* parents de menus de SPIP :
+				menu_accueil (A eviter), menu_edition, menu_publication,
+				menu_activite, menu_squelette, menu_administration, menu_configuration 
+		<menu nom="encheres" titre="encheres:encheres_titre" parent="menu_edition"  icone="images/encheres-16.png" />
+		* parents d'onglets... configuration, plugins, statistiques, ... 
+		<onglet nom="encheres" titre="encheres:encheres_titre" parent="configuration" icone="images/encheres-24.png" />
+	-->
+
+	<necessite nom="saisies" compatibilite="[1.24.0;]" /> 
+
+	<pipeline nom="autoriser" inclure="encheres_autorisations.php" /> 
+
+	<pipeline nom="declarer_tables_objets_sql" inclure="base/encheres.php" /> 
+	<pipeline nom="declarer_tables_interfaces" inclure="base/encheres.php" /> 
+	<pipeline nom="affiche_enfants" inclure="encheres_pipelines.php" /> 
+	<pipeline nom="affiche_auteurs_interventions" inclure="encheres_pipelines.php" /> 
+
+	<menu nom="encheres_objets" titre="encheres_objet:titre_encheres_objets" parent="menu_edition" icone="images/encheres_objet-16.png" action="encheres_objets" /> 
+	<menu nom="encheres_objet_creer" titre="encheres_objet:icone_creer_encheres_objet" parent="outils_rapides" icone="images/encheres_objet-new-16.png" action="encheres_objet_edit" parametres="new=oui" /> 
+	<menu nom="mises" titre="mise:titre_mises" parent="menu_edition" icone="images/mise-16.png" action="mises" /> 
+</paquet>

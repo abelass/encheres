@@ -1,0 +1,8 @@
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<div class="nettoyeur"></div>
+
+<INCLURE{fond=prive/objets/liste/encheres_objets, par=titre, env, ajax, sinon=<:encheres_objet:info_aucun_encheres_objet:>}>
+
+[(#AUTORISER{creer,encheres_objet})
+	[(#URL_ECRIRE{encheres_objet_edit,new=oui}|icone_verticale{<:encheres_objet:icone_creer_encheres_objet:>,encheres_objet,new,right})]
+]

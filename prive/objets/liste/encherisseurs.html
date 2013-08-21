@@ -1,0 +1,36 @@
+[(#SET{defaut_tri,#ARRAY{
+	date_creation,-1, 
+	id_encherisseur,1,
+	points,-1
+}})]<B_liste_encherisseurs>
+#ANCRE_PAGINATION
+<div class="liste-objets encherisseurs">
+<table class='spip liste'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{encherisseur:info_1_encherisseur,encherisseur:info_nb_encherisseurs}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class='picto' scope='col'></th>
+			<th class='' scope='col'>[(#TRI{,<:encherisseur:label_:>,ajax})]</th>
+			<th class='date' scope='col'>[(#TRI{date_creation,<:date:>,ajax})]</th> 
+			<th class='id' scope='col'>[(#TRI{id_encherisseur,<:info_numero_abbreviation:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_encherisseurs(ENCHERISSEURS){id_auteur?}{id_encheres_objet?}{id_encherisseur?}{id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,num },#GET{defaut_tri}}{par }{pagination #ENV{nb,10}}>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
+			<td class='picto'>[(#CHEMIN_IMAGE{encherisseur-16.png}|balise_img)]</td>
+			<td class=' principale'>[(#LOGO_ENCHERISSEUR|image_reduire{20,26})]<a href="[(#ID_ENCHERISSEUR|generer_url_entite{encherisseur})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ENCHERISSEUR">[(#RANG). ]#</a></td>
+			<td class='date secondaire'>[(#DATE_CREATION|affdate_jourcourt)]</td> 
+			<td class='id'>[(#AUTORISER{modifier,encherisseur,#ID_ENCHERISSEUR}|?{
+				<a href="[(#URL_ECRIRE{encherisseur_edit,id_encherisseur=#ID_ENCHERISSEUR})]">#ID_ENCHERISSEUR</a>,
+				#ID_ENCHERISSEUR
+			})]</td>
+		</tr>
+	</BOUCLE_liste_encherisseurs>
+	</tbody>
+</table>
+[<p class='pagination'>(#PAGINATION{prive})</p>]
+</div>
+</B_liste_encherisseurs>[
+<div class="liste-objets encherisseurs caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_liste_encherisseurs>

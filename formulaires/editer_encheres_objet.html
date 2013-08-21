@@ -1,0 +1,52 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_encheres_objet,nouveau}'>
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type='hidden' name='id_encheres_objet' value='#ENV{id_encheres_objet}' />
+		<ul>
+
+			[(#SAISIE{auteur, id_auteur, obligatoire=oui,
+				label=<:encheres_objet:label_id_auteur:>})]
+
+			[(#SAISIE{input, titre, obligatoire=oui,
+				label=<:encheres_objet:label_titre:>})]
+
+			[<li class="editer editer_rubrique[ (#ENV**{erreurs/id_parent}|oui)erreur]">
+					<label for="id_parent"><:titre_cadre_interieur_rubrique:></label>[
+					<span class="erreur_message">(#ENV**{erreurs/id_parent})</span>
+					]
+					(#VAL|chercher_rubrique{#ENV{id_encheres_objet},#ENV{id_parent},'encheres_objet',#ENV{id_secteur},'',0,form_simple})
+			</li>]
+
+			[(#SAISIE{input, prix_minimum,
+				label=<:encheres_objet:label_prix_minimum:>,
+				li_class=haut, class=inserer_barre_edition, rows=4})]
+
+			[(#SAISIE{input, prix_actuel,
+				label=<:encheres_objet:label_prix_actuel:>})]
+
+			[(#SAISIE{date, date_debut, obligatoire=oui,
+				label=<:encheres_objet:label_date_debut:>})]
+
+			[(#SAISIE{input, date_fin,
+				label=<:encheres_objet:label_date_fin:>})]
+
+			[(#SAISIE{input, palier_encherissement, obligatoire=oui,
+				label=<:encheres_objet:label_palier_encherissement:>})]
+
+			[(#SAISIE{input, date_fin,
+				label=<:encheres_objet:label_date_fin:>})]
+
+			[(#SAISIE{input, palier_encherissement,
+				label=<:encheres_objet:label_palier_encherissement:>})]
+
+		</ul>
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	</div></form>
+	]
+</div>

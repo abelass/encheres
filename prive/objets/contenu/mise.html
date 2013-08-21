@@ -1,0 +1,23 @@
+<BOUCLE_mise(MISES){id_mise}>
+
+[<div class="champ contenu_id_encheres_objet[ (#ID_ENCHERES_OBJET*|strlen|?{'',vide})]">
+	<label><:mise:label_id_encheres_objet:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{id_encheres_objet} id_encheres_objet'>(#ID_ENCHERES_OBJET)</span>
+</div>]
+
+[<div class="champ contenu_id_encherisseur[ (#ID_ENCHERISSEUR*|strlen|?{'',vide})]">
+	<label><:mise:label_id_encherisseur:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{id_encherisseur} id_encherisseur'>(#ID_ENCHERISSEUR)</span>
+</div>]
+
+[<div class="champ contenu_date[ (#DATE*|strlen|?{'',vide})]">
+	<label><:mise:label_date:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{date} date'>(#DATE)</span>
+</div>]
+
+[<div class="champ contenu_montant[ (#MONTANT*|strlen|?{'',vide})]">
+	<label><:mise:label_montant:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{montant} montant'>(#MONTANT)</span>
+</div>]
+
+</BOUCLE_mise>

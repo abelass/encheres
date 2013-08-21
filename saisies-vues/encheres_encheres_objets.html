@@ -1,0 +1,20 @@
+<BOUCLE_test_multiple(CONDITION){si #ENV{multiple}|=={on}|oui}>
+	[(#SET{valeur,[(#ENV*{valeur}|is_array|?{[(#ENV*{valeur})],[(#ENV*{valeur}|explode{','})]})]})]
+	<B_encheres_objets_selectionnes>
+	<ul>
+	<BOUCLE_encheres_objets_selectionnes(ENCHERES_OBJETS){id_encheres_objet IN #GET*{valeur}}
+		{par num titre, titre}{statut?}{tout}>
+		<li class="choix">#TITRE (#ID_ENCHERES_OBJET)</li>
+	</BOUCLE_encheres_objets_selectionnes>
+	</ul>
+	</B_encheres_objets_selectionnes>
+   	[(#ENV*{sans_reponse}|propre)]
+	<//B_encheres_objets_selectionnes>
+</BOUCLE_test_multiple>
+	<BOUCLE_encheres_objet_selectionne(ENCHERES_OBJETS){id_encheres_objet=#ENV{valeur}}
+		{par num titre, titre}{statut?}{tout}>
+	  	<p>#TITRE (#ID_ENCHERES_OBJET)</p>
+	</BOUCLE_encheres_objet_selectionne>
+   	[(#ENV*{sans_reponse}|propre)]
+	<//B_encheres_objet_selectionne>
+<//B_test_multiple>

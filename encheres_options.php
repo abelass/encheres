@@ -1,55 +1,24 @@
 <?php
-// redirection selon domaine et langue idée de http://www.spip-contrib.net/MultilinguismeExemple6
+/**
+ * Options du plugin Enchèresau chargement
+ *
+ * @plugin     Enchères
+ * @copyright  2013
+ * @author     Rainer Müller
+ * @licence    GNU/GPL
+ * @package    SPIP\Encheres\Options
+ */
 
-if(lire_config('encheres/redirection_languedomaine') AND !_request('ecrire')){
-
-	if (!$_COOKIE['spip_lang']) {
-
-		$langues= explode(',',lire_config('langues_multilingue'));
-		
-		foreach($langues AS $lang){
-			$domaines=explode(',',lire_config('encheres/langue_domaine_'.$lang));		
-			foreach($domaines AS  $domaine){
-				if(preg_match ('/'.$domaine.'/',$_SERVER['HTTP_HOST'])){$langue = $lang;}
-				}
-			}
-			
-		include_spip('inc/lang');	
-	
-		changer_langue($langue);
-		global $spip_lang;
-		
-		if($langue){
-			// tiré de function verifier_lang_url()  http://doc.spip.org/@verifier_lang_url
-			// Renvoyer si besoin (et si la langue demandee existe)
-			if ($langue!= @$_GET['lang']) {
-				$destination = parametre_url(self(),'lang', $langue, '&');
-				// ici on a besoin des var_truc
-				foreach ($_GET as $var => $val) {
-					if (!strncmp('var_', $var, 4))
-						$destination = parametre_url($destination, $var, $val, '&');
-				}
-				include_spip('inc/headers');
-				redirige_par_entete($destination);
-				}
-			if ($langue != $_COOKIE['spip_lang']) {
-				include_spip('inc/cookie');
-				spip_setcookie('spip_lang', $langue);
-				}
-			}
-		}
-	}
+if (!defined('_ECRIRE_INC_VERSION')) return;
 
 
-	// {max_encheres}
-	//Récupérer les objets avec le plus d'enchères dessus
-	function critere_max_encheres($idb, &$boucles, $param){
-		$boucle = &$boucles[$idb];
-		$table = $boucle->id_table;
-		
-		$boucle->select[] = 'count($table.id_objet) as tot_encheres';
-		$boucle->group[] = '$table.id_objet';
-	}
+/*
+ * Un fichier d'options permet de définir des éléments
+ * systématiquement chargés à chaque hit sur SPIP.
+ *
+ * Il vaut donc mieux limiter au maximum son usage
+ * tout comme son volume !
+ * 
+ */
 
-$table_des_traitements['VILLE'][]= 'extraire_multi(%s)';
 ?>

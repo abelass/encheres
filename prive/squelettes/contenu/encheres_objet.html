@@ -1,0 +1,46 @@
+[(#AUTORISER{voir,encheres_objet,#ID_ENCHERES_OBJET}|sinon_interdire_acces)]
+<BOUCLE_encheres_objet(ENCHERES_OBJETS){id_encheres_objet}{statut==.*}{si #ENV{exec}|=={encheres_objet}}>
+[(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,encheres_objet,#ID_ENCHERES_OBJET})
+		[(#ID_ENCHERES_OBJET|afficher_qui_edite{encheres_objet}|non)
+			[(#URL_ECRIRE{encheres_objet_edit,id_encheres_objet=#ID_ENCHERES_OBJET}|icone_verticale{<:encheres_objet:icone_modifier_encheres_objet:>,encheres_objet,edit,right ajax preload})]
+		]
+		[(#ID_ENCHERES_OBJET|afficher_qui_edite{encheres_objet}|oui)
+			[(#URL_ECRIRE{encheres_objet_edit,id_encheres_objet=#ID_ENCHERES_OBJET}|icone_verticale{#ID_ENCHERES_OBJET|afficher_qui_edite{encheres_objet},warning-24,'',right edition_deja ajax preload})]
+		]
+	]
+
+	<h1>[(#RANG). ](#TITRE|sinon{<:info_sans_titre:>})[(#CHEMIN_IMAGE{encheres_objet-24.png}|balise_img{encheres_objet,cadre-icone})]</h1>
+
+],simple fiche_objet})]
+
+<div class="ajax">
+	#FORMULAIRE_DATER{encheres_objet,#ID_ENCHERES_OBJET}
+</div>
+
+<!--affiche_milieu-->
+
+<div id="wysiwyg">
+<INCLURE{fond=prive/objets/contenu/encheres_objet,id=#ID_ENCHERES_OBJET,id_encheres_objet=#ID_ENCHERES_OBJET,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
+</div>
+
+<div class="nettoyeur"></div>
+
+[(#AUTORISER{modifier,encheres_objet,#ID_ENCHERES_OBJET})
+	[(#ID_ENCHERES_OBJET|afficher_qui_edite{encheres_objet}|non)
+		[(#URL_ECRIRE{encheres_objet_edit,id_encheres_objet=#ID_ENCHERES_OBJET}|icone_verticale{<:encheres_objet:icone_modifier_encheres_objet:>,encheres_objet,edit,right ajax preload})]
+	]
+	[(#ID_ENCHERES_OBJET|afficher_qui_edite{encheres_objet}|oui)
+		[(#URL_ECRIRE{encheres_objet_edit,id_encheres_objet=#ID_ENCHERES_OBJET}|icone_verticale{#ID_ENCHERES_OBJET|afficher_qui_edite{encheres_objet},warning-24,'',right edition_deja ajax preload})]
+	]
+]
+
+#PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,encheres_objet,id,#ID_ENCHERES_OBJET},data,'<div class="nettoyeur"></div>'}}
+
+#BOITE_FERMER
+[(#EVAL{_AJAX}|oui)
+	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin');/*\\]\\]>*/</script>
+]
+</BOUCLE_encheres_objet>
+[(#ENV**{exec}|=={encheres_objet_edit}|?{#INCLURE{fond=prive/squelettes/contenu/encheres_objet_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
+<//B_encheres_objet>

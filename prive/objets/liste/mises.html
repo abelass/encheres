@@ -1,0 +1,36 @@
+[(#SET{defaut_tri,#ARRAY{
+	date,-1, 
+	id_mise,1,
+	points,-1
+}})]<B_liste_mises>
+#ANCRE_PAGINATION
+<div class="liste-objets mises">
+<table class='spip liste'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{mise:info_1_mise,mise:info_nb_mises}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class='picto' scope='col'></th>
+			<th class='' scope='col'>[(#TRI{,<:mise:label_:>,ajax})]</th>
+			<th class='date' scope='col'>[(#TRI{date,<:date:>,ajax})]</th> 
+			<th class='id' scope='col'>[(#TRI{id_mise,<:info_numero_abbreviation:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_mises(MISES){id_encheres_objet?}{id_encherisseur?}{id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,num },#GET{defaut_tri}}{par }{pagination #ENV{nb,10}}>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
+			<td class='picto'>[(#CHEMIN_IMAGE{mise-16.png}|balise_img)]</td>
+			<td class=' principale'>[(#LOGO_MISE|image_reduire{20,26})]<a href="[(#ID_MISE|generer_url_entite{mise})]" title="<:info_numero_abbreviation|attribut_html:> #ID_MISE">[(#RANG). ]#</a></td>
+			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td> 
+			<td class='id'>[(#AUTORISER{modifier,mise,#ID_MISE}|?{
+				<a href="[(#URL_ECRIRE{mise_edit,id_mise=#ID_MISE})]">#ID_MISE</a>,
+				#ID_MISE
+			})]</td>
+		</tr>
+	</BOUCLE_liste_mises>
+	</tbody>
+</table>
+[<p class='pagination'>(#PAGINATION{prive})</p>]
+</div>
+</B_liste_mises>[
+<div class="liste-objets mises caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_liste_mises>
