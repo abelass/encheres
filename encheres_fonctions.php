@@ -680,3 +680,17 @@ if(!function_exists('filtres_prix_formater')){
     return $prix;
     }
 }
+
+function lignes2array($lignes){
+    $tableau    = array();
+    $lignes     = explode("\n",$lignes);
+    foreach ($lignes as $l){
+        $donnees= explode(',',$l);
+        if ($donnees[1])
+            $tableau[trim($donnees[0])] = trim (_T($donnees[1]));
+        else
+            $tableau[trim($donnees[0])] = '';
+    }
+
+    return $tableau;
+}

@@ -31,29 +31,37 @@
 			</fieldset>
 			</li>
 			
-			<li class="fieldset"><fieldset><legend><:encheres:super_asso:></legend>
+			<li class="fieldset"><fieldset><legend><:encheres:roles:></legend>
 				<ul>
-
+				    
+				    
+                    [(#SAISIE{textarea,roles,
+                        label=<:encheres:determiner_roles:>,
+                        rows=4,
+                        explication=<:encheres:explication_determiner_roles:>})]
+                        
                     [(#SAISIE{checkbox,activer_super_encherisseur,
                         label=<:encheres:activer_super_encherisseur:>,
                         datas=#ARRAY{on,ok}
-                        })]
+                        })]                        
+                      
+                    [(#SAISIE{selection,roles_super_encherisseur,
+                        label=<:encheres:determiner_roles_super_encherisseur:>,
+                        datas=#ENV**{roles}|lignes2array})]                        
+                    
 
-					[(#SAISIE{auteurs,id_super_encherisseur,
-						label=<:encheres:choisir_super_encherisseur:>,
-						option_statut=oui,
-						multiple=oui})]
-						
+
+
                     <script type="text/javascript">
                         jQuery(document).ready(function(){
                             
                             if (!$('input[name="activer_super_encherisseur[]"]').is(':checked')) {
-                                $('.editer_id_super_encherisseur').hide(); 
+                                $('.editer_roles_super_encherisseur').hide(); 
                                 } 
                             });
                             
                         $('input[name="activer_super_encherisseur[]"]').click(function() {
-                            $('.editer_id_super_encherisseur').slideToggle('slow', function() {
+                            $('.editer_roles_super_encherisseur').slideToggle('slow', function() {
                             });
                     });   
                     </script>

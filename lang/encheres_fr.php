@@ -11,7 +11,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 'activer' => 'Mettre en vente',
 'activer_projet' => 'Activer le projet',
 'activer_redirection_langue_domaine' => 'Activer la redirection par domaine',
-'activer_super_asso' => 'Activer la fonctionnalité Super Association',
+'activer_super_encherisseur' => 'Activer la fonctionnalité Super Enchérisseur',
 'ajouter_categorie' => 'Ajouter une catégorie',
 'ajouter_logo' => 'Ajoutez une image',
 'archive' => 'Archive',
@@ -61,25 +61,12 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 
 // D
-'date_debut' => 'Changer la date pour différer la vente',
-'date_debut_court' => 'Date début',
-'date_debut_evenement' => 'Date début de l\'évènement',
-'date_extistante' => 'Cette date n\'existe pas, veuillez entre une date valide (YYYY-MM-DD)',
-'date_fin' => 'Date fin',
-'date_fin_evenement' => 'Date fin de l\'événement',
-'date_fin_min' => 'Date fin minimum',
-'date_valide' => 'Le format de votre date n\'est pas correct, veuillez entre une date valide (YYYY-MM-DD HH:MM:SS)',
-'deja' => 'Déjà',
-'deja_recolte' => 'déjà récolté',
-'desactiver' => 'Mettre en stand by',
-'desactiver_projet' => 'Désactiver le projet',
-'descriptif' => 'Descriptif',
+'determiner_roles'=>'Indiquez les rôles pour les auteurs/enchérisseurs',
+'determiner_roles_super_encherisseur'=>'Quel rôle obtient des droits "Super enréchisseur"',
 'devises' => 'Devises',
 'divers' => 'Divers',
-'domaine_langue' => 'domaine pour',
-'donnees_objets' => 'Détails objets',
 'duree' => 'Nombre de jours avant la clôture de la vente',
-'duree_valide' => 'Veuillez mettre une durée valide',
+
 
 
 // E
@@ -92,6 +79,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'enregistrer' => 'Enregistrer',
 'erreur_choisir_image' => 'Veuillez sélectionner une image !',
 'explicatif_montant_maximum' => '(Le système fera automatiquement des enchères pour vous, sans jamais dépasser ce montant)',
+'explication_determiner_roles' => 'un role par ligne, suivie d\'une virgule et d\'une description. La description peut être une chaîne de langue.',
 'explication_remise_vente_automatique' => 'L\'objet sera remis en vente automatiquement la la fin de la période de vente!',
 
 
@@ -124,14 +112,6 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 // J
 'jours_actifs' => 'Les jours actifs de l\'événement',
 
-
-// K
-'k_bleu' => 'Kidonateur actif',
-'k_gris' => 'aucun objet vendu',
-'k_orange' => 'Kidonateur assidu',
-'k_rouge' => 'Kidonateur régulier',
-'k_super' => 'SuperKidonateur',
-'k_vert' => 'Kidonateur confirmé',
 
 
 // L
@@ -237,15 +217,12 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 
 // R
-'redirection_choix' => 'Introduisez le(s) domaine(s) par langues (sépares par virgule)',
 'region' => 'Région',
 'remise_en_vente' => 'Remise en vente',
 'remise_vente_automatique' => 'Remise en vente automatique',
-'reponse_objet' => 'Réponse à votre question au sujet de  @titre@ (répondre sur le site) ',
-'reponse_projet' => 'Réponse à votre question au sujet de  @titre@ (répondre sur le site) ',
-'restaurant' => 'Restaurant',
-'restaurants' => 'Restaurants',
-'rubrique_projets' => 'Rubrique principale des projets',
+'roles' => 'Roles',
+
+
 
 
 // S
@@ -255,8 +232,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'statut' => 'Statut',
 'statut_asso' => 'Statut Organisme',
 'statut_juridque' => 'Statut juridique',
-'sujet_validation_paypal_assoc' => '[Kidonaki]: Payement Paypal en votre faveur - @objet@.',
-'super_asso' => 'Super Associations',
+
 'supprime' => 'Supprimé',
 'supprimer' => 'Supprimer',
 'supprimer_photo' => 'Supprimer l\'image',
