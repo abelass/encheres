@@ -57,7 +57,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne seront valables que dans la période de validité indiquée (voir annonce) et uniquement pour les jours où le lieu culturel n\'affiche pas encore complet.',
 'compte_bancaire' => 'Nº de compte bancaire',
 'confirmer' => 'Confirmer',
-'courrier_velo' => 'Suggérer la livraison écologique à bicyclette (<a class=\"nouvelle_fenetre\" href=\"@url_art@\" title=\"FAG - Dioxyde de Gambette\">Dioxyde de Gambettes</a>)',
+
 
 
 // D
@@ -127,6 +127,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 
 // L
+'label_role'=>'Rôle :',
 'livraison' => 'Livraison à domicile (chez l’acheteur)',
 'livraison_court' => 'Livraison',
 'livraison_deja_payee' => 'La livraison de cet objet a déjà été payée.',
@@ -220,10 +221,10 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'region' => 'Région',
 'remise_en_vente' => 'Remise en vente',
 'remise_vente_automatique' => 'Remise en vente automatique',
-'roles' => 'Roles',
+'role' => 'Rôle',
+'roles' => 'Rôles',
 
-
-
+'teste'=>'Teste',
 
 // S
 'section_vendeurs' => 'Section vendeurs <br/> <small> (pas nécessaire pour les seuls acheteurs)</small>',

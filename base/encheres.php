@@ -158,6 +158,31 @@ function encheres_declarer_tables_objets_sql($tables) {
 	return $tables;
 }
 
+/*/
+ * Les champs extras
+ */
+function encheres_declarer_champs_extras($champs = array()) {
+  include_spip('inc/config');
+  include_spip('encheres_fonctions');
+  
+  $roles=lignes2array(lire_config('encheres/roles'));
+    
 
+  $champs['spip_auteurs']['role'] = array(
+      'saisie' => 'selection',//Type du champ (voir plugin Saisies)
+      'options' => array(
+            'nom' => 'role', 
+            'label' => _T('encheres:label_role'), 
+            'sql' => "varchar(30) NOT NULL DEFAULT ''",
+            'datas' => $roles,// Valeur par dÃ©faut
+            'restrictions'=>array('voir' => array('auteur' => ''),//Tout le monde peut voir
+                        'modifier' => array('auteur' => 'webmestre')),//Seuls les webmestres peuvent modifier
+      ),
+  );
+  
 
+  return $champs;   
+  
+  
+}
 ?>
