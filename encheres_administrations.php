@@ -52,7 +52,7 @@ function encheres_upgrade($nom_meta_base_version, $version_cible) {
 
 	$maj['create'] = array(array('maj_tables', array('spip_encheres_objets', 'spip_mises', 'spip_encherisseurs')));
     $maj['1.0.7'] = array(array('maj_tables', array('spip_encheres_objets', 'spip_mises', 'spip_encherisseurs')));
-    cextras_api_upgrade(role_declarer_champs_extras(), $maj['1.1.2']);
+    cextras_api_upgrade(encheres_declarer_champs_extras(), $maj['1.1.2']);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
@@ -85,7 +85,7 @@ function encheres_vider_tables($nom_meta_base_version) {
 	sql_delete("spip_versions",              sql_in("objet", array('encheres_objet', 'mise', 'encherisseur')));
 	sql_delete("spip_versions_fragments",    sql_in("objet", array('encheres_objet', 'mise', 'encherisseur')));
 	sql_delete("spip_forum",                 sql_in("objet", array('encheres_objet', 'mise', 'encherisseur')));
-    cextras_api_vider_tables(role_declarer_champs_extras());
+    cextras_api_vider_tables(encheres_declarer_champs_extras());
 	effacer_meta($nom_meta_base_version);
 }
 
