@@ -9,6 +9,7 @@
 		<ul>
 
 			[(#SAISIE{auteurs, id_auteur, obligatoire=oui,
+			    defaut=#ENV{id_auteur},
 				label=<:encheres_objet:label_id_auteur:>})]
 
 			[(#SAISIE{input, titre, obligatoire=oui,
