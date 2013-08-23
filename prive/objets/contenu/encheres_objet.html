@@ -4,49 +4,54 @@
 
 <B_auteur>
 <div class="champ contenu_id_auteur[ (#ID_AUTEUR*|strlen|?{'',vide})]">
-        <label><:spip:onglet_auteur:> : </label>
+        <label><:spip:onglet_auteur:></label>
 <BOUCLE_auteur(AUTEURS){id_auteur}{tout}>
         <a href="#URL_ECRIRE{auteur,id_auteur=#ID_AUTEUR}"<span dir='#LANG_DIR' class='#EDIT{id_auteur} id_auteur'>#NOM</a></span>
 </BOUCLE_auteur>
 </div>
 </B_auteur>
 [<div class="champ contenu_titre[ (#TITRE*|strlen|?{'',vide})]">
-	<label><:encheres_objet:label_titre:> : </label>
+	<label><:encheres_objet:label_titre:></label>
 	<span dir='#LANG_DIR' class='#EDIT{titre} titre'>(#TITRE)</span>
 </div>]
 
 [<div class="champ contenu_descriptif[ (#DESCRIPTIF*|strlen|?{'',vide})]">
-    <label><:encheres_objet:label_descriptif:> : </label>
+    <label><:encheres_objet:label_descriptif:></label>
     <span dir='#LANG_DIR' class='#EDIT{descriptif} descriptif'>(#DESCRIPTIF)</span>
 </div>]
 
 [<div class="champ contenu_texte[ (#TEXTE*|strlen|?{'',vide})]">
-    <label><:encheres_objet:label_texte:> : </label>
+    <label><:encheres_objet:label_texte:></label>
     <span dir='#LANG_DIR' class='#EDIT{texte} texte'>(#TEXTE)</span>
 </div>]
 
 [<div class="champ contenu_prix_minimum[ (#PRIX_MINIMUM*|strlen|?{'',vide})]">
-	<label><:encheres_objet:label_prix_minimum:> : </label>
+	<label><:encheres_objet:label_prix_minimum:></label>
 	<span dir='#LANG_DIR' class='#EDIT{prix_minimum} prix_minimum'>(#PRIX_MINIMUM|filtres_prix_formater)</span>
 </div>]
 
+[<div class="champ contenu_prix_depart[ (#PRIX_DEPART*|strlen|?{'',vide})]">
+	<label><:encheres_objet:label_prix_depart:></label>
+	<span dir='#LANG_DIR' class='#EDIT{prix_depart} prix_depart'>(#PRIX_DEPART|filtres_prix_formater)</span>
+</div>]
+
 [<div class="champ contenu_prix_actuel[ (#PRIX_ACTUEL*|strlen|?{'',vide})]">
-	<label><:encheres_objet:label_prix_actuel:> : </label>
+	<label><:encheres_objet:label_prix_actuel:></label>
 	<span dir='#LANG_DIR' class='#EDIT{prix_actuel} prix_actuel'>(#PRIX_ACTUEL|filtres_prix_formater)</span>
 </div>]
 
 [<div class="champ contenu_date_debut[ (#DATE_DEBUT*|strlen|?{'',vide})]">
-	<label><:encheres_objet:label_date_debut:> : </label>
+	<label><:encheres_objet:label_date_debut:></label>
 	<span dir='#LANG_DIR' class='#EDIT{date_debut} date_debut'>(#DATE_DEBUT)</span>
 </div>]
 
 [<div class="champ contenu_date_fin[ (#DATE_FIN*|strlen|?{'',vide})]">
-	<label><:encheres_objet:label_date_fin:> : </label>
+	<label><:encheres_objet:label_date_fin:></label>
 	<span dir='#LANG_DIR' class='#EDIT{date_fin} date_fin'>(#DATE_FIN)</span>
 </div>]
 
 [<div class="champ contenu_palier_encherissement[ (#PALIER_ENCHERISSEMENT*|strlen|?{'',vide})]">
-	<label><:encheres_objet:label_palier_encherissement:> : </label>
+	<label><:encheres_objet:label_palier_encherissement:></label>
 	<span dir='#LANG_DIR' class='#EDIT{palier_encherissement} palier_encherissement'>(#PALIER_ENCHERISSEMENT|filtres_prix_formater)</span>
 </div>]
 

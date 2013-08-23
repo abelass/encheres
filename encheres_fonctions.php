@@ -91,15 +91,14 @@ function difference_jour($date_fin,$mode ='complete'){
 	$minutes=date('i',$date_difference);
 	$secondes=date('s',$date_difference);
 
-echo 0;
 	if ($mode=='simple'){
-		if ($mois !=0 ) $mois_affichage=$mois.' '._T('m').' ';
- 		if ($jours !=0) $jours_affichage=$jours.' '._T('j').' ';
-		if ($heures !=0) $heures_affichage=$heures.' '._T('h').' ';
-		if ($minutes !=0) $minutes_affichage=$minutes.' '._T('min').' ';
-		if ($secondes !=0) $secondes_affichage=$secondes.' '._T('s');
+		if ($mois !=0 ) $mois_affichage=$mois._T('m').' ';
+ 		if ($jours !=0) $jours_affichage=$jours._T('j').' ';
+		if ($heures !=0) $heures_affichage=$heures._T('h').' ';
+		if ($minutes !=0) $minutes_affichage=$minutes._T('min').' ';
+		if ($secondes !=0) $secondes_affichage=$secondes._T('s');
 		}
-	if ($mode=='complete'){echo 'ok';
+	if ($mode=='complete'){
 		if ($mois !=0) $mois_affichage=$mois.' '._T('mois').' ';
  		if ($jours !=0){
 			if($jours==1) $jours_affichage=$jours.' '._T('jour').' ';
@@ -143,9 +142,11 @@ function devises(){
 	return $devises;
 }
 
-/*
- * Crée un tableau des données du gagnant d'une enchère
- */
+function traduire_devise($code_devise){
+	$devises =devises();
+	$trad= $devises[$code_devise];
+	return $trad;
+}
 
 function enchere_gagnant($id_encheres_objet,$filtre=''){
     

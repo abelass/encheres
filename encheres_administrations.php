@@ -35,7 +35,7 @@ function encheres_upgrade($nom_meta_base_version, $version_cible) {
 	
     cextras_api_upgrade(encheres_declarer_champs_extras(),$maj['create']);
 	$maj['create'][] = array('maj_tables', array('spip_encheres_objets', 'spip_mises', 'spip_encherisseurs'));
-
+	$maj['1.0.2'][] = array('maj_tables', array('spip_encheres_objets'));
 
 
 	include_spip('base/upgrade');

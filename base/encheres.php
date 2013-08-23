@@ -54,7 +54,8 @@ function encheres_declarer_tables_objets_sql($tables) {
 			"id_auteur"          => "bigint(21) NOT NULL DEFAULT 0",
 			"titre"              => "varchar(25) NOT NULL DEFAULT ''",
             "texte"              => "text NOT NULL DEFAULT ''",
-            "descriptif"         => "text NOT NULL DEFAULT ''",			
+            "descriptif"         => "text NOT NULL DEFAULT ''",
+			"prix_depart"       => "float (38,2) NOT NULL  DEFAULT '00.0'",            			
 			"prix_minimum"       => "float (38,2) NOT NULL  DEFAULT '00.0'",
 			"prix_actuel"        => "float (38,2) NOT NULL  DEFAULT '00.0'",
 			"date_debut"         => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
@@ -77,8 +78,8 @@ function encheres_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, lang AS lang",
 		'date' => "date",
-		'champs_editables'  => array('id_auteur', 'titre', 'descriptif', 'texte', 'prix_minimum', 'date_debut','date_fin', 'palier_encherissement'),
-		'champs_versionnes' => array( 'id_auteur', 'titre', 'descriptif', 'texte', 'prix_minimum', 'date_debut', 'date_fin', 'date_fin', 'palier_encherissement'),
+		'champs_editables'  => array('id_auteur', 'titre', 'descriptif', 'texte','prix_depart', 'prix_minimum', 'date_debut','date_fin', 'palier_encherissement'),
+		'champs_versionnes' => array( 'id_auteur', 'titre', 'descriptif', 'texte','prix_depart', 'prix_minimum', 'date_debut', 'date_fin', 'date_fin', 'palier_encherissement'),
 		'rechercher_champs' => array("titre" => 10, "texte" => 8, "descriptif" => 4),
 		'tables_jointures'  => array(),
 		'statut_textes_instituer' => array(
@@ -98,8 +99,6 @@ function encheres_declarer_tables_objets_sql($tables) {
 			)
 		),
 		'texte_changer_statut' => 'encheres_objet:texte_changer_statut_encheres_objet', 
-		
-
 	);
 
 	$tables['spip_mises'] = array(

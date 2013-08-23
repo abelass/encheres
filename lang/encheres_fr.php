@@ -72,7 +72,8 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 // E
 'eliminer' => 'Enlever',
 'enchere_cloture' => 'Enchère clôturée le',
-'encheres' => 'enchères',
+'enchere' => 'Enchère',
+'encheres' => 'Enchères',
 'encheres_auto' => '(enchères automatiques)',
 'encheres_maj' => 'Enchères',
 'encheres_titre' => 'Enchères',
@@ -80,6 +81,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'erreur_choisir_image' => 'Veuillez sélectionner une image !',
 'explicatif_montant_maximum' => '(Le système fera automatiquement des enchères pour vous, sans jamais dépasser ce montant)',
 'explication_determiner_roles' => 'un role par ligne, suivie d\'une virgule et d\'une description. La description peut être une chaîne de langue.',
+'explication_activer_palier_encherissment' => 'Permet d\'augmenter le montant de mise par paliers d\'enchérissment',
 'explication_remise_vente_automatique' => 'L\'objet sera remis en vente automatiquement la la fin de la période de vente!',
 
 
@@ -115,6 +117,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 
 // L
+'label_activer_palier_encherissment'=>'Activer les paliers d\'enchérissment',
 'label_communication_virement' => 'Communication virement',
 'label_compte_bancaire' => 'Compte bancaire',
 'label_id_auteur' => 'Association',

@@ -2,20 +2,20 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-function formulaires_enchere_mise_charger_dist()
+function formulaires_enchere_mise_charger_dist($id_encheres_objet)
 {
-	$valeurs = array('id_encheres_objet'=>'','montant'=>'','prix_maximum_top'=>'','id_auteur'=>'');
-	$id_encheres_objet =$valeurs['id_encheres_objet'];
+	$valeurs = array('id_encheres_objet'=>$id_encheres_objet,'montant'=>'','prix_maximum_top'=>'','id_auteur'=>'');
+
 
 	$data = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet);
 
-	$montant_precedent = $data['montant_mise'];
+	$montant_precedent = $data['prix_actuel']>0 ?$data['prix_actuel']:$data['prix_depart'];
 	$prix_achat_inmediat= $data['prix_achat_inmediat'];
-	$valeurs['montant_mise'] = $montant_precedent;
+	$valeurs['montant'] = $montant_precedent;
 
 	$data = sql_fetsel('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND suivre=""','','prix_maximum DESC');
 
-	$valeurs['montant'] = $montant_precedent+1;
+	if(isset($valeurs['montant']))$valeurs['montant'] = $montant_precedent+1;
 	$prix_max_min = $data['prix_maximum'];
 
 	if ($prix_max_min<$montant_precedent){
@@ -32,13 +32,11 @@ function formulaires_enchere_mise_charger_dist()
 
 
 /* @annotation: Validation des champs obligatoires */
-function formulaires_enchere_mise_verifier_dist(){
+function formulaires_enchere_mise_verifier_dist($id_encheres_objet){
 	include_spip('encheres_fonctions');	
 	$devise = traduire_devise(lire_config('encheres/devise'));
 	$erreurs = array();
 	/* @annotation: le champ prix_livraison est obligatoire si la marchandise est livré ou envoyé ou les deux, si pas de frais de livraison exigé, on permet la valeur 0*/
-	$id_encheres_objet = _request('id_encheres_objet');
-
 
 		$data = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet);
 
@@ -116,11 +114,10 @@ function formulaires_enchere_mise_verifier_dist(){
 }
 
 /* @annotation: Actualisation de la base de donnée */
-function formulaires_enchere_mise_traiter_dist(){
+function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 
 		include_spip('inc/encheresmail_fonctions');	
 
-		$id_encheres_objet= _request('id_encheres_objet');
 		$id_auteur = _request('id_auteur');
 		$montant = _request('montant');
 		$prix_maximum = _request('prix_maximum');
@@ -171,7 +168,7 @@ function formulaires_enchere_mise_traiter_dist(){
 			/* @annotation: Si l'id_client  n'existe pas encore on crée un nouveau*/
 			if (!$id_encherisseur){
 				$arg_inser_client = array(
-					'id_auteur' => 4id_auteur,
+					'id_auteur' => $id_auteur,
 					'id_encheres_objet' => $id_encheres_objet,
 					'date_creation' => $date_creation,
 					'prix_maximum' => $prix_maximum,

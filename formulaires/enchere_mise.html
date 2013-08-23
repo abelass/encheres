@@ -1,20 +1,19 @@
 #CACHE{0}
-
+#SET{config,#CONFIG{encheres}}
 <div class="formulaire_spip enchere_mise">
 
-<h2><:encheres:votre_mise:></h2>
+<h2><:encheres:enchere:></h2>
 
-<BOUCLE_objet(spip_encheres_objets){id_objet}>
+<BOUCLE_objet(ENCHERES_OBJETS){id_encheres_objet}>
 <!--<div><:encheres:montant_mise:> : #MONTANT_MISE</div>-->
 
 [(#REM)Si premiere mise, mise minimum et celle du prix minimal, sino celle de la dernière mise plus 1]
-<BOUCLE_objet_test(spip_encheres_mises){id_objet}>
+<BOUCLE_objet_test(MISES){id_encheres_objet}>
 #SET{inmediat,#PRIX_ACHAT_INMEDIAT}
 #SET{montant_min,#MONTANT_MISE|plus{1}}
 </BOUCLE_objet_test>
 #SET{montant_min,#PRIX_DEPART}
 <//B_objet_test>
-
 
 [(#PRIX_ACHAT_INMEDIAT|=={'inmediat'}|oui)<div><:encheres:vente_directe:> !</div>]
 
@@ -25,22 +24,31 @@
 		<input type='hidden' name='id_auteur' value="#SESSION{id_auteur}" />	
 
         #SET{erreurs,#ENV**{erreurs}|table_valeur{montant_mise}}
-        <div id='montant_mise' class="editer_montant_mise obligatoire[ (#GET{erreurs}|oui)erreur]">
-            <label for="montant_mise"><:encheres:montant_mise:></label>
-				[(#PRIX_ACHAT_INMEDIAT|=={inmediat}|non)
-            [<span class='erreur_message'>(#GET{erreurs})</span>]
-            <input type='text' class="text"  name='montant_mise' id='montant_mise' value="[(#ENV{montant_mise,#GET{montant_min}})]" /> [(#CONFIG{encheres/devise}|traduire_devise)]]
-				[(#PRIX_ACHAT_INMEDIAT|=={inmediat}|oui)<input type='hidden' name='montant_mise' value="#MONTANT_MISE" /><div>#MONTANT_MISE  [(#CONFIG{encheres/devise}|traduire_devise)]</div>]
+        <div id='montant' class="editer_montant obligatoire[ (#GET{erreurs}|oui)erreur]">
+            [(#GET{config}|table_valeur{activer_palier_encherissment}|non)
+            <label for="montant_mise"><:encheres:montant_mise:></label>]
+		    [(#PRIX_ACHAT_INMEDIAT|=={inmediat}|non)
+		      [(#GET{config}|table_valeur{activer_palier_encherissment}|non)
+                [<span class='erreur_message'>(#GET{erreurs})</span>]
+                <input type='text' class="text"  name='montant' id='montant' value="[(#ENV{montant,#GET{montant_min}})]" /> [(#GET{config}|table_valeur{devise}|traduire_devise)]
+                ]
+              [(#GET{config}|table_valeur{activer_palier_encherissment}|oui)
+                    <INCLURE{fond=formulaires/inc-enchere_mise_palier_encherissement,id_encheres_objet,palier_encherissement,env,ajax}/>
+                ]
+            ]
+            
+		  [(#PRIX_ACHAT_INMEDIAT|=={inmediat}|oui)<input type='hidden' name='montant_mise' value="#MONTANT" /><div>[(#MONTANT|filtres_prix_formater)]</div>]
         </div>
-			[(#PRIX_ACHAT_INMEDIAT|=={inmediat}|non)
+		[(#PRIX_ACHAT_INMEDIAT|=={inmediat}|non)
         #SET{erreurs,#ENV**{erreurs}|table_valeur{prix_maximum}}<br/>
+        [(#GET{config}|table_valeur{montan_maximum}|oui)
         <div id='prix_maximum' class="editer_prix_maximum obligatoire[ (#GET{erreurs}|oui)erreur]">
             <label for="prix_maximum"><:encheres:montant_mise_maximum:><br/><small><:encheres:explicatif_montant_maximum:> <a href="#URL_ARTICLE{1154}" target="_blank" ><:en_savoir_plus:></a></small></label>
             [<span class='erreur_message'>(#GET{erreurs})</span>]
             <input type='text' class="text"  name='prix_maximum' id='prix_maximum' value="" /> [(#CONFIG{encheres/devise}|traduire_devise)]
-        </div>]
+        </div>]]
 
-    	<p style="float:right;"><input type="image" src="[(#CHEMIN{styles/images/[(#PRIX_ACHAT_INMEDIAT|=={inmediat}|?{acheteznew.gif,encherir[_(#ENV{lang})].jpg})]})]" class="submit" value="<:encheres:enregistrer:>" onClick="return confirmSubmitEnchere()"/></p>
+    	<p style="bouton"><input type="button" class="submit" value="<:encheres:enregistrer:>" /></p>
 	</form>
 </BOUCLE_objet>
 
