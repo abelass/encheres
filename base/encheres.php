@@ -165,7 +165,7 @@ function encheres_declarer_champs_extras($champs = array()) {
   include_spip('inc/config');
   include_spip('encheres_fonctions');
   
-  $roles=lignes2array(lire_config('encheres/roles'));
+  $roles=lignes2array(lire_config('encheres/roles',array()));
     
 
   $champs['spip_auteurs']['role'] = array(
