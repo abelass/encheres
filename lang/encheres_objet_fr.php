@@ -17,7 +17,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'icone_modifier_encheres_objet' => 'Modifier cet objet pour enchères',
 	'info_1_encheres_objet' => 'Un objet pour enchères',
 	'info_aucun_encheres_objet' => 'Aucun objet pour enchères',
-	'info_encheres_encheres_objets_auteur' => 'Les objets pour enchères de cet auteur',
+	'info_encheres_objets_auteur' => 'Les objets pour enchères de cet auteur',
 	'info_nb_encheres_encheres_objets' => '@nb@ objets pour enchères',
 
 	// L
@@ -40,8 +40,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_ajouter_encheres_objet' => 'Ajouter un objet pour enchères',
 	'texte_changer_statut_encheres_objet' => 'Ce objet pour enchères est :',
 	'texte_creer_associer_encheres_objet' => 'Créer et associer un objet pour enchères',
-	'titre_encheres_encheres_objets' => 'Objets pour enchères',
-	'titre_encheres_encheres_objets_rubrique' => 'Objets pour enchères de la rubrique',
+	'titre_encheres_objets' => 'Objets pour enchères',
+	'titre_encheres_objets_rubrique' => 'Objets pour enchères de cette rubrique',
 	'titre_encheres_objet' => 'Objet pour enchères',
 	'titre_encheres_objets' => 'Objets pour enchères',	
 	'titre_langue_encheres_objet' => 'Langue de cet objet pour enchères',
