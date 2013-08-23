@@ -1,3 +1,5 @@
+#SET{date,#DATE}
+
 [(#SET{defaut_tri,#ARRAY{
 	titre,1, 
 	date,-1, 
@@ -13,7 +15,10 @@
 			<th class='picto' scope='col'></th>
 			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th> 
 			<th class='titre' scope='col'>[(#TRI{titre,<:encheres_objet:label_titre:>,ajax})]</th>
-			<th class='date' scope='col'>[(#TRI{date,<:date:>,ajax})]</th> 
+			<th class='temps_restant' scope='col'><:encheres_objet:label_temps_restant:></th> 
+			<th class='gagnant' scope='col'><:encheres_objet:label_gagnant:></th> 
+			<th class='prix_minimum' scope='col'>[(#TRI{prix_minimum,<:encheres_objet:label_prix_minimum:>,ajax})]</th>		
+			<th class='prix_actuel' scope='col'>[(#TRI{prix_actuel,<:encheres_objet:label_prix_actuel:>,ajax})]</th>			 	
 			<th class='id' scope='col'>[(#TRI{id_encheres_objet,<:info_numero_abbreviation:>,ajax})]</th>
 		</tr>
 	</thead>
@@ -23,7 +28,10 @@
 			<td class='picto'>[(#CHEMIN_IMAGE{encheres_objet-16.png}|balise_img)]</td>
 			<td class='statut'>[(#STATUT|puce_statut{encheres_objet,#ID_ENCHERES_OBJET,#ID_RUBRIQUE})]</td> 
 			<td class='titre principale'>[(#LOGO_ENCHERES_OBJET|image_reduire{20,26})]<a href="[(#ID_ENCHERES_OBJET|generer_url_entite{encheres_objet})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ENCHERES_OBJET">[(#RANG). ]#TITRE</a></td>
-			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td> 
+			<td class='temps_restant'>[(#DATE_FIN|difference_jour)]</td> 
+			<td class='gagnant'>[(#ID_ENCHERES_OBJET|enchere_gagnant|table_valeur{#NOM})]</td> 	
+			<td class='prix_minimum'>#PRIX_MINIMUM</td> 
+			<td class='prix_actuel'>#PRIX_ACTUEL</td> 									
 			<td class='id'>[(#AUTORISER{modifier,encheres_objet,#ID_ENCHERES_OBJET}|?{
 				<a href="[(#URL_ECRIRE{encheres_objet_edit,id_encheres_objet=#ID_ENCHERES_OBJET})]">#ID_ENCHERES_OBJET</a>,
 				#ID_ENCHERES_OBJET

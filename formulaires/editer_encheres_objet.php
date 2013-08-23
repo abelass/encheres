@@ -65,7 +65,7 @@ function formulaires_editer_encheres_objet_identifier_dist($id_encheres_objet='n
 function formulaires_editer_encheres_objet_charger_dist($id_encheres_objet='new', $id_rubrique=0, $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$valeurs = formulaires_editer_objet_charger('encheres_objet',$id_encheres_objet,$id_rubrique,$lier_trad,$retour,$config_fonc,$row,$hidden);
     $valeurs['date_actuelle']=date('Y-m-d H:i:s');
-    echo $valeurs['id_auteur'];
+
     if(((isset($valeurs['id_auteur']) AND $valeurs['id_auteur']<1) OR !isset($valeurs['id_auteur'])) AND !_request('id_auteur'))$valeurs['id_auteur']=session_get('id_auteur');
 	return $valeurs;
 }

@@ -23,13 +23,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// L
 	'label_date_debut' => 'Date début',
 	'label_date_fin' => 'Date fin',
-    'label_descriptif' => 'Déscriptif',   	
+    'label_descriptif' => 'Déscriptif',
+    'label_gagnant' => 'Gagnant',       	
 	'label_id_auteur' => 'Id auteur',
 	'label_id_encheres__objet_source' => 'Id objet source',
 	'label_palier_encherissement' => 'Paliers d\'enchérissement',
 	'label_prix_actuel' => 'Prix actuel',
 	'label_prix_minimum' => 'Prix Minimun',
 	'label_titre' => 'Titre',
+	'label_temps_restant' => 'Temps restant',	
 	'label_texte' => 'Texte',	
 
 	// R

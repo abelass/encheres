@@ -22,7 +22,7 @@
     	#ACTION_FORMULAIRE{#ENV{action}}
      	<input type='hidden' name='id_article'  value="#ID_ARTICLE" />
 		<input type='hidden' name='id_objet' value="#ID_OBJET" />
-		<input type='hidden' name='id_encherisseur' value="#SESSION{id_auteur}" />	
+		<input type='hidden' name='id_auteur' value="#SESSION{id_auteur}" />	
 
         #SET{erreurs,#ENV**{erreurs}|table_valeur{montant_mise}}
         <div id='montant_mise' class="editer_montant_mise obligatoire[ (#GET{erreurs}|oui)erreur]">

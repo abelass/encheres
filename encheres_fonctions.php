@@ -28,10 +28,8 @@ function cloturer_enchere($id_encheres_objet,$statut) {
 
 // Filtre qui affiche une différence de date
 
-function difference_date ($date_debut,$date_fin,$output='',$sec=''){
+function difference_date ($date_debut,$date_fin,$secondes=86400){
 
- 	$secondes=86400;
- 	if($sec){$secondes=$sec;}
  	$date_debut_jours = date('d-m-Y',strtotime($date_debut));
  	$date_debut_heures = date('G:i:s',strtotime($date_debut));
 
@@ -67,15 +65,12 @@ function calculer_date($date,$difference,$format=NULL){
 	$date=date($format, strtotime ($date."$difference"));
 
  	return $date;
-
 }
+
 
 /* Fonction permet de cacluler le temps entre la date actuelle; et une date donnÃ©e */
 
-function difference_jour($date_fin,$mode = NULL){
-	if(!$mode){
-	$mode='complete';
-	};
+function difference_jour($date_fin,$mode ='complete'){
 
 	$date_fin_jours = date('Y-m-d',strtotime($date_fin));
 	$date_fin_heures = date('G:i:s',strtotime($date_fin));
@@ -96,7 +91,7 @@ function difference_jour($date_fin,$mode = NULL){
 	$minutes=date('i',$date_difference);
 	$secondes=date('s',$date_difference);
 
-
+echo 0;
 	if ($mode=='simple'){
 		if ($mois !=0 ) $mois_affichage=$mois.' '._T('m').' ';
  		if ($jours !=0) $jours_affichage=$jours.' '._T('j').' ';
@@ -104,7 +99,7 @@ function difference_jour($date_fin,$mode = NULL){
 		if ($minutes !=0) $minutes_affichage=$minutes.' '._T('min').' ';
 		if ($secondes !=0) $secondes_affichage=$secondes.' '._T('s');
 		}
-	if ($mode=='complete'){
+	if ($mode=='complete'){echo 'ok';
 		if ($mois !=0) $mois_affichage=$mois.' '._T('mois').' ';
  		if ($jours !=0){
 			if($jours==1) $jours_affichage=$jours.' '._T('jour').' ';
@@ -148,6 +143,19 @@ function devises(){
 	return $devises;
 }
 
+/*
+ * Crée un tableau des données du gagnant d'une enchère
+ */
+
+function enchere_gagnant($id_encheres_objet,$filtre=''){
+    
+    $gagnant=sql_fetsel('*','spip_encherisseurs,spip_auteurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
+    
+    if($filtre)$gagnant=$gagnant[$filtre];
+    
+    return $gagnant;
+}
+ 
 
 //Surcharge de la fonction filtres_prix_formater_dist du plugin prix
 if(!function_exists('filtres_prix_formater')){

@@ -4,29 +4,28 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 
 function formulaires_enchere_mise_charger_dist()
 {
-	$valeurs = array('id_objet'=>'','id_article'=>'','montant_mise'=>'','prix_maximum_top'=>'');
-	$valeurs['id_objet'] = _request('id_objet');
-	$id_objet =_request('id_objet');
+	$valeurs = array('id_encheres_objet'=>'','montant'=>'','prix_maximum_top'=>'','id_auteur'=>'');
+	$id_encheres_objet =$valeurs['id_encheres_objet'];
 
-	$sql = spip_query( "SELECT * FROM spip_encheres_objets WHERE id_objet='$id_objet' ");
-		while($data = spip_fetch_array($sql)) {
-			$montant_precedent = $data['montant_mise'];
-			$prix_achat_inmediat= $data['prix_achat_inmediat'];
-			$valeurs['montant_mise'] = $montant_precedent;
-					}
-	$sql = spip_query( "SELECT * FROM spip_encheres_encherisseurs WHERE id_objet='$id_objet' AND suivre='' ORDER BY prix_maximum DESC LIMIT 1");
-		while($data = spip_fetch_array($sql)) {
-		$valeurs['montant_mise'] = $montant_precedent+1;
-		$prix_max_min = $data['prix_maximum'];
+	$data = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet);
 
-		if ($prix_max_min<$montant_precedent){
-			$prix_max_min = $montant_precedent+2;
-				}
-		else{
-			$prix_max_min = $data['prix_maximum']+1;
+	$montant_precedent = $data['montant_mise'];
+	$prix_achat_inmediat= $data['prix_achat_inmediat'];
+	$valeurs['montant_mise'] = $montant_precedent;
+
+	$data = sql_fetsel('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND suivre=""','','prix_maximum DESC');
+
+	$valeurs['montant'] = $montant_precedent+1;
+	$prix_max_min = $data['prix_maximum'];
+
+	if ($prix_max_min<$montant_precedent){
+		$prix_max_min = $montant_precedent+2;
 			}
-		$valeurs['prix_maximum_top'] = $prix_max_min;
-			}
+	else{
+		$prix_max_min = $data['prix_maximum']+1;
+		}
+	$valeurs['prix_maximum_top'] = $prix_max_min;
+
 	return $valeurs;
 }
 
@@ -38,15 +37,15 @@ function formulaires_enchere_mise_verifier_dist(){
 	$devise = traduire_devise(lire_config('encheres/devise'));
 	$erreurs = array();
 	/* @annotation: le champ prix_livraison est obligatoire si la marchandise est livré ou envoyé ou les deux, si pas de frais de livraison exigé, on permet la valeur 0*/
-	$id_objet = _request('id_objet');
+	$id_encheres_objet = _request('id_encheres_objet');
 
 
-		$sql = spip_query( "SELECT * FROM spip_encheres_objets WHERE id_objet='$id_objet' ");
-				while($data = spip_fetch_array($sql)) {
-				$montant_precedent = $data['montant_mise'];
-				$prix_achat_inmediat= $data['prix_achat_inmediat'];
-				$statut= $data['statut'];				
-					}
+		$data = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet);
+
+		$montant_precedent = $data['montant'];
+		$prix_achat_inmediat= $data['prix_achat_inmediat'];
+		$statut= $data['statut'];				
+
 
 	foreach(array('montant_mise') as $obligatoire)
 	if (!_request($obligatoire)) $erreurs[$obligatoire] = _T('encheres:champ_obligatoire');
@@ -60,8 +59,8 @@ function formulaires_enchere_mise_verifier_dist(){
 					}
 
 		if($valideur){
-			$sql = spip_query( "SELECT * FROM spip_encheres_encherisseurs WHERE id_objet='$id_objet' AND suivre='' ORDER BY prix_maximum DESC LIMIT 1");
-				while($data = spip_fetch_array($sql)) {
+		      $data = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet.' AND suivre=""','','prix_maximum DESC');
+
 				$prix_max_min = $data['prix_maximum'];
 				$prix_maximum_comparer = $data['prix_maximum'];
 				$enchere='ok';
@@ -71,7 +70,7 @@ function formulaires_enchere_mise_verifier_dist(){
 				else{ 
 					$prix_max_min = $data['prix_maximum']+1;
 					}
-				}
+				
 
 				if (_request('montant_mise') AND !ctype_digit(_request('montant_mise')) ) {	
 				$erreurs['montant_mise'] = _T('encheres:prix_valide');
@@ -121,27 +120,25 @@ function formulaires_enchere_mise_traiter_dist(){
 
 		include_spip('inc/encheresmail_fonctions');	
 
-		$id_objet= _request('id_objet');
-		$id_article= _request('id_article');
-		$id_encherisseur = _request('id_encherisseur');
-		$montant_mise = _request('montant_mise');
+		$id_encheres_objet= _request('id_encheres_objet');
+		$id_auteur = _request('id_auteur');
+		$montant = _request('montant');
 		$prix_maximum = _request('prix_maximum');
 		$date_creation = date('Y-m-d G:i:s');
-		$url_retour= generer_url_public("article","id_article=$id_article");
-		$url_retour= str_replace('&amp;','&',$url_retour); 
-		$url_var='&id_objet='.$id_objet;
+		//$url_retour= generer_url_public("article","id_article=$id_article");
+		//$url_retour= str_replace('&amp;','&',$url_retour); 
+		//$url_var='&id_objet='.$id_objet;
 		$date_actuel= time();
 
 		//Établit les données de base
 
-		$objet = sql_fetsel('*','spip_encheres_objets',array('id_objet='.sql_quote($id_objet)));
+		$objet = sql_fetsel('*','spip_encheres_objets',array('id_encheres_objet='.sql_quote($id_encheres_objet)));
 
-		$prix_achat_inmediat = $objet['prix_achat_inmediat'];
 		$statut = $objet['statut'];
 		$date_fin = $objet['date_fin'];
 		$date_fin_jours = date('d-m-Y',strtotime($date_fin));
 		$date_fin_heures = date('G:i:s',strtotime($date_fin));
-		$montant_mise_actuel =$objet['montant_mise'];
+		$montant_mise_actuel =$objet['montant '];
 
 		$split_jours = explode("-", $date_fin_jours);
 		$split_heures = explode(":", $date_fin_heures);
@@ -150,8 +147,8 @@ function formulaires_enchere_mise_traiter_dist(){
 		$date_difference = ($date_fin-$date_actuel)/(3600*24);
 					
 	
-		$encherisseur = sql_fetsel('*','spip_encheres_encherisseurs',array('id_objet='.sql_quote($id_objet),'id_encherisseur='.sql_quote($id_encherisseur)));		
-		$id_client = $encherisseur['id_client'];
+		$encherisseur = sql_fetsel('*','spip_encherisseurs',array('id_encheres_objet='.sql_quote($id_objet),'id_auteur='.sql_quote($id_auteur)));		
+		$id_encherisseur = $encherisseur['id_encherisseur'];
 		$suivre = $encherisseur['suivre'];
 
 
@@ -172,19 +169,17 @@ function formulaires_enchere_mise_traiter_dist(){
 		if ($statut=='mise_en_vente' OR $statut=='mise_en_vente_active' AND $date_fin > $date_actuel){
 
 			/* @annotation: Si l'id_client  n'existe pas encore on crée un nouveau*/
-			if (!$id_client){
+			if (!$id_encherisseur){
 				$arg_inser_client = array(
-					'id_client' => '',
-					'id_objet' => $id_objet,
-					'id_encherisseur' => $id_encherisseur,
+					'id_auteur' => 4id_auteur,
+					'id_encheres_objet' => $id_encheres_objet,
 					'date_creation' => $date_creation,
 					'prix_maximum' => $prix_maximum,
 					);
-				$id_client = sql_insertq('spip_encheres_encherisseurs',$arg_inser_client);
+				$id_encherisseur = sql_insertq('spip_encherisseurs',$arg_inser_client);
 				}
-			elseif($prix_maximum){
-				spip_query ("UPDATE spip_encheres_encherisseurs SET prix_maximum = '$prix_maximum', suivre = '' WHERE id_client='$id_client'");
-					}
+			elseif($prix_maximum)
+			    sql_updateq('spip_encheres_encherisseurs',array('prix_maximum' => $prix_maximum, 'suivre' => ''),'id_encherisseur='.$id_encherisseur);
 			elseif($suivre=='1'){
 				spip_query ("UPDATE spip_encheres_encherisseurs SET suivre = '' WHERE id_objet='$id_objet'");
 				
