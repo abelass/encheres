@@ -12,13 +12,6 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 	
 
-/*
- * Un fichier de pipelines permet de regrouper
- * les fonctions de branchement de votre plugin
- * sur des pipelines existants.
- */
-
-
 /**
  * Ajouter les objets sur les vues de rubriques
  *
@@ -67,5 +60,13 @@ function encheres_affiche_auteurs_interventions($flux) {
 	return $flux;
 }
 
+function encheres_taches_generales_cron($taches_generales){
+        $taches_generales['encheres'] = 60*10; // tous les 10 minutes           
+    return $taches_generales;
+}
 
+function encheres_header_prive($flux){
+    $flux .= recuperer_fond('inclure/header');
+    return $flux;   
+}
 ?>
