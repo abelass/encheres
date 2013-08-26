@@ -20,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-    <BOUCLE_liste_encheres_objets(ENCHERES_OBJETS){id_rubrique?}{id_secteur?}{id_encheres_objet_source?}{id_auteur?}{id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>
+    <BOUCLE_liste_encheres_objets(ENCHERES_OBJETS){id_rubrique?}{id_secteur?}{statut IN publie,mise_en_vente_active}{id_encheres_objet_source?}{id_auteur?}{id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>
         <tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
             <td class='titre principale'>[(#LOGO_ENCHERES_OBJET|image_reduire{20,26})]<a href="[(#ID_ENCHERES_OBJET|generer_url_entite{encheres_objet})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ENCHERES_OBJET">[(#RANG). ]#TITRE</a></td>
             <td class='temps_restant'>[(#DATE_FIN|difference_jour{simple})]</td> 

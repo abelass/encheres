@@ -2,18 +2,29 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-function formulaires_enchere_mise_charger_dist($id_encheres_objet)
-{
+function formulaires_enchere_mise_charger_dist($id_encheres_objet){
+    $date_actuel=date('Y-m-d H:i:s');
 	$valeurs = array('id_encheres_objet'=>$id_encheres_objet,'montant'=>'','palier_encherissement'=>'','id_auteur'=>'');
 
 
-	$data = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet);
+	$objet = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet);
+    
+    $valeurs['editable']=true;
 
-	$montant_precedent = $data['prix_actuel']>0 ?$data['prix_actuel']:$data['prix_depart'];
-	$prix_achat_inmediat= $data['prix_achat_inmediat'];
+	$montant_precedent = $objet['prix_actuel']>0 ?$$objet['prix_actuel']:$$objet['prix_depart'];
+	$prix_achat_inmediat= $$objet['prix_achat_inmediat'];
 	$valeurs['montant'] = $montant_precedent;
+    $statut=$objet['statut'];
 
-	$data = sql_fetsel('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND suivre=""','','prix_maximum DESC');
+	$encherisseur = sql_fetsel('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND suivre=""','','prix_maximum DESC');
+    
+    
+
+    if($objet['date_fin'] <= $date_actuel){
+        $actualiser = charger_fonction('actions_enchere_gagne','inc');
+        $actualiser('cloture_cron_'.$statut,$id_encheres_objet);
+        $valeurs['editable']=false;
+    }
 
 	if(isset($valeurs['montant']))$valeurs['montant'] = $montant_precedent+1;
 	$prix_max_min = $data['prix_maximum'];
@@ -117,6 +128,8 @@ function formulaires_enchere_mise_verifier_dist($id_encheres_objet){
 
 /* @annotation: Actualisation de la base de donnée */
 function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
+        $actualiser = charger_fonction('actions_enchere_gagne','inc');
+    
         include_spip('inc/config');
         $config=lire_config('encheres');
 		$prix_maximum = _request('prix_maximum');
@@ -183,7 +196,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 				// Invalider les caches
 				include_spip('inc/invalideur');
 				suivre_invalideur("id='id_encheres_objet/$id_encheres_objet'");
-					}
+					
 			if ($prix_achat_inmediat!='inmediat'){
 					$statut='mise_en_vente_active';
 					
@@ -204,7 +217,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
                             'montant' => $montant,
                             'date' => $date_creation
                             );
-                     $id_mise = sql_insertq('spip_mises',$arg_inser_mise);
+                     sql_insertq('spip_mises',$arg_inser_mise);
                      sql_updateq('spip_encherisseurs',array('gagnant'=>1),'id_encherisseur='.$id_encherisseur);
                      sql_updateq('spip_encheres_objets',array('prix_actuel'=>$montant,'statut'=>$statut),'id_encheres_objet='.$id_encheres_objet);
                     
@@ -254,7 +267,6 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
             				);
             				$id_mise = sql_insertq('spip_mises',$arg_inser_mise);
             				}
-            	
             							//Envoi de mail à l'encherisseur qui vient d'être surpassé
             	//  						$envoyer_message_visiteur = charger_fonction('envoyer_message_visiteur','inc');
             	//  						$envoyer_message_visiteur($email,'enchere_surpassee',$id_encheres_objet);
@@ -279,11 +291,13 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
             	   }
 				}
 			else {
-					$actualiser = charger_fonction('actions_enchere_gagne','inc');
 					$actualiser('cloture_mise_inmediat',$id_encheres_objet,$id_encherisseur,$contexte);
 				};
-
-		// Invalider les caches
+		  }
+    else   {
+        $actualiser('cloture_cron_'.$statut,$id_encheres_objet,$id_auteur);
+    }
+          		// Invalider les caches
 		include_spip('inc/invalideur');
 		suivre_invalideur("id='id_encheres_objet/$id_encheres_objet'");	
 

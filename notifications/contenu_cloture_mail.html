@@ -1,0 +1,38 @@
+#HTTP_HEADER{Content-Type:text/html}
+#INCLURE{fond=emails/inc-haut}
+<BOUCLE_art(ENCHERES_OBJETS){id_encheres_objet}{statut?}>
+
+<BOUCLE_auteur(AUTEURS){id_auteur=#ID_ACHETEUR}{tout}>
+    #SET{nom_client,#NOM}
+     #SET{email,#EMAIL}
+</BOUCLE_auteur>
+
+
+[(#ENV{qui}|=={encherisseur}|oui)
+<p><:encheres:bonjour:> #GET{nom_client}</p>
+<p><:enchere:message_enchere_gagnee:></p>]
+[(#ENV{qui}|=={encherisseur}|non)
+<p><:enchere:enchere_gagne_par:> #GET{nom_client}</p>]
+
+<h3><:encheres:recapitulatif:></h3>
+
+<p><:encheres_objet:label_titre:>#TITRE</p>
+[(#ENV{qui}|=={encherisseur}|non)
+    <p><:encheres:label_gagnant> #GET{nom_client}</p>
+    
+    <p><:encheres:label_email:> #GET{email}</p>
+    ]
+
+<p><:encheres:remerciement:></p>
+
+<p>#NOM_SITE_SPIP</p>
+
+<hr />
+<p><a href="#URL_SITE_SPIP">#URL_SITE_SPIP</a></p>
+</BOUCLE_art>
+[(#ENV{format_envoi}|=={plain}|oui)
+	#FILTRE{supprimer_tags|filtrer_entites|trim}]
+[(#ENV{format_envoi}|=={plain}|non)
+	#FILTRE{filtrer_entites|trim}]
+
+#INCLURE{fond=emails/inc-bas}

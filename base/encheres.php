@@ -52,6 +52,7 @@ function encheres_declarer_tables_objets_sql($tables) {
 			"id_secteur"         => "bigint(21) NOT NULL DEFAULT 0", 
 			"id_encheres_objet_source" => "bigint(21) NOT NULL DEFAULT 0",
 			"id_auteur"          => "bigint(21) NOT NULL DEFAULT 0",
+			"id_acheteur"          => "bigint(21) NOT NULL DEFAULT 0",			
 			"titre"              => "varchar(25) NOT NULL DEFAULT ''",
             "texte"              => "text NOT NULL DEFAULT ''",
             "descriptif"         => "text NOT NULL DEFAULT ''",
@@ -59,7 +60,8 @@ function encheres_declarer_tables_objets_sql($tables) {
 			"prix_minimum"       => "float (38,2) NOT NULL  DEFAULT '00.0'",
 			"prix_actuel"        => "float (38,2) NOT NULL  DEFAULT '00.0'",
 			"date_debut"         => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
-			"date_fin"           => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",			
+			"date_fin"           => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",	
+			"date_vente"           => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",						
 			"palier_encherissement" => "float (38,2) NOT NULL DEFAULT '00.0'",
 			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'", 
 			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL", 
@@ -86,7 +88,6 @@ function encheres_declarer_tables_objets_sql($tables) {
 			'prepa'    => 'texte_statut_en_cours_redaction',
 			'prop'     => 'texte_statut_propose_evaluation',
 			'publie'   => 'texte_statut_publie',
-			'mise_en_vente'   => 'encheres_objet:texte_statut_mise_en_vente',
 			'mise_en_vente_active'   => 'encheres_objet:texte_statut_mise_en_vente_active',
 			'vendu'   => 'encheres_objet:texte_statut_vendu',
 			'non_vendu'   => 'encheres_objet:texte_statut_non_vendu',												
@@ -96,7 +97,7 @@ function encheres_declarer_tables_objets_sql($tables) {
 		'statut'=> array(
 			array(
 				'champ'     => 'statut',
-				'publie'    => 'publie,mise_en_vente,mise_en_vente_active,vendu',
+				'publie'    => 'publie,mise_en_vente_active,vendu',
 				'previsu'   => 'publie,prop,prepa,,mise_en_vente,mise_en_vente_active,vendu',
 				'post_date' => 'date', 
 				'exception' => array('statut','tout')
