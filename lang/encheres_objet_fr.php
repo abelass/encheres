@@ -18,7 +18,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_1_encheres_objet' => 'Un objet pour enchères',
 	'info_aucun_encheres_objet' => 'Aucun objet pour enchères',
 	'info_encheres_objets_auteur' => 'Les objets pour enchères de cet auteur',
-	'info_nb_encheres_encheres_objets' => '@nb@ objets pour enchères',
+	'info_nb_encheres_objets' => '@nb@ objets pour enchères',
 
 	// L
 	'label_date_debut' => 'Date début :',
