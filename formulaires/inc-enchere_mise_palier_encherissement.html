@@ -1,6 +1,5 @@
 #CACHE{0}
 <div class="bloc_enchere">
-    <h2><:encheres:enchere:></h2>
     <BOUCLE_objet_test(MISES){id_encheres_objet}>
     #SET{inmediat,#PRIX_ACHAT_INMEDIAT}
     #SET{montant_min,#MONTANT_MISE}
@@ -12,6 +11,7 @@
       <b><:encheres_objet:label_montant_actuel:></b>  [(#GET{montant_min}|filtres_prix_formater)] 
       </div>
       <div class="mise">
-    <b><:encheres_objet:label_votre_mise:></b> <a class="ajax nocache" href="#URL_ACTION_AUTEUR{encherir_palier,#ID_ENCHERES_OBJET|#PALIER_ENCHERISSEMENT,#SELF}"><img src="#CHEMIN_IMAGE{plus_16.png}" alt="plus"/> [(#PALIER_ENCHERISSEMENT|filtres_prix_formater)] </a>
+    <b><:encheres_objet:label_votre_mise:></b> [(#PALIER_ENCHERISSEMENT|filtres_prix_formater)] 
+    <input type="hidden" name="palier_encherissement" value="#PALIER_ENCHERISSEMENT"/>
     </div>
 </div>
