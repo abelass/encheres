@@ -119,25 +119,22 @@ function formulaires_enchere_mise_verifier_dist($id_encheres_objet){
 function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
         include_spip('inc/config');
         $config=lire_config('encheres');
-
+		$prix_maximum = _request('prix_maximum');
 		$id_auteur = _request('id_auteur');
 		$montant = _request('montant');
 		$palier_encherissement = _request('palier_encherissement');
 		$date_creation = date('Y-m-d G:i:s');
-		//$url_retour= generer_url_public("article","id_article=$id_article");
-		//$url_retour= str_replace('&amp;','&',$url_retour); 
-		//$url_var='&id_objet='.$id_objet;
 		$date_actuel= time();
 
 		//Établit les données de base
 
-		$objet = sql_fetsel('*','spip_encheres_objets',array('id_encheres_objet='.$id_encheres_objet));
+		$objet = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet);
 
 		$statut = $objet['statut'];
 		$date_fin = $objet['date_fin'];
 		$date_fin_jours = date('d-m-Y',strtotime($date_fin));
 		$date_fin_heures = date('G:i:s',strtotime($date_fin));
-		$montant_actuel =$objet['montant '];
+		$montant_actuel =$objet['prix_actuel'];
 
 		$split_jours = explode("-", $date_fin_jours);
 		$split_heures = explode(":", $date_fin_heures);
@@ -146,12 +143,12 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 		$date_difference = ($date_fin-$date_actuel)/(3600*24);
 					
 	
-		$encherisseur = sql_fetsel('*','spip_encherisseurs',array('id_encheres_objet='.sql_quote($id_objet),'id_auteur='.sql_quote($id_auteur)));		
+		$encherisseur = sql_fetsel('*','spip_encherisseurs',array('id_encheres_objet='.sql_quote($id_encheres_objet),'id_auteur='.sql_quote($id_auteur)));		
 		$id_encherisseur = $encherisseur['id_encherisseur'];
 		$suivre = $encherisseur['suivre'];
 
 		//Établit les données du gagnant actuel
-		$encherisseur_gagnant = sql_select('*','spip_encheres_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
+		$encherisseur_gagnant = sql_select('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
 
 
 		$prix_max_actuel = $encherisseur_gagnant['prix_maximum'];
@@ -164,13 +161,11 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
     			}
             }
 
-					
-					
 
 		/* actions seulement possible si le statut est le bon*/
-		if ($statut=='mise_en_vente' OR $statut=='mise_en_vente_active' AND $date_fin > $date_actuel){
+		if (($statut=='publie' OR $statut=='mise_en_vente' OR $statut=='mise_en_vente_active') AND $date_fin > $date_actuel){
 
-			/* @annotation: Si l'id_client  n'existe pas encore on crée un nouveau*/
+			/* @annotation: Si l'id_encherisseur  n'existe pas encore on crée un nouveau*/
 			if (!$id_encherisseur){
 				$arg_inser_client = array(
 					'id_auteur' => $id_auteur,
@@ -180,173 +175,118 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 					);
 				$id_encherisseur = sql_insertq('spip_encherisseurs',$arg_inser_client);
 				}
-			elseif($prix_maximum)
-			    sql_updateq('spip_encheres_encherisseurs',array('prix_maximum' => $prix_maximum, 'suivre' => ''),'id_encherisseur='.$id_encherisseur);
+			/*elseif($prix_maximum)
+			    sql_updateq('spip_encherisseurs',array('prix_maximum' => $prix_maximum, 'suivre' => ''),'id_encherisseur='.$id_encherisseur);
 			elseif($suivre=='1'){
-				spip_query ("UPDATE spip_encheres_encherisseurs SET suivre = '' WHERE id_objet='$id_objet'");
+				spip_query ("UPDATE spip_encherisseurs SET suivre = '' WHERE id_encheres_objet='$id_encheres_objet'");*/
 				
 				// Invalider les caches
 				include_spip('inc/invalideur');
-				suivre_invalideur("id='id_objet/$id_objet'");
+				suivre_invalideur("id='id_encheres_objet/$id_encheres_objet'");
 					}
 			if ($prix_achat_inmediat!='inmediat'){
 					$statut='mise_en_vente_active';
 					
-					$acheteur =sql_fetsel('*','spip_auteurs LEFT JOIN spip_auteurs_elargis USING(id_auteur)',array('id_auteur='.sql_quote($id_encherisseur)));
+					$acheteur =sql_fetsel('*','spip_auteurs',array('id_auteur='.sql_quote($id_auteur)));
 	
 					if($acheteur){
 							$email = $acheteur['email'];
-							// Invalider les caches
-							include_spip('inc/invalideur');
-							suivre_invalideur("id='id_objet/$id_objet'");		
 							}
-	
-					//L'envoi des mails, avant de la actualisation de la BDD afin de permettre la détermination de l'encherisseur surpassé
-					
-					// les infos projets	
-						
-					$artobjet=sql_fetsel('*','spip_articles',array('id_article='.sql_quote($id_article)));
-					
-					$projet=sql_fetsel('titre,id_auteur','spip_rubriques',array('id_rubrique='.sql_quote($artobjet['id_rubrique'])));				
-							
-					// Les infos de l'association
-					$asso=sql_fetsel('nom','spip_auteurs',array('id_auteur='.sql_quote($projet['id_auteur'])))	;
-														
-		
-	
-					$contexte=array(
-						'objet'=>$objet,
-						'projet'=>$projet,
-						'asso'=>$asso,
-						'artobjet'=>$artobjet,					
-						'kidonateur'=>'rien',																				
-						);
-	
-					//Mail de confirmation pour l'encherisseur surpassé sauf celui qui reste gagnant à cause d'un prix maximum supérieur
-	
-					$sql = spip_query( "SELECT * FROM spip_encheres_mises WHERE id_objet='$id_objet' ORDER BY montant DESC LIMIT 1");
-						while($data = sql_fetch($sql)) {
-							$id_encherisseur_surpasse=$data['id_encherisseur'];
-							if($id_encherisseur_surpasse != $id_encherisseur){
-								$encherisseur_surpasse = requete_auteurs_elargis(array('id_auteur='.sql_quote($id_encherisseur_surpasse),' id_auteur!='.sql_quote($id_encherisseur_top_gagnant)));
-								
-								$contexte['acheteur']=$encherisseur_surpasse;
-	
-								$envoyer_message_visiteur = charger_fonction('envoyer_message_acheteur','inc');
-								$envoyer_message_visiteur($encherisseur_surpasse['email'],'enchere_surpassee',$id_objet,$contexte);
-	
-								}
-							}
-	
-	
-	
-					//Mail de confirmation pour l'encherisseur
-					if(($montant>$prix_max_actuel AND $prix_maximum>$prix_max_actuel) OR ($montant>$prix_max_actuel AND !$prix_max) OR ($prix_maximum>$prix_max_actuel AND $id_encherisseur_top!=$id_encherisseur)){
-					
-					$contexte['acheteur']=$acheteur;		
-					
-					$envoyer_message_acheteur = charger_fonction('envoyer_message_acheteur','inc');
-					$envoyer_message_acheteur($email,'enchere_reussie',$id_objet,$contexte);
-						};
-						
-						
-					//Mail de confirmation pour le kidonateur	
-					
-					$contexte['kidonateur']='';																				
-					
-					$envoyer_message_kidonateur = charger_fonction('envoyer_message_kidonateur','inc');
-					$envoyer_message_kidonateur('','enchere_effectue',$id_objet,$contexte);
-						
-						
-					//Mail de confirmation pour le webmaster
-	
-					$envoyer_message_webmestre = charger_fonction('envoyer_message_webmestre','inc');
-					$envoyer_message_webmestre('mise',$id_objet,$id_encherisseur);
-	
-					//Actualisation de la BDD
-	
-					//En cas de présence d'un prix maximum préexistant et d'un nouveau le surpassant, le prix est superieur d'un euro à l'ancien prix maximum
-	
-						if ($prix_maximum>$prix_max_actuel AND $prix_max_actuel>$montant_actuel)	{
-							if ($id_encherisseur!=$id_encherisseur_top){
-								$montant=$prix_max_actuel+1;
-								}
-							else{$montant=$montant_actuel;
-								};
-							}
-	
-					//En cas de présence d'un prix maximum préexistant et d'un nouveau prix maximum inférieur le montant est le prix_maximuum plus 1
-	
-						elseif ($prix_maximum>$montant_actuel AND $prix_max_actuel>$montant AND $prix_maximum<$prix_max_actuel)	{
-								$arg_inser_mise = array(
-								'id_mise' => '',
-								'id_encherisseur' => $id_encherisseur,
-								'id_objet' => $id_objet,
-								'montant' => $montant,
-								'date_mise' => $date_creation
-								);
-								$id_mise = sql_insertq('spip_encheres_mises',$arg_inser_mise);
-								
-								$montant=$prix_maximum+1;
-								$id_encherisseur = $id_encherisseur_top_gagnant;
-								
-	
-							//Envoi de mail à l'encherisseur qui vient d'être surpassé
-	// 						$envoyer_message_visiteur = charger_fonction('envoyer_message_visiteur','inc');
-	// 						$envoyer_message_visiteur($email,'enchere_surpassee',$id_objet);
-	// 						$id_encherisseur=$id_encherisseur_top;
-							}
-	
-					//En cas de présence d'un prix maximum préexistant et supérieur à la mise et d'unu nouvelle mise d'un encherisseur qui n'est pas celui du prix maximum gagnant, en enregistre la mise qui sera surpassé par la suite par l'encherisseur du prix maximim gagnant.
-	
-						elseif ($prix_max_actuel>=$montant AND !$prix_maximum AND $id_encherisseur!==$id_encherisseur_top)	{
-							if ($prix_max_actue!=$montant){ echo '2';
-								$arg_inser_mise = array(
-								'id_mise' => '',
-								'id_encherisseur' => $id_encherisseur,
-								'id_objet' => $id_objet,
-								'montant' => $montant,
-								'date_mise' => $date_creation
-								);
-								$id_mise = sql_insertq('spip_encheres_mises',$arg_inser_mise);
-								}
-	
-							//Envoi de mail à l'encherisseur qui vient d'être surpassé
-	//  						$envoyer_message_visiteur = charger_fonction('envoyer_message_visiteur','inc');
-	//  						$envoyer_message_visiteur($email,'enchere_surpassee',$id_objet);
-	
-							//Enregistrement de l'encherisseur gagnant (celui du prix maximun gagnant) en ajoutant 1 Euro au montant original
-							$id_encherisseur=$id_encherisseur_top;
-							if($prix_max_actuel!=$montant){
-								$montant=$montant+1;
-								}
-							}
-	
-					spip_query("UPDATE spip_encheres_objets SET montant='$montant',statut='$statut'  WHERE id_objet='$id_objet'");
-	
-					$arg_inser_mise = array(
-					'id_mise' => '',
-					'id_encherisseur' => $id_encherisseur,
-					'id_objet' => $id_objet,
-					'montant' => $montant,
-					'date_mise' => $date_creation
-					);
-					$id_mise = sql_insertq('spip_encheres_mises',$arg_inser_mise);
 
+            	//Actualisation de la BDD
+            
+                // si par palier
+                if($palier_encherissement){
+                    $montant=$montant_actuel+$palier_encherissement;
+                     $arg_inser_mise = array(
+                            'id_encherisseur' => $id_encherisseur,
+                            'id_encheres_objet' => $id_encheres_objet,
+                            'montant' => $montant,
+                            'date' => $date_creation
+                            );
+                     $id_mise = sql_insertq('spip_mises',$arg_inser_mise);
+                     sql_updateq('spip_encherisseurs',array('gagnant'=>1),'id_encherisseur='.$id_encherisseur);
+                     sql_updateq('spip_encheres_objets',array('prix_actuel'=>$montant,'statut'=>$statut),'id_encheres_objet='.$id_encheres_objet);
+                    
+                }
+                //En cas de présence d'un prix maximum préexistant et d'un nouveau le surpassant, le prix est superieur d'un euro à l'ancien prix maximum
+                else{
+            		if ($prix_maximum>$prix_max_actuel AND $prix_max_actuel>$montant_actuel)	{
+            			if ($id_encherisseur!=$id_encherisseur_top){
+            				$montant=$prix_max_actuel+1;
+            				}
+            			else{$montant=$montant_actuel;
+            				};
+            			}
+            
+            	//En cas de présence d'un prix maximum préexistant et d'un nouveau prix maximum inférieur le montant est le prix_maximuum plus 1
+            
+            		elseif ($prix_maximum>$montant_actuel AND $prix_max_actuel>$montant AND $prix_maximum<$prix_max_actuel)	{
+            				$arg_inser_mise = array(
+            				'id_mise' => '',
+            				'id_encherisseur' => $id_encherisseur,
+            				'id_encheres_objet' => $id_encheres_objet,
+            				'montant' => $montant,
+            				'date' => $date_creation
+            				);
+            				$id_mise = sql_insertq('spip_mises',$arg_inser_mise);
+            				
+            				$montant=$prix_maximum+1;
+            				$id_encherisseur = $id_encherisseur_top_gagnant;
+            				
+            
+            			//Envoi de mail à l'encherisseur qui vient d'être surpassé
+            // 						$envoyer_message_visiteur = charger_fonction('envoyer_message_visiteur','inc');
+            // 						$envoyer_message_visiteur($email,'enchere_surpassee',$id_encheres_objet);
+            // 						$id_encherisseur=$id_encherisseur_top;
+            			}
+            
+            					//En cas de présence d'un prix maximum préexistant et supérieur à la mise et d'unu nouvelle mise d'un encherisseur qui n'est pas celui du prix maximum gagnant, en enregistre la mise qui sera surpassé par la suite par l'encherisseur du prix maximim gagnant.
+            	
+            		elseif ($prix_max_actuel>=$montant AND !$prix_maximum AND $id_encherisseur!==$id_encherisseur_top)	{
+            			if ($prix_max_actue!=$montant){
+            				$arg_inser_mise = array(
+            				'id_mise' => '',
+            				'id_encherisseur' => $id_encherisseur,
+            				'id_encheres_objet' => $id_encheres_objet,
+            				'montant' => $montant,
+            				'date' => $date_creation
+            				);
+            				$id_mise = sql_insertq('spip_mises',$arg_inser_mise);
+            				}
+            	
+            							//Envoi de mail à l'encherisseur qui vient d'être surpassé
+            	//  						$envoyer_message_visiteur = charger_fonction('envoyer_message_visiteur','inc');
+            	//  						$envoyer_message_visiteur($email,'enchere_surpassee',$id_encheres_objet);
+            	
+            							//Enregistrement de l'encherisseur gagnant (celui du prix maximun gagnant) en ajoutant 1 Euro au montant original
+            							$id_encherisseur=$id_encherisseur_top;
+            							if($prix_max_actuel!=$montant){
+            								$montant=$montant+1;
+            								}
+            							}
+            	
+            					spip_query("UPDATE spip_encheres_objets SET montant='$montant',statut='$statut'  WHERE id_encheres_objet='$id_encheres_objet'");
+            	
+            					$arg_inser_mise = array(
+            					'id_mise' => '',
+            					'id_encherisseur' => $id_encherisseur,
+            					'id_encheres_objet' => $id_encheres_objet,
+            					'montant' => $montant,
+            					'date' => $date_creation
+            					);
+            					$id_mise = sql_insertq('spip_mises',$arg_inser_mise);
+            	   }
 				}
 			else {
 					$actualiser = charger_fonction('actions_enchere_gagne','inc');
-					$actualiser('cloture_mise_inmediat',$id_objet,$id_encherisseur,$contexte);
+					$actualiser('cloture_mise_inmediat',$id_encheres_objet,$id_encherisseur,$contexte);
 				};
-			}
-		else{$url_var='&id_objet='.$id_objet.'&enchere=termine';}
-		
+
 		// Invalider les caches
 		include_spip('inc/invalideur');
-		suivre_invalideur("id='id_objet/$id_objet'");	
+		suivre_invalideur("id='id_encheres_objet/$id_encheres_objet'");	
 
-		// construction de la page de retour
-		header ('location:'.$url_retour.$url_var);
 	}
 
 ?>
