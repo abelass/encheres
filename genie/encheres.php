@@ -38,7 +38,7 @@ include_spip('inc/utils');
 			}
 
 		// Selectionne celles qui se termine dans les 24 heures
-		elseif ($date_difference <='24'){
+		/*elseif ($date_difference <='24'){
 			// Cherche l'encherisseur gagnant actuel afin d'éviter de  lui envoyer un mail d'avis
 			$sql2 = spip_query( "SELECT * FROM spip_encheres_mises WHERE id_objet='$id_objet' ORDER BY montant_mise DESC LIMIT 1");
 
@@ -72,11 +72,11 @@ include_spip('inc/utils');
 					
 				spip_query("UPDATE spip_encheres_objets SET remise_vente_automatique='avis_envoye' WHERE id_objet='$id_objet'");
 				}
-			};
+			};*/
 
 		}
 		
-
+/*
 	$livre = spip_query( "SELECT * FROM spip_encheres_objets WHERE statut='vente_termine' AND statut_livraison!='envoie' AND statut_livraison!='recu' AND statut_payement_livraison='ok' AND date_paiement_livraison != '0000-00-00 00:00:00' AND envoi_rappels!='rappel_1_livraison' ORDER BY date_vente" );
 		while($v = sql_fetch($livre)) {
 		$id_objet = $v['id_objet'];
@@ -146,7 +146,7 @@ include_spip('inc/utils');
 			spip_log("CRON : rappel achteur 8 jours depuis livraison: id_objet: $id_objet ",'encheres_cron');
 		 
 		 }
-	}
+	}*/
 }
 
 ?>

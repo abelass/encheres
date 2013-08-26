@@ -86,14 +86,18 @@ function encheres_declarer_tables_objets_sql($tables) {
 			'prepa'    => 'texte_statut_en_cours_redaction',
 			'prop'     => 'texte_statut_propose_evaluation',
 			'publie'   => 'texte_statut_publie',
+			'mise_en_vente'   => 'encheres_objet:texte_statut_mise_en_vente',
+			'mise_en_vente_active'   => 'encheres_objet:texte_statut_mise_en_vente_active',
+			'vendu'   => 'encheres_objet:texte_statut_vendu',
+			'non_vendu'   => 'encheres_objet:texte_statut_non_vendu',												
 			'refuse'   => 'texte_statut_refuse',
 			'poubelle' => 'texte_statut_poubelle',
 		),
 		'statut'=> array(
 			array(
 				'champ'     => 'statut',
-				'publie'    => 'publie',
-				'previsu'   => 'publie,prop,prepa',
+				'publie'    => 'publie,mise_en_vente,mise_en_vente_active,vendu',
+				'previsu'   => 'publie,prop,prepa,,mise_en_vente,mise_en_vente_active,vendu',
 				'post_date' => 'date', 
 				'exception' => array('statut','tout')
 			)

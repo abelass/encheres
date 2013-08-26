@@ -150,18 +150,21 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 		$id_encherisseur = $encherisseur['id_encherisseur'];
 		$suivre = $encherisseur['suivre'];
 
-
 		//Établit les données du gagnant actuel
-		$encherisseur_gagnant = spip_query( "SELECT * FROM spip_encheres_encherisseurs WHERE id_objet='$id_objet' ORDER BY prix_maximum DESC LIMIT 1");
-				while($data = sql_fetch($encherisseur_gagnant)) {
-					$prix_max_actuel = $data['prix_maximum'];
-					$id_encherisseur_top	= $data['id_encherisseur'];
+		$encherisseur_gagnant = sql_select('*','spip_encheres_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
 
-						//Établit l'id du gagnant à cause d'un prix maximum
-					if ($montant_actuel<$prix_max_actuel AND $montant<=$prix_max_actuel AND $prix_maximum<$prix_max_actuel){
-						$id_encherisseur_top_gagnant = $id_encherisseur_top;
-						}
-					}
+
+		$prix_max_actuel = $encherisseur_gagnant['prix_maximum'];
+		$id_encherisseur_top	= $encherisseur_gagnant['id_encherisseur'];
+        
+        if($montant){
+            //Établit l'id du gagnant à cause d'un prix maximum
+    		if ($montant_actuel<$prix_max_actuel AND $montant<=$prix_max_actuel AND $prix_maximum<$prix_max_actuel){
+    			$id_encherisseur_top_gagnant = $id_encherisseur_top;
+    			}
+            }
+
+					
 					
 
 		/* actions seulement possible si le statut est le bon*/

@@ -49,32 +49,8 @@ function inc_actions_enchere_gagne_dist($type,$id_objet,$id_encherisseur='',$con
 				$projet=$donnees['projet'];	
 			}
 		
-		//Cherche une catégorie de l'objet actuel pour créer le lien recherche pour le mail aux encherisseurs perdants
 
-		if ($type!='cloture_cron_mise_en_vente' AND $type!='cloture_mise_inmediat'){
-		
-				$id_mot=sql_getfetsel('id_mot','spip_mots_articles',array('id_article='.sql_quote($id_article)));
-				$id_groupe=sql_getfetsel('id_groupe','spip_mots',array('id_mot='.sql_quote($id_mot)));
-				
- 					$mots_groupes = spip_query( "SELECT * FROM spip_groupes_mots WHERE id_groupe='$id_groupe'");
-						while($data = sql_fetch($mots_groupes)) {
- 						$id_parent = $data['id_parent'];
-						$var_url_categories = '&id_groupe1='.$id_groupe.'&recherche_etendue=oui#tableauobjets';
 
- 						$sql1 = spip_query( "SELECT * FROM spip_groupes_mots WHERE id_groupe='$id_parent'");
-							while($data = sql_fetch($sql1)) {
- 							$id_parent = $data['id_parent'];
-							$var_url_categories = '&id_groupe1='.$id_groupe.'&recherche_etendue=oui#tableauobjets';
-
- 							$sql2 = spip_query( "SELECT * FROM spip_groupes_mots WHERE id_groupe='$id_parent'");
-								while($data = sql_fetch($sql2)) {
- 								$id_parent = $data['id_parent'];
-								$var_url_categories = '&id_groupe1='.$id_groupe.'&recherche_etendue=oui#tableauobjets';
- 								}
- 							}
-						}
- 						
-				}
 				
 		if ($type!='cloture_cron_mise_en_vente'){
 					
@@ -109,14 +85,14 @@ function inc_actions_enchere_gagne_dist($type,$id_objet,$id_encherisseur='',$con
  					$envoyer_message_acheteur($email,'enchere_gagnee',$id_objet,$contexte);
 
 					//Mail de confirmation aux perdant de l'enchère
-					$sql = sql_select('id_encherisseur','spip_encheres_encherisseurs',array('id_objet='.$id_objet,'gagne=0','suivre!=1' ));
+					$sql = sql_select('id_encherisseur','spip_encheres_encherisseurs',array('id_objet='.$id_objet,'gagne!=1','suivre!=1' ));
 					
 					$id_perdants=array();
 					while($perdants = sql_fetch($sql)) {
 						$id_perdants[]=$perdants ['id_encherisseur'];
 						}
 						
-					spip_log('action:acheteur -'.serialize($id_perdants),'teste 3');
+					spip_log('action:acheteur -'.serialize($id_perdants),'teste');
 								
 								
 					foreach($id_perdants as $id_perdant){
@@ -150,7 +126,7 @@ function inc_actions_enchere_gagne_dist($type,$id_objet,$id_encherisseur='',$con
  			$remettre_en_vente($id_objet,'','auto');
 			}
 		else{
-			$statut='vendu';
+			$statut='non_vendu';
 			
 			sql_updateq('spip_encheres_objets',array("statut" => $statut),'id_objet='.sql_quote($id_objet));
 			
@@ -161,42 +137,7 @@ function inc_actions_enchere_gagne_dist($type,$id_objet,$id_encherisseur='',$con
 
 			};
 						
-		//Mise en vente des objets multi
-		
-		$sql = spip_query( "SELECT * FROM spip_encheres_objets WHERE (statut='mise_en_vente' OR statut='mise_en_vente_active') AND id_article='$id_article'  ORDER BY id_objet DESC LIMIT 3");
-
-			while($data = sql_fetch($sql)) {
-				$compteur = $compteur+1;
-					}
-				$sql2 = spip_query( "SELECT * FROM spip_encheres_objets WHERE statut='stand_by'  AND id_article='$id_article'  ORDER BY id_objet DESC LIMIT 1");
-					while($data = sql_fetch($sql2)) {
-					$duree = $data['duree'];
-					$statut = 'mise_en_vente';				
-					}
-				$date_fin = date('Y-m-d G:i:s', strtotime ($date."$duree day"));
-				
-				//Dans le cas des objets de la billetterie, vérifie si la date_stop-vente n'est pas inférieure à la date_fin de l'objet, sinon la date_fin devient la date_stop_vente	
-						
-				if ($date_fin > $date_stop_vente AND $date_stop_vente!="0000-00-00 00:00:00") $date_fin=$date_stop_vente;
-				$nombre = 3-$compteur;
-				
-
-				if ($date_fin>$date){
-				spip_query ("UPDATE spip_encheres_objets SET statut = '$statut', date_debut = '$date', date_fin = '$date_fin'  WHERE statut='stand_by' AND id_article='$id_article' ORDER BY id_objet LIMIT $nombre");
-				
-				if($nombre>0 AND $compteur!=1){
-					$sql = spip_query( "SELECT * FROM spip_encheres_objets WHERE statut='mise_en_vente' AND id_article='$id_article'  ORDER BY id_objet DESC LIMIT $nombre");
-						while($data = sql_fetch($sql)) {
-						$id_objet = $data['id_objet'];
-						$statut = 'mise_en_vente_multi';
-					
-						//Mail d'info au webmaster
- 						$envoyer_inscription_webmaster = charger_fonction('envoyer_message_webmaster','inc');
- 						$envoyer_inscription_webmaster('mise_en_vente_multi',$id_objet);
-						}
-					}
-				}
-				$id_objet = $id_objet_actuel;
+        $id_objet = $id_objet_actuel;
 				
 				//Enregistre le log
 				if ($type == 'cloture_mise_inmediat'){spip_log("Vente inmediate : action cloture de l'enchère: $id_objet",'encheres');};
