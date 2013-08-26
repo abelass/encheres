@@ -9,9 +9,8 @@ include_spip('inc/utils');
 // Cherche les objet en vente 
 	$sql = spip_query( "SELECT * FROM spip_encheres_objets WHERE statut='mise_en_vente_active' OR statut='mise_en_vente'" );
 		while($data = sql_fetch($sql)) {
- 		$id_objet = $data['id_objet'];
+ 		$id_encheres_objet = $data['id_encheres_objet'];
  		$statut = $data['statut'];
-		$id_encherisseur=$data['id_auteur'];
 		$remise_vente_automatique=$data['remise_vente_automatique'];		
  		$date_fin = $data['date_fin'];
  		$date_fin_jours = date('d-m-Y',strtotime($date_fin));
