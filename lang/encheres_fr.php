@@ -102,27 +102,18 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 // I
 'iban' => 'Nº IBAN',
-'id_objet' => 'ID OBJET',
-'id_transaction_kido' => 'Numéro de transaction Kidonaki',
-'info_ong_marques' => 'Info spécifique de l\'Organisme',
-'infos_marques_asso ' => 'Information sur l\'Organisme',
 'infos_payement_paypal' => 'Pour payer par Paypal cliquez simplement sur le bouton ci-dessous.',
 'infos_payement_virement' => 'Vous trouverez ci-dessous les informations nécessaires pour payer par virement. Merci de pas oublier d\'indiquer la communication.',
 'invendu' => 'Invendu',
 
 
-// J
-'jours_actifs' => 'Les jours actifs de l\'événement',
 
 
 
 // L
 'label_activer_palier_encherissment'=>'Activer les paliers d\'enchérissment',
-'label_communication_virement' => 'Communication virement',
 'label_compte_bancaire' => 'Compte bancaire',
-'label_id_auteur' => 'Association',
 'langues' => 'Langues',
-'lieux' => 'Partenaires culturels',
 
 
 // 0
@@ -139,16 +130,12 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 
 // M
-'marque' => 'Marque/commerce',
-'marque_convention' => 'Marque conventionnée',
-'marques' => 'Kidonateurs professionnels',
+
 'message_erreur_livraison_0' => 'Attention, en indiquant 0, vous vous engagez à livrer votre objet par la poste à vos frais!',
 'message_payement_ok' => 'Votre payement Paypal a été validé. Si ce n\'a pas encore été fait et si nécessaire n\'oubliez pas de pays la livraison.',
 'message_specifique_nombre' => 'Vous avez mis en vente @nombre@ exemplaires de cet objet. Le système les mettra en vente au fur et à mesure, en commençant par trois exemplaires. ',
 'message_validation_paypal_assoc' => 'L\'objet \"@objet@\" vendu en votre faveur à été payé sur votre compte Paypal. <br />Votre compte Paypal a été crédité d\'un montant de @montant@ @devise@. <br />La validation du payement de cet objet a été effectuée automatiquement.',
 'mettre_jours_actifs' => 'Encoder les jours actifs',
-'mise_en_vente' => 'Mise en vente',
-'mise_en_vente_active' => 'Mise en vente actif',
 'mode_livraison' => 'Mode livraison',
 'montant' => 'Montant',
 'montant_mise' => 'Montant',
@@ -175,6 +162,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'objet' => 'Objet',
 'objet_deja_paye' => 'Cet objet a déjà été payé.',
 'objet_envente' => 'objet mis en vente',
+'objet_vendu' => 'Cet objet est vendu',
 'objets_envente' => 'objets mis en vente',
 'occasion' => 'Occasion',
 'ong' => 'Association/ONG',
@@ -184,7 +172,6 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 
 // P
-'par_ce_kido' => 'par ce Kidonateur',
 'particulier' => 'Particulier',
 'particuliers' => 'Particuliers',
 'pas_repondre' => 'ATTENTION: NE PAS REPONDRE A CE MAIL EN CLIQUANT SUR REPONDRE. (Merci d\'utiliser uniquement les questions/réponses sur le site)',
@@ -210,9 +197,6 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'prix_livraison_expl' => '(Montant payé par l\'acheteur au vendeur, laissez vide si pas de livraison)<br/>Montant sans décimales',
 'prix_maximum_trop_bas' => 'le montant maximun doit être de @prix_max_min@ @devise@ au minimum',
 'prix_trop_bas' => 'Votre montant est inférieur à 5 @devise@. Nous vous demandons de mettre en vente des objets dont la valeur réelle est minimum 5 @devise@.',
-'prix_valide' => 'Merci d\'encoder uniquement un chiffre, sans symbole ni décimale',
-'projet' => 'Projet',
-'projet_desactive' => 'Le projet actuel de cet objet a été désactivé, veuillez choisir un autre',
 
 
 // Q
@@ -227,7 +211,6 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'role' => 'Rôle',
 'roles' => 'Rôles',
 
-'teste'=>'Teste',
 
 // S
 'section_vendeurs' => 'Section vendeurs <br/> <small> (pas nécessaire pour les seuls acheteurs)</small>',
@@ -257,10 +240,6 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'vente' => 'Vente',
 'vente_directe' => 'Cet objet est en vente directe',
 'votre_mise' => 'Votre mise'
-
-
-
-
 
 );
 
