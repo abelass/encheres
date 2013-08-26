@@ -45,6 +45,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_ajouter_encheres_objet' => 'Ajouter un objet pour enchères',
 	'texte_changer_statut_encheres_objet' => 'Ce objet pour enchères est :',
 	'texte_creer_associer_encheres_objet' => 'Créer et associer un objet pour enchères',
+    'texte_statut_mise_en_vente' => 'mise en vente',
+    'texte_statut_mise_en_vente_active' => 'mise en vente active', 
+    'texte_statut_non_vendu' => 'non vendu', 
+     'texte_statut_vendu' => 'vendu',           
 	'titre_encheres_objets' => 'Objets pour enchères',
 	'titre_encheres_objets_rubrique' => 'Objets pour enchères de cette rubrique',
 	'titre_encheres_objet' => 'Objet pour enchères',
@@ -52,5 +56,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_langue_encheres_objet' => 'Langue de cet objet pour enchères',
 	'titre_logo_encheres_objet' => 'Logo de cet objet pour enchères',
 );
+
 
 ?>
