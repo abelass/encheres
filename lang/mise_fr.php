@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// L
 	'label_date' => 'Date mise',
+	'label_encherisseur' => 'Enchérisseur',	
 	'label_id_encheres_mise' => 'Id enchères objet',
 	'label_id_encherisseur' => 'Id encherisseur',
 	'label_montant' => 'Montant',

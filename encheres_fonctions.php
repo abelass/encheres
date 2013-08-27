@@ -155,7 +155,13 @@ function enchere_gagnant($id_encheres_objet,$filtre=''){
     return $gagnant;
 }
  
-
+function encherisseur_auteur($id_encherisseur,$filtre=''){
+    $auteur=sql_fetsel('*','spip_encherisseurs LEFT JOIN spip_auteurs USING(id_auteur)','id_encherisseur='.$id_encherisseur);
+    if($filtre)$auteur=$auteur[$filtre];
+    
+    return $auteur;
+}
+ 
 //Surcharge de la fonction filtres_prix_formater_dist du plugin prix
 if(!function_exists('filtres_prix_formater')){
     function filtres_prix_formater($prix){

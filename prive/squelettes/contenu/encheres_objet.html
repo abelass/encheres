@@ -41,6 +41,8 @@
 [(#EVAL{_AJAX}|oui)
 	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin');/*\\]\\]>*/</script>
 ]
+<INCLURE{fond=prive/objets/liste/mises, par=date,id_encheres_objet, env, ajax, sinon=<:mises:info_aucun_mise:>}>
+
 </BOUCLE_encheres_objet>
 [(#ENV**{exec}|=={encheres_objet_edit}|?{#INCLURE{fond=prive/squelettes/contenu/encheres_objet_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
 <//B_encheres_objet>

@@ -112,14 +112,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 // L
 'label_activer_palier_encherissment'=>'Activer les paliers d\'enchérissment',
 'label_compte_bancaire' => 'Compte bancaire',
-'langues' => 'Langues',
 
-
-// 0
-'0' => 'Mise en vente confirmée',
-
-
-// L
 'label_email'=>'Email :',
 'label_auteur_encheres'=>'Auteur de l\'enchère',
 'label_gagnant'=>'Le gagnant :',
@@ -130,6 +123,10 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'livraison_deja_payee' => 'La livraison de cet objet a déjà été payée.',
 'livraison_email' => 'Envoi par email',
 'livraison_etranger' => 'J\'accepte de livrer dans un autre pays',
+'langues' => 'Langues',
+
+
+
 
 
 // M

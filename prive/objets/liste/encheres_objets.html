@@ -23,7 +23,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<BOUCLE_liste_encheres_objets(ENCHERES_OBJETS){id_rubrique?}{id_secteur?}{id_encheres_objet_source?}{id_auteur?}{id_mot?}{id_auteur?}{where?}{statut?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>
+	<BOUCLE_liste_encheres_objets(ENCHERES_OBJETS){id_rubrique?}{id_secteur?}{id_encheres_objet_source?}{id_auteur?}{id_mot?}{id_auteur?}{where?}{statut?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>#SET{gagnant,''}
 		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
 			<td class='picto'>[(#CHEMIN_IMAGE{encheres_objet-16.png}|balise_img)]</td>
 			<td class='statut'>[(#STATUT|puce_statut{encheres_objet,#ID_ENCHERES_OBJET,#ID_RUBRIQUE})]</td> 
@@ -38,8 +38,8 @@
 			    #SET{gagnant,#ID_ENCHERES_OBJET|enchere_gagnant}
                     <a href="[(#URL_ECRIRE{auteur,id_auteur=[(#GET{gagnant}|table_valeur{id_auteur})]})]">[(#GET{gagnant}|table_valeur{nom})]</a>
 			    </td> 	
-			<td class='prix_minimum'>#PRIX_MINIMUM</td> 
-			<td class='prix_actuel'>#PRIX_ACTUEL</td> 									
+			<td class='prix_minimum'>[(#PRIX_MINIMUM|filtres_prix_formater)]</td> 
+			<td class='prix_actuel'>[(#PRIX_ACTUEL|filtres_prix_formater)]</td> 									
 			<td class='id'>[(#AUTORISER{modifier,encheres_objet,#ID_ENCHERES_OBJET}|?{
 				<a href="[(#URL_ECRIRE{encheres_objet_edit,id_encheres_objet=#ID_ENCHERES_OBJET})]">#ID_ENCHERES_OBJET</a>,
 				#ID_ENCHERES_OBJET

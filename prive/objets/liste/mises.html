@@ -10,21 +10,23 @@
 	<thead>
 		<tr class='first_row'>
 			<th class='picto' scope='col'></th>
-			<th class='' scope='col'>[(#TRI{,<:mise:label_:>,ajax})]</th>
+			[(#ENV{id_encheres_objet}|non)<th class='titre_objet' scope='col'><:encheres:label_titre_objet:></th>]
+			<th class='encherisseur' scope='col'><:mise:label_encherisseur:></th>
 			<th class='date' scope='col'>[(#TRI{date,<:date:>,ajax})]</th> 
-			<th class='id' scope='col'>[(#TRI{id_mise,<:info_numero_abbreviation:>,ajax})]</th>
+			<th class='montant' scope='col'><:encheres:montant:></th>
 		</tr>
 	</thead>
 	<tbody>
-	<BOUCLE_liste_mises(MISES){id_encheres_objet?}{id_encherisseur?}{id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,num },#GET{defaut_tri}}{par }{pagination #ENV{nb,10}}>
+	<BOUCLE_liste_mises(MISES){id_encheres_objet?}{id_encherisseur?}{id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,date},#GET{defaut_tri}}{par date}{pagination #ENV{nb,10}}>#SET{auteur,''}
 		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
 			<td class='picto'>[(#CHEMIN_IMAGE{mise-16.png}|balise_img)]</td>
-			<td class=' principale'>[(#LOGO_MISE|image_reduire{20,26})]<a href="[(#ID_MISE|generer_url_entite{mise})]" title="<:info_numero_abbreviation|attribut_html:> #ID_MISE">[(#RANG). ]#</a></td>
-			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td> 
-			<td class='id'>[(#AUTORISER{modifier,mise,#ID_MISE}|?{
-				<a href="[(#URL_ECRIRE{mise_edit,id_mise=#ID_MISE})]">#ID_MISE</a>,
-				#ID_MISE
-			})]</td>
+			[(#ENV{id_encheres_objet}|non)<td class='titre_objet'><a href="#URL_ECRIRE{encheres_objet,id_encheres_objet=#ID_ENCHERES_OBJET}">#INFO_TITRE{encheres_objet,#ID_ENCHERES_OBJET}</a></td>]
+			<td class=' principale'>
+			    #SET{auteur,#ID_ENCHERISSEUR|encherisseur_auteur}
+                    <a href="[(#URL_ECRIRE{auteur,id_auteur=[(#GET{auteur}|table_valeur{id_auteur})]})]">[(#GET{auteur}|table_valeur{nom})]</a>
+            </td>
+			<td class='date secondaire'>[(#DATE|affdate{d-m-Y H:i})]</td> 
+			<td class='id'>[(#MONTANT|filtres_prix_formater)]</td>
 		</tr>
 	</BOUCLE_liste_mises>
 	</tbody>
