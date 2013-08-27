@@ -7,7 +7,7 @@ $date_actuel= time();
 include_spip('inc/utils');
 
 // Cherche les objet en vente 
-	$sql = spip_query( "SELECT * FROM spip_encheres_objets WHERE statut='mise_en_vente_active' OR statut='mise_en_vente'" );
+	$sql = sql_select('*','spip_encheres_objets','statut="mise_en_vente_active" OR statut="publie"');
 		while($data = sql_fetch($sql)) {
  		$id_encheres_objet = $data['id_encheres_objet'];
  		$statut = $data['statut'];
@@ -26,14 +26,14 @@ include_spip('inc/utils');
 		// Cloture de la vente 
 		if ($date_difference <= 0 ){
 
-			$sql2 = spip_query( "SELECT * FROM spip_encheres_mises WHERE id_objet='$id_objet' ORDER BY montant_mise DESC LIMIT 1");
+			$sql2 = sql_select('*','spip_encheres_mises','id_encheres_objet="$id__encheres_objet"','','montant_mise DESC','1');
 				while($data = sql_fetch($sql2)) {
 					$id_encherisseur=$data['id_encherisseur'];
 					};
 
 			// Détermine l'action suivant si l'enchère est resté sans mises (statut: mise_en_vente) ou avec mises (statut : mise_en_vente_active)	
 			$actualiser = charger_fonction('actions_enchere_gagne','inc');
-			$actualiser('cloture_cron_'.$statut,$id_objet,$id_encherisseur);
+			$actualiser('cloture_cron_'.$statut,$id_encheres_objet,$id_encherisseur);
 			}
 
 		// Selectionne celles qui se termine dans les 24 heures
@@ -146,6 +146,7 @@ include_spip('inc/utils');
 		 
 		 }
 	}*/
+	return 1;
 }
 
 ?>

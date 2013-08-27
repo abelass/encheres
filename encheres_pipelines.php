@@ -60,9 +60,9 @@ function encheres_affiche_auteurs_interventions($flux) {
 	return $flux;
 }
 
-function encheres_taches_generales_cron($taches_generales){
-        $taches_generales['encheres'] = 60*10; // tous les 10 minutes           
-    return $taches_generales;
+function encheres_taches_generales_cron($taches){
+        $taches['encheres'] = 60*10; // tous les 10 minutes           
+    return $taches;
 }
 
 function encheres_header_prive($flux){

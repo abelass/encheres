@@ -47,18 +47,18 @@ function inc_actions_enchere_gagne_dist($type,$id_encheres_objet,$id_encherisseu
     			);	
     		
             if($statut=='vendu'){
-                
+                // Notifications
+                $notifications = charger_fonction('notifications', 'inc', true);
+        
+    
+                // Envoyer à l'encherisseur et au webmaster
+                $notifications('cloture_webmaster',$id_encheres_objet, $options);
+        
+                $options['email']=$email;
+                $options['statut']=$statut;
+                $notifications('cloture_encherisseur',$id_encheres_objet, $options);
             }	
-            // Notifications
-            $notifications = charger_fonction('notifications', 'inc', true);
-    
 
-            // Envoyer à l'encherisseur et au webmaster
-            $notifications('cloture_webmaster',$id_encheres_objet, $options);
-    
-            $options['email']=$email;
-            $options['statut']=$statut;
-            $notifications('cloture_encherisseur',$id_encheres_objet, $options);
             }
 		elseif($remise_vente_automatique AND $statut_2!='vendu'){
  			$remettre_en_vente = charger_fonction('remise_vente','inc');

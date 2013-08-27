@@ -10,7 +10,7 @@ function notifications_cloture_encherisseur_dist($quoi,$id_encheres_objet, $opti
     
     $options['id_encheres_objet']=$id_encheres_objet;  
     $options['qui']='encherisseur';     
-    $subject=_T('encheres:cloture_votre_enchere_sur',array('nom'=>$GLOBALS['meta']['nom_site']));
+    $subject=_T('encheres:sujet_votre_enchere_gagne_sur',array('nom'=>$GLOBALS['meta']['nom_site']));
 
     $message=recuperer_fond('notifications/contenu_cloture_mail',$options);
      
@@ -19,16 +19,10 @@ function notifications_cloture_encherisseur_dist($quoi,$id_encheres_objet, $opti
     //
     //
     //
-    $nom='TissusBruxelles.pdf';
-    $fichier=realpath(find_in_path('docs/'.$nom));
-    $o=array(
+
+
+   $o=array(
         'html'=>$message,
-        'pieces_jointes' => array(
-               array('chemin' => $fichier,
-               'nom' => $nom,
-               'encodage' => 'base64',
-               'mime' => 'application/pdf')
-               )
         );
 
 

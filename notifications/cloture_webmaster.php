@@ -14,7 +14,7 @@ function notifications_cloture_webmaster_dist($quoi,$id_encheres_objet, $options
     $email=isset($GLOBALS['meta']['facteur_adresse_envoi_email'])?$GLOBALS['meta']['facteur_adresse_envoi_email']:$GLOBALS['meta']['email_webmaster'];
 
     
-    $subject=_T('encheres:encheres_cloture',array('titre'=>$titre));
+    $subject=_T('encheres:sujet_encheres_cloture',array('titre'=>$titre));
 
     $message=recuperer_fond('notifications/contenu_cloture_mail',$options);
      

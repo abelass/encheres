@@ -22,6 +22,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 // B
 'bic' => 'BIC/SWIFT',
+'bonjour' => 'Bonjour',
 'bulle_objet_vendu' => 'objet vendu',
 'bulle_objets_vendus' => 'objets vendus',
 
@@ -89,15 +90,13 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'fin' => 'Fin',
 'fin_enchere_non_termine' => 'Fin enchère non cloturée',
 'fin_enchere_termine' => 'Fin enchère cloturée',
-'fisc' => 'Déduction Fiscal',
-'footer' => 'Pied de page',
 'formats_autorises' => 'Seules des images en format png,jpg,gif sont autorisés',
 'frais_livraison' => 'Frais de livraison',
 
 
 // G
 'genre_prix' => 'Précisez le type de vente',
-'geo' => 'Géolocalisation',
+
 
 
 // I
@@ -121,7 +120,10 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 
 // L
+'label_email'=>'Email :',
+'label_gagnant'=>'Le gagnant :',
 'label_role'=>'Rôle :',
+'label_titre_objet'=>'Titre de l\'objet :',
 'livraison' => 'Livraison à domicile (chez l’acheteur)',
 'livraison_court' => 'Livraison',
 'livraison_deja_payee' => 'La livraison de cet objet a déjà été payée.',
@@ -131,6 +133,8 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 // M
 
+'message_enchere_gagnee' => 'Félicitations vous avez gagné l\'enchère pour l\'objet @titre@.',
+'message_enchere_gagne_par' => '@nom@ a gagné l\'enchère pour l\'objet @titre@.',
 'message_erreur_livraison_0' => 'Attention, en indiquant 0, vous vous engagez à livrer votre objet par la poste à vos frais!',
 'message_payement_ok' => 'Votre payement Paypal a été validé. Si ce n\'a pas encore été fait et si nécessaire n\'oubliez pas de pays la livraison.',
 'message_specifique_nombre' => 'Vous avez mis en vente @nombre@ exemplaires de cet objet. Le système les mettra en vente au fur et à mesure, en commençant par trois exemplaires. ',
@@ -205,7 +209,9 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 
 // R
-'region' => 'Région',
+
+'recapitulatif' => 'Récapitulatif',
+'remerciement' => 'Cordialement',
 'remise_en_vente' => 'Remise en vente',
 'remise_vente_automatique' => 'Remise en vente automatique',
 'role' => 'Rôle',
@@ -219,7 +225,8 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'statut' => 'Statut',
 'statut_asso' => 'Statut Organisme',
 'statut_juridque' => 'Statut juridique',
-
+'sujet_encheres_cloture' => 'Une enchère a été cloturée',
+'sujet_votre_enchere_gagne_sur' => 'Enchère gagné sur @nom@',
 'supprime' => 'Supprimé',
 'supprimer' => 'Supprimer',
 'supprimer_photo' => 'Supprimer l\'image',
@@ -242,5 +249,4 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'votre_mise' => 'Votre mise'
 
 );
-
 ?>

@@ -176,7 +176,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 
 
 		/* actions seulement possible si le statut est le bon*/
-		if (($statut=='publie' OR $statut=='mise_en_vente' OR $statut=='mise_en_vente_active') AND $date_fin > $date_actuel){
+		if (($statut=='publie' OR $statut=='mise_en_vente_active') AND $date_fin > $date_actuel){
 
 			/* @annotation: Si l'id_encherisseur  n'existe pas encore on crée un nouveau*/
 			if (!$id_encherisseur){
@@ -294,8 +294,8 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 					$actualiser('cloture_mise_inmediat',$id_encheres_objet,$id_encherisseur,$contexte);
 				};
 		  }
-    else   {
-        $actualiser('cloture_cron_'.$statut,$id_encheres_objet,$id_auteur);
+    elseif(($statut=='publie' OR $statut=='mise_en_vente_active') AND $date_fin <= $date_actuel)   {
+        $actualiser('cloture_cron_'.$statut,$id_encheres_objet);
     }
           		// Invalider les caches
 		include_spip('inc/invalideur');
