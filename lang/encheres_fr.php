@@ -121,6 +121,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 
 // L
 'label_email'=>'Email :',
+'label_auteur_encheres'=>'Auteur de l\'enchère',
 'label_gagnant'=>'Le gagnant :',
 'label_role'=>'Rôle :',
 'label_titre_objet'=>'Titre de l\'objet :',
@@ -136,6 +137,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'message_enchere_gagnee' => 'Félicitations vous avez gagné l\'enchère pour l\'objet @titre@.',
 'message_enchere_gagne_par' => '@nom@ a gagné l\'enchère pour l\'objet @titre@.',
 'message_erreur_livraison_0' => 'Attention, en indiquant 0, vous vous engagez à livrer votre objet par la poste à vos frais!',
+'message_loguer' => 'Vous devez vous loguer pour pouvoir participer à l\'enchère',
 'message_payement_ok' => 'Votre payement Paypal a été validé. Si ce n\'a pas encore été fait et si nécessaire n\'oubliez pas de pays la livraison.',
 'message_specifique_nombre' => 'Vous avez mis en vente @nombre@ exemplaires de cet objet. Le système les mettra en vente au fur et à mesure, en commençant par trois exemplaires. ',
 'message_validation_paypal_assoc' => 'L\'objet \"@objet@\" vendu en votre faveur à été payé sur votre compte Paypal. <br />Votre compte Paypal a été crédité d\'un montant de @montant@ @devise@. <br />La validation du payement de cet objet a été effectuée automatiquement.',

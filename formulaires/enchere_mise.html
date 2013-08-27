@@ -1,10 +1,11 @@
 #CACHE{0}
 #SET{config,#CONFIG{encheres}}
+<BOUCLE_objet(ENCHERES_OBJETS){id_encheres_objet}>
 <div class="formulaire_spip enchere_mise">
 
 <h2><:encheres:enchere:></h2>
 
-<BOUCLE_objet(ENCHERES_OBJETS){id_encheres_objet}>
+
 <!--<div><:encheres:montant_mise:> : #MONTANT_MISE</div>-->
 [(#EDITABLE|non)<p><:encheres:objet_vendu:></p>]
 [(#REM)Si premiere mise, mise minimum et celle du prix minimal, sino celle de la dernière mise plus 1]
@@ -15,7 +16,7 @@
 #SET{montant_min,#PRIX_DEPART}
 <//B_objet_test>
 [(#PRIX_ACHAT_INMEDIAT|=={'inmediat'}|oui)<div><:encheres:vente_directe:> !</div>]
-[(#EDITABLE|oui)
+[(#EDITABLE|et{#SESSION{id_auteur}}|oui)
 	<form action="#ENV{action}" method="post">
     	#ACTION_FORMULAIRE{#ENV{action}}
         #SET{erreurs,#ENV**{erreurs}|table_valeur{montant_mise}}
@@ -27,17 +28,19 @@
             <input type='text' class="text"  name='montant' id='montant' value="[(#ENV{montant,#GET{montant_min}})]" /> [(#GET{config}|table_valeur{devise}|traduire_devise)]
             ]
           [(#GET{config}|table_valeur{activer_palier_encherissment}|oui)
-                <INCLURE{fond=formulaires/inc-enchere_mise_palier_encherissement,id_encheres_objet,palier_encherissement,prix_depart,env,ajax}/>
+                <INCLURE{fond=formulaires/inc-enchere_mise_palier_encherissement,id_encheres_objet,palier_encherissement,prix_depart,cfg=#GET{config},env,ajax}/>
             ]
-            
+
         </div>
 
 
     	<p style="bouton"><input class="boutton" type="submit" value="<:encheres:enregistrer:>" /></p>
     	
-	</form>
-	]
-</BOUCLE_objet>
-
-
+	</form>]
+	
+            [(#SESSION{id_auteur}|non)
+            <b><:encheres:message_loguer:></b>
+            #FORMULAIRE_LOGIN{#SELF}
+            ]   	
 </div>
+</BOUCLE_objet>

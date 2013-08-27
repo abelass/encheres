@@ -36,6 +36,7 @@ function formulaires_enchere_mise_charger_dist($id_encheres_objet){
 		$prix_max_min = $data['prix_maximum']+1;
 		}
 	$valeurs['prix_maximum_top'] = $prix_max_min;
+    include_spip('inc/session');
     if($id_auteur=session_get('id_auteur'))$valeurs['_hidden'].='<input type="hidden" name="id_auteur" value="'.$id_auteur.'"/>';
 $valeurs['_hidden'].='<input type="hidden" name="id_auteur" value="'.$id_auteur.'"/>';
 	return $valeurs;
@@ -219,6 +220,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
                             );
                      sql_insertq('spip_mises',$arg_inser_mise);
                      sql_updateq('spip_encherisseurs',array('gagnant'=>1),'id_encherisseur='.$id_encherisseur);
+                     sql_updateq('spip_encherisseurs',array('gagnant'=>''),'id_encherisseur!='.$id_encherisseur);                     
                      sql_updateq('spip_encheres_objets',array('prix_actuel'=>$montant,'statut'=>$statut),'id_encheres_objet='.$id_encheres_objet);
                     
                 }

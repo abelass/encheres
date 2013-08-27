@@ -6,6 +6,9 @@
     </BOUCLE_objet_test>
     #SET{montant_min,#PRIX_DEPART}
     <//B_objet_test>
+    [(#CFG{activer_super_encherisseur}|oui)
+        <INCLURE{fond=formulaires/inc_enchere_mise_super_encherisseur,env}/>
+    ]
     
     <div class="montant_actuel">
       <b><:encheres_objet:label_montant_actuel:></b>  [(#GET{montant_min}|filtres_prix_formater)] 

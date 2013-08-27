@@ -10,24 +10,24 @@ function inc_actions_enchere_gagne_dist($type,$id_encheres_objet,$id_encherisseu
 		
 		// Les infos acheteur
 		if($id_encherisseur)$acheteur= sql_select('*','spip_auteurs','id_auteur='.sql_quote($id_encherisseur));
-        else { spip_log('id'.$id_encheres_objet,'teste');
+        else {
             $acheteur= sql_fetsel('*','spip_encherisseurs,spip_auteurs','spip_encherisseurs.id_encheres_objet='.sql_quote($id_encheres_objet).' AND spip_encherisseurs.gagnant=1');
             $id_encherisseur=$acheteur['id_auteur'];
         }
-        spip_log($acheteur,'teste');
+
         
         $email = $acheteur['email'];
 
 		// Les infos de l'objet
 		$objet=sql_fetsel('*','spip_encheres_objets',array('id_encheres_objet='.sql_quote($id_encheres_objet)));
 
-		$remise_vente_automatique= $objet['remise_vente_automatique'];
+
 		$date_fin = $objet['date_fin'];
 		$statut_2 = $objet['statut'];	
 		
-				
+	   spip_log($type,'teste')	;
 		if ($type!='cloture_cron_publie'){
-		    
+
             if($prix_minimum=$objet['prix_minimum']>$objet['prix_actuel'])$statut = 'non_vendu';
 					
 			$set=array(
@@ -60,17 +60,9 @@ function inc_actions_enchere_gagne_dist($type,$id_encheres_objet,$id_encherisseu
             }	
 
             }
-		elseif($remise_vente_automatique AND $statut_2!='vendu'){
- 			$remettre_en_vente = charger_fonction('remise_vente','inc');
- 			$remettre_en_vente($id_objet,'','auto');
-			}
 		else{
-			$statut='non_vendu';
-			
-			sql_updateq('spip_encheres_objets',array("statut" => $statut),'id_objet='.sql_quote($id_objet));
-
-
-
+			$statut='non_vendu';			
+			sql_updateq('spip_encheres_objets',array("statut" => $statut),'id_encheres_objet='.sql_quote($id_encheres_objet));
 			};
 						
         $id_objet = $id_objet_actuel;

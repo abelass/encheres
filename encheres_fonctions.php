@@ -149,9 +149,7 @@ function traduire_devise($code_devise){
 }
 
 function enchere_gagnant($id_encheres_objet,$filtre=''){
-    
-    $gagnant=sql_fetsel('*','spip_encherisseurs,spip_auteurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
-    
+    $gagnant=sql_fetsel('*','spip_encherisseurs LEFT JOIN spip_auteurs USING(id_auteur)','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
     if($filtre)$gagnant=$gagnant[$filtre];
     
     return $gagnant;

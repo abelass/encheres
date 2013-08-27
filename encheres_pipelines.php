@@ -65,7 +65,7 @@ function encheres_taches_generales_cron($taches){
     return $taches;
 }
 
-function encheres_header_prive($flux){
+function encheres_insert_head($flux){
     $flux .= recuperer_fond('inclure/header');
     return $flux;   
 }

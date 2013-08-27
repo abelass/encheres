@@ -1,0 +1,20 @@
+[(#REM)exemple pour un super encherisseurs qui peut encherir pour les auteurs lié via le plugin selection objets ]
+
+#SET{session,#SESSION}
+
+#SET{auteurs,#ARRAY}
+<B_auteurs_attaches>
+<ul>
+    <li class="editer editer_id_auteur">
+        <label for="id_auteur"><:encheres:label_auteur_encheres:></label>
+    <select name="id_auteur" id="id_auteur">
+        <option value="[(#GET{session}|table_valeur{id_auteur})]">[(#GET{session}|table_valeur{nom})]</option>
+    <BOUCLE_auteurs_attaches(SELECTION_OBJETS auteurs){id_objet_dest=#GET{session}|table_valeur{id_auteur}}{objet_dest=auteur}{objet=auteur}>
+        <BOUCLE_auteur(AUTEURS){id_auteur=#ID_OBJET}{tout}>
+            <option value="#ID_AUTEUR"[(#ENV{id_auteur}|=={#ID_AUTEUR}|oui) selected="selected"]>#NOM</option>
+        </BOUCLE_auteur>
+    </BOUCLE_auteurs_attaches>
+    </select>
+    </li>
+</ul>
+</B_auteurs_attaches>

@@ -1,15 +1,1 @@
-#donnees_objets li.obligatoire {
-background-color:#FFE080;
-}
-
-#donnees_objets li.obligatoire label {
-color:#000000;
-font-weight:bold;
-}
-
-#donnees_objets input,#donnees_objets select {
-margin-left:50px;
-width:250px;
-}
-
-.formulaire_spip .titrem {background-color:#FFC000;}
+.formulaire_spip.enchere_mise{float:right; border:#e5e5e5 1px solid;padding:0.5em;width:45%}

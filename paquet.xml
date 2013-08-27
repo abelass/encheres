@@ -56,7 +56,7 @@
 	<pipeline nom="affiche_auteurs_interventions" inclure="encheres_pipelines.php" /> 
 	
 	<pipeline nom="taches_generales_cron" inclure="encheres_pipelines.php" /> 
-	<pipeline nom="header_prive" inclure="encheres_pipelines.php" /> 		
+	<pipeline nom="insert_head" inclure="encheres_pipelines.php" /> 		
 
 	<menu nom="encheres_objets" titre="encheres_objet:titre_encheres_objets" parent="menu_edition" icone="images/encheres_objet-16.png" action="encheres_objets" /> 
 	<menu nom="encheres_objet_creer" titre="encheres_objet:icone_creer_encheres_objet" parent="outils_rapides" icone="images/encheres_objet-new-16.png" action="encheres_objet_edit" parametres="new=oui" /> 
