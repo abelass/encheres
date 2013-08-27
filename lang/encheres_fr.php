@@ -112,7 +112,6 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 // L
 'label_activer_palier_encherissment'=>'Activer les paliers d\'enchérissment',
 'label_compte_bancaire' => 'Compte bancaire',
-
 'label_email'=>'Email :',
 'label_auteur_encheres'=>'Auteur de l\'enchère',
 'label_gagnant'=>'Le gagnant :',
