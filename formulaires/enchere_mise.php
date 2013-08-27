@@ -220,7 +220,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
                             );
                      sql_insertq('spip_mises',$arg_inser_mise);
                      sql_updateq('spip_encherisseurs',array('gagnant'=>1),'id_encherisseur='.$id_encherisseur);
-                     sql_updateq('spip_encherisseurs',array('gagnant'=>''),'id_encherisseur!='.$id_encherisseur);                     
+                     sql_updateq('spip_encherisseurs',array('gagnant'=>''),'id_encheres_objet='.$id_encheres_objet.' AND id_encherisseur!='.$id_encherisseur);                     
                      sql_updateq('spip_encheres_objets',array('prix_actuel'=>$montant,'statut'=>$statut),'id_encheres_objet='.$id_encheres_objet);
                     
                 }
