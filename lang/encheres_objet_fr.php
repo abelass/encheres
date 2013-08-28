@@ -23,6 +23,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// L
 	'label_date_debut' => 'Date début :',
 	'label_date_fin' => 'Date fin :',
+	'label_date_vente' => 'Date vente :',	
     'label_descriptif' => 'Déscriptif :',
     'label_gagnant' => 'Gagnant :',       	
 	'label_id_auteur' => 'Id auteur :',

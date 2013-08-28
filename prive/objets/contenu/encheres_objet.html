@@ -40,6 +40,11 @@
 	<span dir='#LANG_DIR' class='#EDIT{prix_actuel} prix_actuel'>(#PRIX_ACTUEL|filtres_prix_formater)</span>
 </div>]
 
+[<div class="champ contenu_date_vente[ (#DATE_VENTE*|strlen|?{'',vide})]">
+    <label><:encheres_objet:label_date_vente:></label>
+    <span dir='#LANG_DIR' class='#EDIT{date_vente} date_fin'>(#DATE_VENTE)</span>
+</div>]
+
 [<div class="champ contenu_date_debut[ (#DATE_DEBUT*|strlen|?{'',vide})]">
 	<label><:encheres_objet:label_date_debut:></label>
 	<span dir='#LANG_DIR' class='#EDIT{date_debut} date_debut'>(#DATE_DEBUT)</span>
