@@ -17,7 +17,7 @@
 <//B_objet_test>
 [(#PRIX_ACHAT_INMEDIAT|=={'inmediat'}|oui)<div><:encheres:vente_directe:> !</div>]
 [(#EDITABLE|et{#SESSION{id_auteur}}|oui)
-<p class="temps_restant"> [(#DATE_FIN|difference_jour)]</p>
+<p class="temps_restant"><span class="label"><:encheres:label_temps_restant:></span>[ <span class="temps">(#DATE_FIN|difference_jour)</span>]</p>
 	<form action="#ENV{action}" method="post">
     	#ACTION_FORMULAIRE{#ENV{action}}
         #SET{erreurs,#ENV**{erreurs}|table_valeur{montant_mise}}

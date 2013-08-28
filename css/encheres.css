@@ -1,1 +1,5 @@
 .formulaire_spip.enchere_mise{float:right; border:#e5e5e5 1px solid;padding:0.5em;width:45%}
+
+.temps_restant .label{font-weight:bold}
+
+.temps_restant .temps{display:block}

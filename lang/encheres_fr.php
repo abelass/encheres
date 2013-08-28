@@ -116,6 +116,7 @@ N\'oubliez cependant pas de réserver! Vos places achetées sur Kidonaki ne sero
 'label_auteur_encheres'=>'Auteur de l\'enchère',
 'label_gagnant'=>'Le gagnant :',
 'label_role'=>'Rôle :',
+'label_temps_restant'=>'Temps restant :',
 'label_titre_objet'=>'Titre de l\'objet :',
 'livraison' => 'Livraison à domicile (chez l’acheteur)',
 'livraison_court' => 'Livraison',
