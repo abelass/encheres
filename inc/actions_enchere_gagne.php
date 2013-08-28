@@ -25,7 +25,7 @@ function inc_actions_enchere_gagne_dist($type,$id_encheres_objet,$id_encherisseu
 		$date_fin = $objet['date_fin'];
 		$statut_2 = $objet['statut'];	
 		
-	   spip_log($type,'teste')	;
+
 		if ($type!='cloture_cron_publie'){
 
             if($prix_minimum=$objet['prix_minimum']>$objet['prix_actuel'])$statut = 'non_vendu';
@@ -38,9 +38,6 @@ function inc_actions_enchere_gagne_dist($type,$id_encheres_objet,$id_encherisseu
 
 			sql_updateq('spip_encheres_objets',$set,'id_encheres_objet='.sql_quote($id_encheres_objet));
 
-			sql_updateq('spip_encherisseurs',array('gagnant'=>$gagne),'id_encheres_objet='.sql_quote($id_encheres_objet).' AND id_auteur='.sql_quote($id_encherisseur));	
-			
-			
     		// On assemble les infos pour l'envoi des mails	
     		$contexte=array(
     			'acheteur'=>$acheteur,	
