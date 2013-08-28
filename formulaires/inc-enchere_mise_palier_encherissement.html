@@ -14,7 +14,17 @@
       <b><:encheres_objet:label_montant_actuel:></b>  [(#GET{montant_min}|filtres_prix_formater)] 
       </div>
       <div class="mise">
-    <b><:encheres_objet:label_votre_mise:></b> [(#PALIER_ENCHERISSEMENT|filtres_prix_formater)] 
-    <input type="hidden" name="palier_encherissement" value="#PALIER_ENCHERISSEMENT"/>
+   
+    <ul class="palier_encherissement">
+        <li class="palier">
+            <b><:encheres_objet:label_votre_mise:></b>  [(#PALIER_ENCHERISSEMENT|filtres_prix_formater)] 
+             <input type="hidden" name="palier_encherissement" value="#PALIER_ENCHERISSEMENT"/>
+        </li>
+    #SAISIE{selection,multiplicateur,
+        defaut=1,
+        label=x,
+        datas=#ARRAY{1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10}}
+    </ul>
+   
     </div>
 </div>

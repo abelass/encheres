@@ -3,3 +3,9 @@
 .temps_restant .label{font-weight:bold}
 
 .temps_restant .temps{display:block}
+
+.palier_encherissement li {clear:none;float:left}
+
+.palier_encherissement label{display:inline}
+
+.editer_multiplicateur{margin-left:0.5em}

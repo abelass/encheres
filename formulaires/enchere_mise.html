@@ -29,13 +29,13 @@
             <input type='text' class="text"  name='montant' id='montant' value="[(#ENV{montant,#GET{montant_min}})]" /> [(#GET{config}|table_valeur{devise}|traduire_devise)]
             ]
           [(#GET{config}|table_valeur{activer_palier_encherissment}|oui)
-                <INCLURE{fond=formulaires/inc-enchere_mise_palier_encherissement,id_encheres_objet,palier_encherissement,prix_depart,cfg=#GET{config},env,ajax}/>
+                <INCLURE{fond=formulaires/inc-enchere_mise_palier_encherissement,multiplicateur=#ENV{multiplicateur,1},id_encheres_objet,palier_encherissement,prix_depart,cfg=#GET{config},env,ajax}/>
             ]
 
         </div>
 
 
-    	<p style="bouton"><input class="boutton" type="submit" value="<:encheres:enregistrer:>" /></p>
+    	<p style="bouton"><input class="boutton" type="submit" value="<:encheres:bouton_encherir:>" /></p>
     	
 	</form>]
 	

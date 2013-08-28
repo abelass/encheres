@@ -23,6 +23,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 // B
 'bic' => 'BIC/SWIFT',
 'bonjour' => 'Bonjour',
+'bouton_encherir' => 'Enchérir',
 'bulle_objet_vendu' => 'objet vendu',
 'bulle_objets_vendus' => 'objets vendus',
 

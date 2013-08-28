@@ -4,7 +4,7 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 
 function formulaires_enchere_mise_charger_dist($id_encheres_objet){
     $date_actuel=date('Y-m-d H:i:s');
-	$valeurs = array('id_encheres_objet'=>$id_encheres_objet,'montant'=>'','palier_encherissement'=>'','id_auteur'=>'');
+	$valeurs = array('id_encheres_objet'=>$id_encheres_objet,'montant'=>'','palier_encherissement'=>'','id_auteur'=>'','multiplicateur');
 
 
 	$objet = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet);
@@ -139,6 +139,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 		$palier_encherissement = _request('palier_encherissement');
 		$date_creation = date('Y-m-d G:i:s');
 		$date_actuel= time();
+        $multiplicateur=_request('multiplicateur')?_request('multiplicateur'):1;
 
 		//Établit les données de base
 
@@ -211,7 +212,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
             
                 // si par palier
                 if($palier_encherissement){
-                    $montant=$montant_actuel+$palier_encherissement;
+                    $montant=$montant_actuel+($multiplicateur*$palier_encherissement);
                      $arg_inser_mise = array(
                             'id_encherisseur' => $id_encherisseur,
                             'id_encheres_objet' => $id_encheres_objet,
