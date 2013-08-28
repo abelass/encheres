@@ -98,7 +98,7 @@ function encheres_declarer_tables_objets_sql($tables) {
 			array(
 				'champ'     => 'statut',
 				'publie'    => 'publie,mise_en_vente_active,vendu',
-				'previsu'   => 'publie,prop,prepa,,mise_en_vente,mise_en_vente_active,vendu',
+				'previsu'   => 'publie,prop,prepa,,mise_en_vente,mise_en_vente_active,vendu,non_vendu',
 				'post_date' => 'date', 
 				'exception' => array('statut','tout')
 			)
