@@ -11,7 +11,7 @@ function formulaires_enchere_mise_charger_dist($id_encheres_objet){
     
     $valeurs['editable']=true;
 
-	$montant_precedent = $objet['prix_actuel']>0 ?$$objet['prix_actuel']:$$objet['prix_depart'];
+	$montant_precedent = $objet['prix_actuel']>0 ?$$objet['prix_actuel']:$objet['prix_depart'];
 	$prix_achat_inmediat= $$objet['prix_achat_inmediat'];
 	$valeurs['montant'] = $montant_precedent;
     $statut=$objet['statut'];
@@ -19,8 +19,8 @@ function formulaires_enchere_mise_charger_dist($id_encheres_objet){
 	$encherisseur = sql_fetsel('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND suivre=""','','prix_maximum DESC');
     
     
-
-    if($objet['date_fin'] <= $date_actuel){
+    //Cloturer les evenement 'a termes pas encore traité
+    if($objet['date_fin'] <= $date_actuel AND in_array($statut,array('publie','mise_en_vente_active'))){
         $actualiser = charger_fonction('actions_enchere_gagne','inc');
         $actualiser('cloture_cron_'.$statut,$id_encheres_objet);
         $valeurs['editable']=false;

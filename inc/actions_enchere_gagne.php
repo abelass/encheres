@@ -25,9 +25,8 @@ function inc_actions_enchere_gagne_dist($type,$id_encheres_objet,$id_encherisseu
 		$date_fin = $objet['date_fin'];
 		$statut_2 = $objet['statut'];	
 		
-
-		if ($type!='cloture_cron_publie'){
-
+        //Cloturer les objets avec enchères
+		if ($type!='cloture_cron_publie' AND in_array($statut,array('publie','mise_en_vente_active'))){
             if($prix_minimum=$objet['prix_minimum']>$objet['prix_actuel'])$statut = 'non_vendu';
 					
 			$set=array(
@@ -57,6 +56,7 @@ function inc_actions_enchere_gagne_dist($type,$id_encheres_objet,$id_encherisseu
             }	
 
             }
+        //Cloturer les objets sans enchères
 		else{
 			$statut='non_vendu';			
 			sql_updateq('spip_encheres_objets',array("statut" => $statut),'id_encheres_objet='.sql_quote($id_encheres_objet));
