@@ -26,7 +26,7 @@ function inc_actions_enchere_gagne_dist($type,$id_encheres_objet,$id_encherisseu
 		$statut_2 = $objet['statut'];	
 		
         //Cloturer les objets avec enchères
-		if ($type!='cloture_cron_publie' AND in_array($statut,array('publie','mise_en_vente_active'))){
+		if ($type!='cloture_cron_publie' AND in_array($statut_2,array('publie','mise_en_vente_active'))){
             if($prix_minimum=$objet['prix_minimum']>$objet['prix_actuel'])$statut = 'non_vendu';
 					
 			$set=array(
