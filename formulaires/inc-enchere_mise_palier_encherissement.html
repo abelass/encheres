@@ -6,9 +6,9 @@
     </BOUCLE_objet_test>
     #SET{montant_min,#PRIX_DEPART}
     <//B_objet_test>
-    [(#CFG{activer_super_encherisseur}|oui)
+    [(#CFG{activer_super_encherisseur}|et{#ENV**{session}|table_valeur{role}|=={agence}|oui}oui)
         <INCLURE{fond=formulaires/inc_enchere_mise_super_encherisseur,env}/>
-    ]
+        ]
     
     <div class="montant_actuel">
       <b><:encheres_objet:label_montant_actuel:></b>  [(#GET{montant_min}|filtres_prix_formater)] 
@@ -25,6 +25,5 @@
         label=x,
         datas=#ARRAY{1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10}}
     </ul>
-   
     </div>
-</div>
+ </div>

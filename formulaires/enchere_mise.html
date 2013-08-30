@@ -1,5 +1,6 @@
 #CACHE{0}
 #SET{config,#CONFIG{encheres}}
+#SET{session,#SESSION}
 <BOUCLE_objet(ENCHERES_OBJETS){id_encheres_objet}>
 <div class="formulaire_spip enchere_mise">
 
@@ -16,7 +17,7 @@
 #SET{montant_min,#PRIX_DEPART}
 <//B_objet_test>
 [(#PRIX_ACHAT_INMEDIAT|=={'inmediat'}|oui)<div><:encheres:vente_directe:> !</div>]
-[(#EDITABLE|et{#SESSION{id_auteur}}|oui)
+[(#EDITABLE|et{#GET{session}|table_valeur{id_auteur}}|oui)
 <p class="temps_restant"><span class="label"><:encheres:label_temps_restant:></span>[ <span class="temps">(#DATE_FIN|difference_jour)</span>]</p>
 	<form action="#ENV{action}" method="post">
     	#ACTION_FORMULAIRE{#ENV{action}}
@@ -29,7 +30,7 @@
             <input type='text' class="text"  name='montant' id='montant' value="[(#ENV{montant,#GET{montant_min}})]" /> [(#GET{config}|table_valeur{devise}|traduire_devise)]
             ]
           [(#GET{config}|table_valeur{activer_palier_encherissment}|oui)
-                <INCLURE{fond=formulaires/inc-enchere_mise_palier_encherissement,multiplicateur=#ENV{multiplicateur,1},id_encheres_objet,palier_encherissement,prix_depart,cfg=#GET{config},env,ajax}/>
+                <INCLURE{fond=formulaires/inc-enchere_mise_palier_encherissement,multiplicateur=#ENV{multiplicateur,1},id_encheres_objet,palier_encherissement,prix_depart,cfg=#GET{config},env,session=#GET{session},ajax}/>
             ]
 
         </div>
@@ -39,7 +40,7 @@
     	
 	</form>]
 	
-            [(#SESSION{id_auteur}|non)
+            [(#GET{session}|table_valeur{id_auteur}|non)
             <b><:encheres:message_loguer:></b>
             #FORMULAIRE_LOGIN{#SELF}
             ]   	
