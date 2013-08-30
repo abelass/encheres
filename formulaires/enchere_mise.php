@@ -20,9 +20,12 @@ function formulaires_enchere_mise_charger_dist($id_encheres_objet){
     
     
     //Cloturer les evenement 'a termes pas encore traité
-    if($objet['date_fin'] <= $date_actuel AND in_array($statut,array('publie','mise_en_vente_active'))){
-        $actualiser = charger_fonction('actions_enchere_gagne','inc');
-        $actualiser('cloture_cron_'.$statut,$id_encheres_objet);
+    if($objet['date_fin'] <= $date_actuel){
+        if(in_array($statut,array('publie','mise_en_vente_active'))){
+                    $actualiser = charger_fonction('actions_enchere_gagne','inc');
+                    $actualiser('cloture_cron_'.$statut,$id_encheres_objet);
+                }
+
         $valeurs['editable']=false;
     }
 
