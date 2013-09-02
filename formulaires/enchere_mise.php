@@ -166,7 +166,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 		$suivre = $encherisseur['suivre'];
 
 		//Établit les données du gagnant actuel
-		$encherisseur_gagnant = sql_select('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
+		$encherisseur_gagnant = sql_fetsel('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
 
 
 		$prix_max_actuel = $encherisseur_gagnant['prix_maximum'];
