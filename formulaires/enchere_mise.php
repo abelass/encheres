@@ -11,8 +11,8 @@ function formulaires_enchere_mise_charger_dist($id_encheres_objet){
     
     $valeurs['editable']=true;
 
-	$montant_precedent = $objet['prix_actuel']>0 ?$$objet['prix_actuel']:$objet['prix_depart'];
-	$prix_achat_inmediat= $$objet['prix_achat_inmediat'];
+	$montant_precedent = $objet['prix_actuel']>0 ?$objet['prix_actuel']:$objet['prix_depart'];
+	$prix_achat_inmediat= $objet['prix_achat_inmediat'];
 	$valeurs['montant'] = $montant_precedent;
     $statut=$objet['statut'];
 
@@ -29,7 +29,6 @@ function formulaires_enchere_mise_charger_dist($id_encheres_objet){
         $valeurs['editable']=false;
     }
 
-	if(isset($valeurs['montant']))$valeurs['montant'] = $montant_precedent+1;
 	$prix_max_min = $data['prix_maximum'];
 
 	if ($prix_max_min<$montant_precedent){
@@ -41,7 +40,7 @@ function formulaires_enchere_mise_charger_dist($id_encheres_objet){
 	$valeurs['prix_maximum_top'] = $prix_max_min;
     include_spip('inc/session');
     if($id_auteur=session_get('id_auteur'))$valeurs['_hidden'].='<input type="hidden" name="id_auteur" value="'.$id_auteur.'"/>';
-$valeurs['_hidden'].='<input type="hidden" name="id_auteur" value="'.$id_auteur.'"/>';
+	$valeurs['_hidden'].='<input type="hidden" name="montant_precedent" value="'.$montant_precedent.'"/>';	
 	return $valeurs;
 }
 
@@ -75,7 +74,7 @@ function formulaires_enchere_mise_verifier_dist($id_encheres_objet){
 			$valideur='ok';
 			}
 		if($valideur){
-		      $data = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet.' AND suivre=""','','prix_maximum DESC');
+		      $data = sql_fetsel('*','spip_encheres_objets','id_encheres_objet='.$id_encheres_objet,'','prix_maximum DESC');
 
 				$prix_max_min = $data['prix_maximum'];
 				$prix_maximum_comparer = $data['prix_maximum'];
@@ -139,6 +138,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 		$prix_maximum = _request('prix_maximum');
 		$id_auteur = _request('id_auteur');
 		$montant = _request('montant');
+		$montant_precedent = _request('montant_precedent');		
 		$palier_encherissement = _request('palier_encherissement');
 		$date_creation = date('Y-m-d G:i:s');
 		$date_actuel= time();
@@ -152,7 +152,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 		$date_fin = $objet['date_fin'];
 		$date_fin_jours = date('d-m-Y',strtotime($date_fin));
 		$date_fin_heures = date('G:i:s',strtotime($date_fin));
-		$montant_actuel =$objet['prix_actuel'];
+		$montant_actuel =$montant_precedent?$montant_precedent:$objet['prix_actuel'];
 
 		$split_jours = explode("-", $date_fin_jours);
 		$split_heures = explode(":", $date_fin_heures);
@@ -166,7 +166,7 @@ function formulaires_enchere_mise_traiter_dist($id_encheres_objet){
 		$suivre = $encherisseur['suivre'];
 
 		//Établit les données du gagnant actuel
-		$encherisseur_gagnant = sql_fetsel('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
+		$encherisseur_gagnant = sql_select('*','spip_encherisseurs','id_encheres_objet='.$id_encheres_objet.' AND gagnant=1');
 
 
 		$prix_max_actuel = $encherisseur_gagnant['prix_maximum'];

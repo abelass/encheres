@@ -1,9 +1,9 @@
-<paquet
+﻿<paquet
 	prefix="encheres"
 	categorie="divers"
-	version="1.0.5"
+	version="1.0.6"
 	etat="dev"
-	compatibilite="[3.0.4;3.0.*]"
+	compatibilite="[3.0.11;3.0.*]"
 	logo="prive/themes/spip/images/encheres-64.png"
 	documentation=""
 	schema="1.0.4" 
