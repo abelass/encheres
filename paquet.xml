@@ -1,7 +1,7 @@
 ﻿<paquet
 	prefix="encheres"
 	categorie="divers"
-	version="1.0.6"
+	version="1.0.7"
 	etat="dev"
 	compatibilite="[3.0.11;3.0.*]"
 	logo="prive/themes/spip/images/encheres-64.png"
