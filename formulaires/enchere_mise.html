@@ -22,7 +22,7 @@
 	<form action="#ENV{action}" method="post"><div>
     	#ACTION_FORMULAIRE{#ENV{action}}
         #SET{erreurs,#ENV**{erreurs}|table_valeur{montant_mise}}
-        <div id='montant' class="editer_montant obligatoire[ (#GET{erreurs}|oui)erreur]">
+        <div class="editer_montant obligatoire[ (#GET{erreurs}|oui)erreur]">
             [(#GET{config}|table_valeur{activer_palier_encherissment}|non)
             <label for="montant_mise"><:encheres:montant_mise:></label>]
 	      [(#GET{config}|table_valeur{activer_palier_encherissment}|non)
