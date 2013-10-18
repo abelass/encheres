@@ -19,7 +19,7 @@
 [(#PRIX_ACHAT_INMEDIAT|=={'inmediat'}|oui)<div><:encheres:vente_directe:> !</div>]
 [(#EDITABLE|et{#GET{session}|table_valeur{id_auteur}}|oui)
 <p class="temps_restant"><span class="label"><:encheres:label_temps_restant:></span>[ <span class="temps">(#DATE_FIN|difference_jour)</span>]</p>
-	<form action="#ENV{action}" method="post">
+	<form action="#ENV{action}" method="post"><div>
     	#ACTION_FORMULAIRE{#ENV{action}}
         #SET{erreurs,#ENV**{erreurs}|table_valeur{montant_mise}}
         <div id='montant' class="editer_montant obligatoire[ (#GET{erreurs}|oui)erreur]">
@@ -38,7 +38,7 @@
 
     	<p style="bouton"><input class="boutton" type="submit" value="<:encheres:bouton_encherir:>" /></p>
     	
-	</form>]
+	</div></form>]
 	
             [(#GET{session}|table_valeur{id_auteur}|non)
             <b><:encheres:message_loguer:></b>
